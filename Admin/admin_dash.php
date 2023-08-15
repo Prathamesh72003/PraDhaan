@@ -1,3 +1,13 @@
+<?php
+include "../db.php";
+session_start();
+if(!isset($_SESSION["admin_session"])){
+  header("Location: ../index.php");
+
+}
+else{
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,12 +43,12 @@
   </head>
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:partials/_navbar.php -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
           <a class="navbar-brand brand-logo-mini" href="./admin_dash"
@@ -59,7 +69,7 @@
       </nav>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:partials/_settings-panel.php -->
         <div class="theme-setting-wrapper">
           <div id="settings-trigger"><i class="ti-settings"></i></div>
           <div id="theme-settings" class="settings-panel">
@@ -85,38 +95,41 @@
           </div>
         </div>
       
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:partials/_sidebar.php -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="./admin_dash.html">
+              <a class="nav-link" href="./admin_dash.php">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Stocks.html">
+              <a class="nav-link" href="./Stocks.php">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Stocks</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Vendors.html">
+              <a class="nav-link" href="./Vendors.php">
                 <i class = "material-icons">supervisor_account   </i>
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Accounts.html">
+              <a class="nav-link" href="./Accounts.php">
                 <i class = "material-icons">currency_rupee</i>
                 <span class="menu-title">Accounts</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../index.html">
+              <form method="POST">
+                <!-- <a class="nav-link"> -->
                 <i class = "material-icons">logout  </i>
-                <span class="menu-title">    Logout</span>
-              </a>
+                <span class="menu-title"><input type="submit" name="logoutt" value="Logout"></span>
+              <!-- </a> -->
+            </form>
+
             </li>
           </ul>
         </nav>
@@ -127,7 +140,7 @@
               <div class="col-md-12 grid-margin">
                 <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome Aamir</h3>
+                    <h3 class="font-weight-bold">Welcome <?= $_SESSION["admin_session"] ?> </h3>
                     <h6 class="font-weight-normal mb-0">
                       All systems are running smoothly! You have
                       <span class="text-primary">3 unread alerts!</span>
@@ -313,7 +326,7 @@
             </div>
           </div>
           <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:partials/_footer.php -->
           <footer class="footer">
             <div
               class="d-sm-flex justify-content-center justify-content-sm-between"
@@ -364,3 +377,18 @@
     <!-- End custom js for this page-->
   </body>
 </html>
+
+<?php
+if(isset($_POST['logoutt'])){
+  session_start();
+ // session_unset($_SESSION['ad']);
+
+  unset($_SESSION['admin_session']);
+  session_destroy();
+  echo "<script>window.open('../index.php','_self')</script>";
+  //exit();
+}
+
+}
+
+?>

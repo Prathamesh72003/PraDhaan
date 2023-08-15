@@ -1,3 +1,15 @@
+<?php
+include "../db.php";
+session_start();
+if(!isset($_SESSION["admin_session"])){
+  header("Location: ../index.php");
+
+}
+else{
+
+?>
+
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -62,16 +74,16 @@
 
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:partials/_navbar.php -->
 
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
-          <a class="navbar-brand brand-logo-mini" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo-mini" href="./admin_dash.php"
             ><img src="../images/logo-mini.svg" alt="logo"
           /></a>
         </div>
@@ -91,7 +103,7 @@
       <!-- partial -->
 
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:partials/_settings-panel.php -->
 
         <div class="theme-setting-wrapper">
           <div id="settings-trigger"><i class="ti-settings"></i></div>
@@ -417,36 +429,36 @@
 
         <!-- partial -->
 
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:partials/_sidebar.php -->
 
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="./admin_dash.html">
+              <a class="nav-link" href="./admin_dash.php">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Stocks.html">
+              <a class="nav-link" href="./Stocks.php">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Stocks</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Vendors.html">
+              <a class="nav-link" href="./Vendors.php">
                 <i class="material-icons">supervisor_account </i>
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Accounts.html">
+              <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>
                 <span class="menu-title">Accounts</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../index.html">
+              <a class="nav-link" href="../index.php">
                 <i class="material-icons">logout </i>
                 <span class="menu-title"> Logout</span>
               </a>
@@ -480,7 +492,7 @@
                     <form
                       class="forms-sample"
                       method="POST"
-                      action="./Stocks.html"
+                      action="./Stocks.php"
                     >
                       <div class="form-group row">
                         <label
@@ -520,8 +532,19 @@
                         >
                         <div class="col-sm-9">
                           <select class="form-control" id="exampleSelectGender">
-                            <option>1pc</option>
-                            <option>2pc</option>
+                          <?php
+                      $vendor_query= mysqli_query($conn,"select * from category");
+                      while($row=mysqli_fetch_array($vendor_query)){
+                        $catname=$row['category_name'];
+                      
+                    
+                      ?>
+                            
+                            <option><?= $catname ?></option>
+                        
+                      <?php }?>
+                           
+                           
                           </select>
                         </div>
                       </div>
@@ -531,12 +554,25 @@
                           class="col-sm-3 col-form-label"
                           >Vendors</label
                         >
+                      
+
                         <div class="col-sm-9">
                           <select class="form-control" id="exampleSelectGender">
-                            <option>Vendor A</option>
-                            <option>Vendor B</option>
+                          <?php
+                      $vendor_query= mysqli_query($conn,"select * from vendor");
+                      while($row=mysqli_fetch_array($vendor_query)){
+                        $vname=$row['name'];
+                      
+                    
+                      ?>
+                            <option><?=$vname ?></option>
+                        
+                      <?php }?>
                           </select>
+
                         </div>
+
+                      
                       </div>
 
                       <div class="form-group row">
@@ -579,7 +615,7 @@
 
           <!-- content-wrapper ends -->
 
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:partials/_footer.php -->
 
           <footer class="footer">
             <div
@@ -643,3 +679,17 @@
     <script src="../js/Chart.roundedBarCharts.js"></script>
   </body>
 </html>
+<?php
+if(isset($_POST['logoutt'])){
+  session_start();
+ // session_unset($_SESSION['ad']);
+
+  unset($_SESSION['admin_session']);
+  session_destroy();
+  echo "<script>window.open('../index.php','_self')</script>";
+  //exit();
+}
+
+}
+
+?>

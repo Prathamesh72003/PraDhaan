@@ -1,3 +1,8 @@
+
+<?php
+include "../../db.php"
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,28 +39,32 @@
                 <div class="brand-logo"></div>
                 <h4>Hello! let's get started</h4>
                
-                <form class="pt-3">
+                <form class="pt-3" method="POST">
                   <div class="form-group">
                     <input
-                      type="email"
+                      name="naming"
+                      type="text"
                       class="form-control form-control-lg"
                       id="exampleInputEmail1"
                       placeholder="Username"
+                      required
                     />
                   </div>
                   <div class="form-group">
                     <input
+                       name="passwordingg"
                       type="password"
                       class="form-control form-control-lg"
                       id="exampleInputPassword1"
                       placeholder="Password"
+                      required
                     />
                   </div>
                   <div class="mt-3">
-                    <a
-                      class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
-                      href="../../Sales/sales_dash.html"
-                      >LOG IN</a
+                    <button
+                      class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="logining"
+                      href="../../Admin/admin_dash.php" type="submit" 
+                      >LOG IN</button
                     >
                   </div>
                   <div
@@ -90,3 +99,43 @@
     <!-- endinject -->
   </body>
 </html>
+
+<?php
+if (isset($_POST["logining"])){
+  $name = $_POST['naming'];
+  $password = $_POST['passwordingg'];
+  $query = mysqli_query($conn,"select * from admin where name='" . $name . "' and password= '" . $password . "'");
+  $number_of_rows = mysqli_num_rows($query);
+
+
+  if ($number_of_rows!=0){
+
+    while($row=mysqli_fetch_array($query)){
+      $dbname = $row['name'];
+      $dbpassword = $row['password'];
+      
+    
+
+
+    }
+
+  if($name==$dbname && $password==$dbpassword){
+    
+    session_start();
+    $_SESSION['admin_session']=$name;
+
+    header("Location: ../../Admin/admin_dash.php");
+
+  } 
+
+  
+
+  }
+  else{
+    echo "<script>alert('Invalid Username or Password')</script>";
+    
+  }
+}
+
+
+?>

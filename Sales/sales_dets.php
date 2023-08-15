@@ -62,16 +62,16 @@
 
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:partials/_navbar.php -->
 
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo mr-5" href="./sales_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
-          <a class="navbar-brand brand-logo-mini" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo-mini" href="./sales_dash.php"
             ><img src="../images/logo-mini.svg" alt="logo"
           /></a>
         </div>
@@ -91,107 +91,30 @@
       <!-- partial -->
 
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
-
-        <div class="theme-setting-wrapper">
-          <div id="settings-trigger"><i class="ti-settings"></i></div>
-
-          <div id="theme-settings" class="settings-panel">
-            <i class="settings-close ti-close"></i>
-
-            <p class="settings-heading">SIDEBAR SKINS</p>
-
-            <div class="sidebar-bg-options selected" id="sidebar-light-theme">
-              <div class="img-ss rounded-circle bg-light border mr-3"></div>
-              Light
-            </div>
-
-            <div class="sidebar-bg-options" id="sidebar-dark-theme">
-              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
-              Dark
-            </div>
-
-            <p class="settings-heading mt-2">HEADER SKINS</p>
-
-            <div class="color-tiles mx-0 px-4">
-              <div class="tiles success"></div>
-
-              <div class="tiles warning"></div>
-
-              <div class="tiles danger"></div>
-
-              <div class="tiles info"></div>
-
-              <div class="tiles dark"></div>
-
-              <div class="tiles default"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="right-sidebar" class="settings-panel">
-          <i class="settings-close ti-close"></i>
-
-          <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                id="todo-tab"
-                data-toggle="tab"
-                href="#todo-section"
-                role="tab"
-                aria-controls="todo-section"
-                aria-expanded="true"
-                >TO DO LIST</a
-              >
-            </li>
-
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="chats-tab"
-                data-toggle="tab"
-                href="#chats-section"
-                role="tab"
-                aria-controls="chats-section"
-                >CHATS</a
-              >
-            </li>
-          </ul>
-        </div>
+        <!-- partial:partials/_settings-panel.php -->
 
         <!-- partial -->
 
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:partials/_sidebar.php -->
 
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="./admin_dash.html">
+              <a class="nav-link" href="./sales_dash.php">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="./Stocks.html">
-                <i class="icon-paper menu-icon"></i>
-                <span class="menu-title">Stocks</span>
+              <a class="nav-link" href="./checkout.php">
+                <i class="material-icons">shopping_cart </i>
+                <span class="menu-title">Checkout</span>
               </a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="./Vendors.html">
-                <i class="material-icons">supervisor_account </i>
-                <span class="menu-title">Vendors</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./Accounts.html">
-                <i class="material-icons">currency_rupee</i>
-                <span class="menu-title">Accounts</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../index.html">
+              <a class="nav-link" href="../index.php">
                 <i class="material-icons">logout </i>
                 <span class="menu-title"> Logout</span>
               </a>
@@ -218,27 +141,27 @@
                         width: 100%;
                       "
                     >
-                      <h4 class="card-title">Vendor Details</h4>
+                      <h4 class="card-title">Sales Person Details</h4>
                     </div>
 
                     <p class="card-description"></p>
                     <form
                       class="forms-sample"
                       method="POST"
-                      action="./Vendors.html"
+                      action="./sales_dash.php"
                     >
                       <div class="form-group row">
                         <label
                           for="exampleInputUsername2"
                           class="col-sm-3 col-form-label"
-                          >Vendor name</label
+                          >Name</label
                         >
                         <div class="col-sm-9">
                           <input
                             type="text"
                             class="form-control"
                             id="exampleInputUsername2"
-                            placeholder="Enter the vendor name"
+                            placeholder="Enter the name"
                           />
                         </div>
                       </div>
@@ -312,7 +235,7 @@
 
           <!-- content-wrapper ends -->
 
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:partials/_footer.php -->
 
           <footer class="footer">
             <div

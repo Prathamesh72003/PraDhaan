@@ -1,3 +1,15 @@
+<?php
+include "../db.php";
+session_start();
+if(!isset($_SESSION["sales_session"])){
+  header("Location: ../index.php");
+
+}
+else{
+
+?>
+
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -62,16 +74,16 @@
 
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:partials/_navbar.php -->
 
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="./sales_dash.html"
+          <a class="navbar-brand brand-logo mr-5" href="./sales_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
-          <a class="navbar-brand brand-logo-mini" href="./sales_dash.html"
+          <a class="navbar-brand brand-logo-mini" href="./sales_dash.php"
             ><img src="../images/logo-mini.svg" alt="logo"
           /></a>
         </div>
@@ -91,33 +103,35 @@
       <!-- partial -->
 
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:partials/_settings-panel.php -->
 
         <!-- partial -->
 
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:partials/_sidebar.php -->
 
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="./sales_dash.html">
+              <a class="nav-link" href="./sales_dash.php">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="./checkout.html">
+              <a class="nav-link" href="./checkout.php">
                 <i class="material-icons">shopping_cart </i>
                 <span class="menu-title">Checkout</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="../index.html">
-                <i class="material-icons">logout </i>
-                <span class="menu-title"> Logout</span>
-              </a>
+            <form method="POST">
+                <!-- <a class="nav-link"> -->
+                <i class = "material-icons">logout  </i>
+                <span class="menu-title"><input type="submit" name="logoutt" value="Logout"></span>
+              <!-- </a> -->
+            </form>
             </li>
           </ul>
         </nav>
@@ -125,108 +139,98 @@
         <!-- partial -->
 
         <div class="main-panel">
-          <div class="content-wrapper" style="width: 100%">
-            <div
-              class="row"
-              style="justify-content: center; align-items: center"
-            >
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card" style="width: 100%">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 stretch-card grid-margin">
+                <div class="card data-icon-card-primary" style="height: 300px">
                   <div class="card-body">
                     <div
                       style="
+                        margin-top: 70px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        width: 100%;
+                        flex-direction: column;
                       "
                     >
-                      <h4 class="card-title">Sales Person Details</h4>
-                    </div>
-
-                    <p class="card-description"></p>
-                    <form
-                      class="forms-sample"
-                      method="POST"
-                      action="./sales_dash.html"
-                    >
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputUsername2"
-                          class="col-sm-3 col-form-label"
-                          >Name</label
-                        >
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="exampleInputUsername2"
-                            placeholder="Enter the name"
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Mobile no.</label
-                        >
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Enter the Mobile Number"
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Address</label
-                        >
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Enter the Address"
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Identity Proof</label
-                        >
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Enter Adhaar no./PAN no."
-                          />
-                        </div>
-                      </div>
-
-                      <div
-                        class="form-check form-check-flat form-check-primary"
-                      ></div>
-                      <div
-                        style="
-                          width: 100%;
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
+                      <p class="card-title text-white" style="font-size: 35px">
+                        Add Sales Person
+                      </p>
+                      <a href="./sales_dets.php">
+                        <button style="background: none; border: none">
+                          <i class="material-icons mysize">add_circle</i>
+                        </button></a
                       >
-                        <button type="submit" class="btn btn-primary mr-2">
-                          ADD
-                        </button>
-                      </div>
-                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Sales List</p>
+
+                    <ul class="icon-data-list">
+                      <li>
+                        <div class="d-flex">
+                          <img src="../images/faces/face1.jpg" alt="user" />
+
+                          <div>
+                            <p class="text-info mb-1">SalesP 1</p>
+
+                            <p class="mb-0">No. of Items sold:50pc</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="d-flex">
+                          <img src="../images/faces/face2.jpg" alt="user" />
+
+                          <div>
+                            <p class="text-info mb-1">SalesP 2</p>
+
+                            <p class="mb-0">No. of Items sold:</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="d-flex">
+                          <img src="../images/faces/face3.jpg" alt="user" />
+
+                          <div>
+                            <p class="text-info mb-1">SalesP 3</p>
+
+                            <p class="mb-0">No. of Items sold:</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="d-flex">
+                          <img src="../images/faces/face4.jpg" alt="user" />
+
+                          <div>
+                            <p class="text-info mb-1">SalesP 4</p>
+
+                            <p class="mb-0">No. of Items sold:</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="d-flex">
+                          <img src="../images/faces/face5.jpg" alt="user" />
+
+                          <div>
+                            <p class="text-info mb-1">SalesP 4</p>
+
+                            <p class="mb-0">No. of Items sold:</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -235,7 +239,7 @@
 
           <!-- content-wrapper ends -->
 
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:partials/_footer.php -->
 
           <footer class="footer">
             <div
@@ -299,3 +303,17 @@
     <script src="../js/Chart.roundedBarCharts.js"></script>
   </body>
 </html>
+<?php
+if(isset($_POST['logoutt'])){
+  session_start();
+  // session_unset($_SESSION['ad']);
+ 
+   unset($_SESSION['sales_session']);
+   session_destroy();
+   echo "<script>window.open('../index.php','_self')</script>";
+   //exit();
+}
+
+}
+
+?>

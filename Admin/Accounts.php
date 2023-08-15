@@ -36,10 +36,10 @@
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
-          <a class="navbar-brand brand-logo-mini" href="./admin_dash.html"
+          <a class="navbar-brand brand-logo-mini" href="./admin_dash.php"
             ><img src="../images/logo-mini.svg" alt="logo"
           /></a>
         </div>
@@ -66,31 +66,31 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="./admin_dash.html">
+              <a class="nav-link" href="./admin_dash.php">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Stocks.html">
+              <a class="nav-link" href="./Stocks.php">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Stocks</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Vendors.html">
+              <a class="nav-link" href="./Vendors.php">
                 <i class="material-icons">supervisor_account </i>
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Accounts.html">
+              <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>
                 <span class="menu-title">Accounts</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../index.html">
+              <a class="nav-link" href="../index.php">
                 <i class="material-icons">logout </i>
                 <span class="menu-title"> Logout</span>
               </a>

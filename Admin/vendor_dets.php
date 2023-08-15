@@ -1,3 +1,14 @@
+<?php
+include "../db.php";
+session_start();
+if(!isset($_SESSION["admin_session"])){
+  header("Location: ../index.php");
+
+}
+else{
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -10,7 +21,6 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -56,7 +66,6 @@
     <style>
       i.mysize {
         font-size: 6em;
-
         color: #fff;
       }
     </style>
@@ -64,21 +73,19 @@
 
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:partials/_navbar.php -->
 
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="././sales_dash.html"
+          <a class="navbar-brand brand-logo mr-5" href="./admin_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
-
-          <a class="navbar-brand brand-logo-mini" href="././sales_dash.html"
+          <a class="navbar-brand brand-logo-mini" href="./admin_dash.php"
             ><img src="../images/logo-mini.svg" alt="logo"
           /></a>
         </div>
-
         <div
           class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
         >
@@ -95,34 +102,108 @@
       <!-- partial -->
 
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:partials/_settings-panel.php -->
+
+        <div class="theme-setting-wrapper">
+          <div id="settings-trigger"><i class="ti-settings"></i></div>
+
+          <div id="theme-settings" class="settings-panel">
+            <i class="settings-close ti-close"></i>
+
+            <p class="settings-heading">SIDEBAR SKINS</p>
+
+            <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+              <div class="img-ss rounded-circle bg-light border mr-3"></div>
+              Light
+            </div>
+
+            <div class="sidebar-bg-options" id="sidebar-dark-theme">
+              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+              Dark
+            </div>
+
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+
+            <div class="color-tiles mx-0 px-4">
+              <div class="tiles success"></div>
+
+              <div class="tiles warning"></div>
+
+              <div class="tiles danger"></div>
+
+              <div class="tiles info"></div>
+
+              <div class="tiles dark"></div>
+
+              <div class="tiles default"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="right-sidebar" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+
+          <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="todo-tab"
+                data-toggle="tab"
+                href="#todo-section"
+                role="tab"
+                aria-controls="todo-section"
+                aria-expanded="true"
+                >TO DO LIST</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="chats-tab"
+                data-toggle="tab"
+                href="#chats-section"
+                role="tab"
+                aria-controls="chats-section"
+                >CHATS</a
+              >
+            </li>
+          </ul>
+        </div>
 
         <!-- partial -->
 
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:partials/_sidebar.php -->
 
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="././sales_dash.html">
+              <a class="nav-link" href="./admin_dash.php">
                 <i class="icon-grid menu-icon"></i>
-
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link" href="./Checkout.html">
-                <i class="material-icons">shopping_cart</i>
-
-                <span class="menu-title">Checkout</span>
+              <a class="nav-link" href="./Stocks.php">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Stocks</span>
               </a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link" href="../index.html">
+              <a class="nav-link" href="./Vendors.php">
+                <i class="material-icons">supervisor_account </i>
+                <span class="menu-title">Vendors</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./Accounts.php">
+                <i class="material-icons">currency_rupee</i>
+                <span class="menu-title">Accounts</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../index.php">
                 <i class="material-icons">logout </i>
-
                 <span class="menu-title"> Logout</span>
               </a>
             </li>
@@ -143,51 +224,48 @@
                     <div
                       style="
                         display: flex;
-
                         justify-content: center;
-
                         align-items: center;
-
                         width: 100%;
                       "
                     >
-                      <h4 class="card-title">Checkout For An Item</h4>
+                      <h4 class="card-title">Vendor Details</h4>
                     </div>
 
                     <p class="card-description"></p>
-
                     <form
                       class="forms-sample"
                       method="POST"
-                      action="././sales_dash.html"
+                      
                     >
-                      <hr />
                       <div class="form-group row">
                         <label
+
                           for="exampleInputUsername2"
                           class="col-sm-3 col-form-label"
-                          >Customer Name</label
+                          >Vendor name</label
                         >
-
                         <div class="col-sm-9">
                           <input
+                            name="vname"
+                            required
                             type="text"
                             class="form-control"
                             id="exampleInputUsername2"
-                            placeholder="Enter the name"
+                            placeholder="Enter the vendor name"
                           />
                         </div>
                       </div>
-
                       <div class="form-group row">
                         <label
                           for="exampleInputEmail2"
                           class="col-sm-3 col-form-label"
-                          >Customer Contact</label
+                          >Mobile no.</label
                         >
-
                         <div class="col-sm-9">
                           <input
+                            name="vmobile"
+                            required
                             type="text"
                             class="form-control"
                             id="exampleInputEmail2"
@@ -195,114 +273,54 @@
                           />
                         </div>
                       </div>
-
-                      <hr />
-
                       <div class="form-group row">
                         <label
                           for="exampleInputEmail2"
                           class="col-sm-3 col-form-label"
-                          >Item Name</label
+                          >Address</label
                         >
-
                         <div class="col-sm-9">
                           <input
+                          name="vaddress"
+                            required
                             type="text"
                             class="form-control"
                             id="exampleInputEmail2"
-                            placeholder="Enter the Item name"
+                            placeholder="Enter the Address"
                           />
                         </div>
                       </div>
-
                       <div class="form-group row">
                         <label
                           for="exampleInputEmail2"
                           class="col-sm-3 col-form-label"
-                          >Item Price</label
+                          >Identity Proof</label
                         >
-
                         <div class="col-sm-9">
                           <input
-                            type="number"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Enter the Item price"
-                          />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Item Quantity</label
-                        >
-
-                        <div class="col-sm-9">
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Enter the Item quatity"
-                          />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >GST Number</label
-                        >
-
-                        <div class="col-sm-9">
-                          <input
+                          name="iproof"
+                            required
                             type="text"
                             class="form-control"
                             id="exampleInputEmail2"
-                            placeholder="Enter the GST NUMBER"
+                            placeholder="Enter Adhaar no./PAN no."
                           />
                         </div>
                       </div>
-
-                      <hr />
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Salesperson Name</label
-                        >
-
-                        <div class="col-sm-9">
-                          <select class="form-control" id="exampleSelectGender">
-                            <option>1pc</option>
-
-                            <option>2pc</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <hr />
 
                       <div
                         class="form-check form-check-flat form-check-primary"
                       ></div>
-
                       <div
                         style="
                           width: 100%;
-
                           display: flex;
-
                           justify-content: center;
-
                           align-items: center;
                         "
                       >
-                        <button type="submit" class="btn btn-primary mr-2">
-                          CHECKOUT
+                        <button type="submit" class="btn btn-primary mr-2" name="vadd">
+                          ADD
                         </button>
                       </div>
                     </form>
@@ -314,7 +332,7 @@
 
           <!-- content-wrapper ends -->
 
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:partials/_footer.php -->
 
           <footer class="footer">
             <div
@@ -323,11 +341,9 @@
               <span
                 class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
                 >Hand-crafted & made with
-
                 <i class="ti-heart text-danger ml-1"></i
               ></span>
             </div>
-
             <div
               class="d-sm-flex justify-content-center justify-content-sm-between"
             >
@@ -380,3 +396,38 @@
     <script src="../js/Chart.roundedBarCharts.js"></script>
   </body>
 </html>
+<?php
+if(isset($_POST['vadd'])){
+  $name = $_POST['vname'];
+  $mobile = $_POST['vmobile'];
+  $address = $_POST['vaddress'];
+  $identityp = $_POST['iproof'];
+
+  $insert =mysqli_query($conn,"insert into `vendor`(`name`,`mobile_no`,`address`,`identity_proof`) values('$name','$mobile','$address','$identityp')");
+  
+  if($insert){
+   echo "<script>alert('Vendor added')</script>";
+   echo "<script>window.open('./Vendors.php','_self')</script>";
+  }
+
+  else{
+    echo "<script>alert('Vendor not added')</script>";
+
+  }
+
+}
+
+
+if(isset($_POST['logoutt'])){
+  session_start();
+ // session_unset($_SESSION['ad']);
+
+  unset($_SESSION['admin_session']);
+  session_destroy();
+  echo "<script>window.open('../index.php','_self')</script>";
+  //exit();
+}
+
+}
+
+?>

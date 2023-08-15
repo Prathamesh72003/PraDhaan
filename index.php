@@ -41,7 +41,7 @@
                   <div class="mt-3">
                     <a
                       class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
-                      href="./pages/samples/login.html"
+                      href="./pages/samples/login.php"
                       >Admin</a
                     >
                   </div>
@@ -54,7 +54,7 @@
                     <a
                       style="background-color: #78a0fe"
                       class="btn btn-block btn-lg font-weight-medium auth-form-btn"
-                      href="./pages/samples/sales_login.html"
+                      href="./pages/samples/sales_login.php"
                       >Salesperson</a
                     >
                   </div>
