@@ -1,3 +1,13 @@
+<?php
+include "../db.php";
+session_start();
+if (!isset($_SESSION["admin_session"])) {
+  header("Location: ../index.php");
+
+} else {
+
+  ?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -160,344 +170,89 @@
             </div>
 
             <div class="row">
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card">
-                  <div class="card-body">
+
+            <?php
+                
+                $query = mysqli_query($conn, "select * from vendor");
+                while ($row = mysqli_fetch_array($query)) {
+                  $id = $row['id'];
+                  $name = $row['name'];
+                  $mobile = $row['mobile_no'];
+                  $address = $row['address'];
+                  $identity_proof = $row['identity_proof'];
+
+                ?>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card" style="margin-left=10px">
+                  <div class="card-body" style="border: 1px solid grey; border-radius: 20px">
                     <div class="table-responsive">
                       <table class="table table-borderless">
-                        <thead>
-                          <tr>
-                            <th class="pl-0 pb-2 border-bottom">Places</th>
-
-                            <th class="border-bottom pb-2">Orders</th>
-
-                            <th class="border-bottom pb-2">Users</th>
-                          </tr>
-                        </thead>
+                        
 
                         <tbody>
                           <tr>
-                            <td class="pl-0">Kentucky</td>
-
-                            <td>
+                            <td class="pl-0">Sr. No</td>
+                            <td style="background-color:#fff; border-top-left-radius: 10px;border-top-right-radius: 10px">
                               <p class="mb-0">
-                                <span class="font-weight-bold mr-2">65</span
-                                >(2.15%)
+                                <span class="font-weight-bold mr-2"><?= $id ?></span
+                                >
                               </p>
                             </td>
-
-                            <td class="text-muted">65</td>
                           </tr>
 
                           <tr>
-                            <td class="pl-0">Ohio</td>
+                            <td class="pl-0">Name</td>
 
-                            <td>
+                            <td style="background-color:#fff">
                               <p class="mb-0">
-                                <span class="font-weight-bold mr-2">54</span
-                                >(3.25%)
+                                <span class="font-weight-bold mr-2"><?= $name ?></span
+                                >
                               </p>
                             </td>
-
-                            <td class="text-muted">51</td>
                           </tr>
 
                           <tr>
-                            <td class="pl-0">Nevada</td>
+                            <td class="pl-0">Mobile</td>
 
-                            <td>
+                            <td style="background-color:#fff">
                               <p class="mb-0">
-                                <span class="font-weight-bold mr-2">22</span
-                                >(2.22%)
+                                <span class="font-weight-bold mr-2"><?= $mobile ?></span
+                                >
                               </p>
                             </td>
-
-                            <td class="text-muted">32</td>
                           </tr>
 
                           <tr>
-                            <td class="pl-0">North Carolina</td>
+                            <td class="pl-0">Address</td>
 
-                            <td>
+                            <td style="background-color:#fff">
                               <p class="mb-0">
-                                <span class="font-weight-bold mr-2">46</span
-                                >(3.27%)
+                                <span class="font-weight-bold mr-2"><?= $address ?></span
+                                >
                               </p>
                             </td>
-
-                            <td class="text-muted">15</td>
                           </tr>
 
                           <tr>
-                            <td class="pl-0">Montana</td>
+                            <td class="pl-0">Identity Proof</td>
 
-                            <td>
+                            <td style="background-color:#fff">
                               <p class="mb-0">
-                                <span class="font-weight-bold mr-2">17</span
-                                >(1.25%)
+                                <span class="font-weight-bold mr-2"><?= $identity_proof ?></span
+                                >
                               </p>
                             </td>
 
-                            <td class="text-muted">25</td>
                           </tr>
+                  
 
-                          <tr>
-                            <td class="pl-0">Nevada</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">52</span
-                                >(3.11%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">71</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0 pb-0">Louisiana</td>
-
-                            <td class="pb-0">
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">25</span
-                                >(1.32%)
-                              </p>
-                            </td>
-
-                            <td class="pb-0">14</td>
-                          </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-borderless">
-                        <thead>
-                          <tr>
-                            <th class="pl-0 pb-2 border-bottom">Places</th>
-
-                            <th class="border-bottom pb-2">Orders</th>
-
-                            <th class="border-bottom pb-2">Users</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          <tr>
-                            <td class="pl-0">Kentucky</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">65</span
-                                >(2.15%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">65</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Ohio</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">54</span
-                                >(3.25%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">51</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Nevada</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">22</span
-                                >(2.22%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">32</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">North Carolina</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">46</span
-                                >(3.27%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">15</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Montana</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">17</span
-                                >(1.25%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">25</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Nevada</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">52</span
-                                >(3.11%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">71</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0 pb-0">Louisiana</td>
-
-                            <td class="pb-0">
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">25</span
-                                >(1.32%)
-                              </p>
-                            </td>
-
-                            <td class="pb-0">14</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-borderless">
-                        <thead>
-                          <tr>
-                            <th class="pl-0 pb-2 border-bottom">Places</th>
-
-                            <th class="border-bottom pb-2">Orders</th>
-
-                            <th class="border-bottom pb-2">Users</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          <tr>
-                            <td class="pl-0">Kentucky</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">65</span
-                                >(2.15%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">65</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Ohio</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">54</span
-                                >(3.25%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">51</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Nevada</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">22</span
-                                >(2.22%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">32</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">North Carolina</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">46</span
-                                >(3.27%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">15</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Montana</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">17</span
-                                >(1.25%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">25</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Nevada</td>
-
-                            <td>
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">52</span
-                                >(3.11%)
-                              </p>
-                            </td>
-
-                            <td class="text-muted">71</td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0 pb-0">Louisiana</td>
-
-                            <td class="pb-0">
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2">25</span
-                                >(1.32%)
-                              </p>
-                            </td>
-
-                            <td class="pb-0">14</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <?php } ?>
             </div>
 
             <div style="width: 100%; text-align: right">
@@ -580,3 +335,18 @@
     <script src="../js/Chart.roundedBarCharts.js"></script>
   </body>
 </html>
+<?php
+
+if (isset($_POST['logoutt'])) {
+  session_start();
+  // session_unset($_SESSION['ad']);
+
+  unset($_SESSION['admin_session']);
+  session_destroy();
+  echo "<script>window.open('../index.php','_self')</script>";
+  //exit();
+}
+
+}
+
+?>

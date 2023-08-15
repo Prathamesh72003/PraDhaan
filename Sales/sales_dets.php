@@ -1,3 +1,13 @@
+<?php
+include "../db.php";
+session_start();
+if(!isset($_SESSION["sales_session"])){
+  header("Location: ../index.php");
+}
+else{
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -148,7 +158,6 @@
                     <form
                       class="forms-sample"
                       method="POST"
-                      action="./sales_dash.php"
                     >
                       <div class="form-group row">
                         <label
@@ -158,6 +167,7 @@
                         >
                         <div class="col-sm-9">
                           <input
+                            name="sname"
                             type="text"
                             class="form-control"
                             id="exampleInputUsername2"
@@ -173,6 +183,8 @@
                         >
                         <div class="col-sm-9">
                           <input
+                            name="smobile"
+                            required
                             type="text"
                             class="form-control"
                             id="exampleInputEmail2"
@@ -188,6 +200,8 @@
                         >
                         <div class="col-sm-9">
                           <input
+                          name="saddress"
+                          required
                             type="text"
                             class="form-control"
                             id="exampleInputEmail2"
@@ -203,6 +217,8 @@
                         >
                         <div class="col-sm-9">
                           <input
+                          name="sidentity"
+                          required
                             type="text"
                             class="form-control"
                             id="exampleInputEmail2"
@@ -222,7 +238,7 @@
                           align-items: center;
                         "
                       >
-                        <button type="submit" class="btn btn-primary mr-2">
+                        <button type="submit" class="btn btn-primary mr-2" name="sbtn">
                           ADD
                         </button>
                       </div>
@@ -299,3 +315,37 @@
     <script src="../js/Chart.roundedBarCharts.js"></script>
   </body>
 </html>
+<?php
+
+if(isset($_POST['sbtn'])){
+  $sname = $_POST['sname'];
+  $smobile = $_POST['smobile'];
+  $saddress = $_POST['saddress'];
+  $sidentity = $_POST['sidentity'];
+
+  $insert = mysqli_query($conn,"insert into `sales_person`(`name`,`mobile_no`,`address`,`identity_proof`) values('$sname','$smobile','$saddress','$sidentity')");
+  
+  if($insert){
+  echo "<script>alert('Sales Person added!')</script>";
+  echo "<script>window.open('./sales_dash.php','_self')</script>";
+  }
+
+  else{
+    echo "<script>alert('Sales Person not added')</script>";
+
+  }
+
+}  
+
+
+if(isset($_POST['logoutt'])){
+  session_start();
+   unset($_SESSION['sales_session']);
+   session_destroy();
+   echo "<script>window.open('../index.php','_self')</script>";
+   //exit();
+}
+
+}
+
+?>

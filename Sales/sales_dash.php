@@ -306,8 +306,6 @@ else{
 <?php
 if(isset($_POST['logoutt'])){
   session_start();
-  // session_unset($_SESSION['ad']);
- 
    unset($_SESSION['sales_session']);
    session_destroy();
    echo "<script>window.open('../index.php','_self')</script>";
