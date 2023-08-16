@@ -168,6 +168,7 @@ else{
                         <div class="col-sm-9">
                           <input
                             name="sname"
+                            required
                             type="text"
                             class="form-control"
                             id="exampleInputUsername2"
@@ -315,26 +316,27 @@ else{
     <script src="../js/Chart.roundedBarCharts.js"></script>
   </body>
 </html>
+
+
 <?php
 
 if(isset($_POST['sbtn'])){
+  
   $sname = $_POST['sname'];
   $smobile = $_POST['smobile'];
   $saddress = $_POST['saddress'];
   $sidentity = $_POST['sidentity'];
+  $items_sold = 0;
 
-  $insert = mysqli_query($conn,"insert into `sales_person`(`name`,`mobile_no`,`address`,`identity_proof`) values('$sname','$smobile','$saddress','$sidentity')");
-  
+  $insert =mysqli_query($conn,"insert into `salesperson`(`name`,`mobile_no`,`address`,`identity_proof`,`items_sold`) values('$sname','$smobile','$saddress','$sidentity','$items_sold')");
+
   if($insert){
   echo "<script>alert('Sales Person added!')</script>";
   echo "<script>window.open('./sales_dash.php','_self')</script>";
   }
-
   else{
     echo "<script>alert('Sales Person not added')</script>";
-
   }
-
 }  
 
 

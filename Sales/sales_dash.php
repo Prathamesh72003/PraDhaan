@@ -169,67 +169,34 @@ else{
                 <div class="card">
                   <div class="card-body">
                     <p class="card-title">Sales List</p>
+                    <hr>
 
                     <ul class="icon-data-list">
+                      
+                     <?php 
+                     
+                      $query = mysqli_query($conn,"SELECT * FROM `salesperson` ORDER BY `items_sold` DESC");
+                      while ($row = mysqli_fetch_array($query)) {
+                        $name = $row['name'];
+                        $itemsold = $row['items_sold'];
+                      
+                      ?> 
                       <li>
                         <div class="d-flex">
-                          <img src="../images/faces/face1.jpg" alt="user" />
+                          <img src="../images/faces/defaultfacerec.png" alt="user" />
 
                           <div>
-                            <p class="text-info mb-1">SalesP 1</p>
+                            <p class="text-info mb-1"><?= $name ?></p>
 
-                            <p class="mb-0">No. of Items sold:50pc</p>
+                            <p class="mb-0">No. of Items sold: <?= $itemsold ?></p>
                           </div>
                         </div>
                       </li>
+                      <hr>
 
-                      <li>
-                        <div class="d-flex">
-                          <img src="../images/faces/face2.jpg" alt="user" />
-
-                          <div>
-                            <p class="text-info mb-1">SalesP 2</p>
-
-                            <p class="mb-0">No. of Items sold:</p>
-                          </div>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div class="d-flex">
-                          <img src="../images/faces/face3.jpg" alt="user" />
-
-                          <div>
-                            <p class="text-info mb-1">SalesP 3</p>
-
-                            <p class="mb-0">No. of Items sold:</p>
-                          </div>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div class="d-flex">
-                          <img src="../images/faces/face4.jpg" alt="user" />
-
-                          <div>
-                            <p class="text-info mb-1">SalesP 4</p>
-
-                            <p class="mb-0">No. of Items sold:</p>
-                          </div>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div class="d-flex">
-                          <img src="../images/faces/face5.jpg" alt="user" />
-
-                          <div>
-                            <p class="text-info mb-1">SalesP 4</p>
-
-                            <p class="mb-0">No. of Items sold:</p>
-                          </div>
-                        </div>
-                      </li>
+                      <?php
+                        }
+                      ?>
                     </ul>
                   </div>
                 </div>
