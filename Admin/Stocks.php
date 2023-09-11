@@ -405,6 +405,7 @@ if (!isset($_SESSION["admin_session"])) {
                   $category = $row['category'];
                   $vendor = $row['vendor'];
                   $price = $row['price'];
+                  $ddate = $row['date'];
                 
 
                 ?>
@@ -477,6 +478,17 @@ if (!isset($_SESSION["admin_session"])) {
                             <td style="background-color:#fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $price ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="pl-0">Date</td>
+
+                            <td style="background-color:#fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $ddate ?></span
                                 >
                               </p>
                             </td>

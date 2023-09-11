@@ -560,7 +560,9 @@ if (!isset($_SESSION["admin_session"])) {
     $vendor = $_POST['vendors'];
     $price = $_POST['price'];
 
-    $insert = mysqli_query($conn,"insert into `stock`(`item`,`quantity`,`category`,`vendor`,`price`) values('$item','$quantity','$category','$vendor','$price')");
+    $currentDateTime = date('Y-m-d H:i:s'); 
+
+    $insert = mysqli_query($conn, "INSERT INTO `stock`(`item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES ('$item', '$quantity', '$category', '$vendor', '$price', '$currentDateTime')");
     
     if($insert){
     echo "<script>alert('Stock added!')</script>";

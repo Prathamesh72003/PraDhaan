@@ -336,6 +336,7 @@ if(isset($_POST['sbtn'])){
   }
   else{
     echo "<script>alert('Sales Person not added')</script>";
+    echo "<script>console.log('Not done')</script>";
   }
 }  
 
