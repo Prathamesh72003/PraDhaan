@@ -2,7 +2,8 @@
 <?php
 $username = "root";
 $database = "gati";
-$servername ="localhost";
+//you'll need to add port number for this pc hehe
+$servername ="localhost:3307";
 $password = "";
 
 $conn = new mysqli($servername,$username,$password,$database);

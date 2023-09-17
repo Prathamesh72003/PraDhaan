@@ -194,7 +194,7 @@ if (!isset($_SESSION["admin_session"])) {
                   </div>
                 </form>
               </div>
-
+ <!-- to be removed -->
               <div class="list-wrapper px-3">
                 <ul class="d-flex flex-column-reverse todo-list">
                   <li>
@@ -319,6 +319,7 @@ if (!isset($_SESSION["admin_session"])) {
             <!-- chat tab ends -->
           </div>
         </div>
+        <!-- to be removed -->
 
         <!-- partial -->
 
@@ -330,6 +331,12 @@ if (!isset($_SESSION["admin_session"])) {
               <a class="nav-link" href="./admin_dash.php">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./insertProduct.php">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Insert an Item</span>
               </a>
             </li>
             <li class="nav-item">

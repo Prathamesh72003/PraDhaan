@@ -105,6 +105,12 @@ else{
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="./insertProduct.php">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Insert an Item</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="./Stocks.php">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Stocks</span>

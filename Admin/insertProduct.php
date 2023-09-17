@@ -404,6 +404,7 @@ if (!isset($_SESSION["admin_session"])) {
         <div class="main-panel">
           <div class="content-wrapper" style="width: 100%">
             <div class="row" style="justify-content: center; align-items: center">
+              
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
@@ -413,32 +414,57 @@ if (!isset($_SESSION["admin_session"])) {
                         align-items: center;
                         width: 100%;
                       ">
-                      <h4 class="card-title">Stock Entry</h4>
+                      <h4 class="card-title">Add The Product</h4>
                     </div>
 
                     <p class="card-description"></p>
                     <form class="forms-sample" method="POST">
                       <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Item</label>
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-9">
-                          <input name="itemname" required type="text" class="form-control" id="exampleInputUsername2"
+                          <input name="proname" required type="text" class="form-control" id="pronameid"
                             placeholder="Enter the item" />
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Quantity</label>
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">MRP</label>
                         <div class="col-sm-9">
-                          <input name="quantity" required type="text" class="form-control" id="exampleInputEmail2"
+                          <input name="mrp" required type="text" class="form-control" id="exampleInputEmail2"
                             placeholder="Enter the Quantity" />
                         </div>
                       </div>
+
+                      <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Sales price</label>
+                        <div class="col-sm-9">
+                          <input name="salesp" required type="text" class="form-control" id="exampleInputEmail2"
+                            placeholder="Enter the Quantity" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Unit</label>
+                        <div class="col-sm-9">
+                          <input name="unit" required type="text" class="form-control" id="exampleInputEmail2"
+                            placeholder="Enter the Quantity" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Brand</label>
+                        <div class="col-sm-9">
+                          <input name="brand" required type="text" class="form-control" id="exampleInputEmail2"
+                            placeholder="Enter the Quantity" />
+                        </div>
+                      </div>
+
                       <div class="form-group row">
                         <label for="exampleInputMobile" class="col-sm-3 col-form-label">Category</label>
                         <div class="col-sm-9">
-                          <select class="form-control" id="exampleSelectGender" name="category">
+                          <select class="form-control" id="categoryid" name="category">
                             <?php
-                            $vendor_query = mysqli_query($conn, "select * from category");
-                            while ($row = mysqli_fetch_array($vendor_query)) {
+                            $cat_query = mysqli_query($conn, "select * from category");
+                            while ($row = mysqli_fetch_array($cat_query)) {
                               $catname = $row['category_name'];
                               ?>
 
@@ -452,35 +478,12 @@ if (!isset($_SESSION["admin_session"])) {
                           </select>
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Vendors</label>
-
-
-                        <div class="col-sm-9">
-                          <select class="form-control" id="exampleSelectGender" name="vendors">
-                            <?php
-                            $vendor_query = mysqli_query($conn, "select * from vendor");
-                            while ($row = mysqli_fetch_array($vendor_query)) {
-                              $vname = $row['name'];
-
-
-                              ?>
-                              <option>
-                                <?= $vname ?>
-                              </option>
-
-                            <?php } ?>
-                          </select>
-
-                        </div>
-
-
-                      </div>
+                      
 
                       <div class="form-group row">
-                        <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Price</label>
+                        <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">GST</label>
                         <div class="col-sm-9">
-                          <input name="price" required type="text" class="form-control"
+                          <input name="gst" required type="text" class="form-control"
                             id="exampleInputConfirmPassword2" placeholder="Enter the Price
                              " />
                         </div>
@@ -492,7 +495,7 @@ if (!isset($_SESSION["admin_session"])) {
                           justify-content: center;
                           align-items: center;
                         ">
-                        <button type="submit" class="btn btn-primary mr-2" name="addstockbtn">
+                        <button type="button" class="btn btn-primary mr-2" name="genbarcode" id="genbarcodeid">
                           ADD
                         </button>
                       </div>
@@ -500,7 +503,47 @@ if (!isset($_SESSION["admin_session"])) {
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card" style="width: 100%">
+                  <div class="card-body">
+                    <div style="
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                      ">
+                      <h4 class="card-title">Barcode Of The Product</h4>
+                    </div>
+
+                    <p class="card-description"></p>
+                    <form class="forms-sample" method="POST">
+                      <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Barcode</label>
+                        <div class="col-sm-9">
+                          <input readonly name="barname" required type="text" class="form-control" id="barcodeid" />
+                        </div>
+                      </div>
+                    
+                    <div id='barcodeimg'>
+
+                    </div>
+
+                    <div style="display:flex; width: 100%; justify-content:center; align-items:center">
+                        <button type="submit" class="btn btn-primary mr-2" name="getbarcode">
+                        
+                          Generate
+                        </button>
+                            </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              
+            
             </div>
+            </div>
+                            </div>
           </div>
 
           <!-- content-wrapper ends -->
@@ -554,33 +597,46 @@ if (!isset($_SESSION["admin_session"])) {
     <script src="../js/dashboard.js"></script>
 
     <script src="../js/Chart.roundedBarCharts.js"></script>
+    <script>
+        $('#genbarcodeid').on('click',function(){
+            var item= $('#pronameid').val();
+            var category= $('#categoryid').val();
+            var globalid = item+category;
+            
+            $('#barcodeid').val(globalid);
+            var barcodetxt = $('#barcodeid').val();
+            var barcodeImage = '<center><img alt="testing" src="barcode.php?codetype=Code39&size=50&text=' + barcodetxt + '&print=true"/></center>';
+            $('#barcodeimg').html(barcodeImage);
+               });
+               
+    </script>
   </body>
 
   </html>
   <?php
 
-  if(isset($_POST['addstockbtn'])){
-    $item = $_POST['itemname'];
-    $quantity = $_POST['quantity'];
-    $category = $_POST['category'];
-    $vendor = $_POST['vendors'];
-    $price = $_POST['price'];
+if(isset($_POST['getbarcode'])){
+    $barcode = $_POST['barname'];
+   
 
-    $currentDateTime = date('Y-m-d H:i:s'); 
+    $result= mysqli_query($conn,"select id from stock order by id desc limit 1");
+     $globalid = 0;
+     
 
-    $insert = mysqli_query($conn, "INSERT INTO `stock`(`item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES ('$item', '$quantity', '$category', '$vendor', '$price', '$currentDateTime')");
+     if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $id = $row['id'];
+        $globalid=$id+1;
+       
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
     
-    if($insert){
-    echo "<script>alert('Stock added!')</script>";
-    echo "<script>window.open('./Stocks.php','_self')</script>";
-    }
+    $concat = $barcode.$globalid;
+    echo "<script>alert('ID: $concat')</script>";
 
-    else{
-      echo "<script>alert('Stocks not added')</script>";
 
-    }
-
-  }                     
+  }           
 
 
   if (isset($_POST['logoutt'])) {

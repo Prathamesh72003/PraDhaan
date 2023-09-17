@@ -175,7 +175,7 @@ else{
                       
                      <?php 
                      
-                      $query = mysqli_query($conn,"SELECT * FROM `salesperson` ORDER BY `items_sold` DESC");
+                      $query = mysqli_query($conn,"SELECT * FROM `sales_person` ORDER BY `items_sold` DESC");
                       while ($row = mysqli_fetch_array($query)) {
                         $name = $row['name'];
                         $itemsold = $row['items_sold'];
