@@ -409,7 +409,10 @@ if(isset($_POST['vadd'])){
   $address = $_POST['vaddress'];
   $identityp = $_POST['iproof'];
 
-  $insert =mysqli_query($conn,"insert into `vendor`(`name`,`mobile_no`,`address`,`identity_proof`) values('$name','$mobile','$address','$identityp')");
+  date_default_timezone_set('Asia/Kolkata'); 
+  $currentDateTime = date('Y-m-d H:i:s'); 
+
+  $insert =mysqli_query($conn,"insert into `vendor`(`name`,`mobile_no`,`address`,`identity_proof`,`date`) values('$name','$mobile','$address','$identityp','$currentDateTime')");
   
   if($insert){
    echo "<script>alert('Vendor added')</script>";

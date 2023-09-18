@@ -413,7 +413,7 @@ if (!isset($_SESSION["admin_session"])) {
                         align-items: center;
                         width: 100%;
                       ">
-                      <h4 class="card-title">Stock Entry</h4>
+                      <h4 class="card-title">New Stock Entry</h4>
                     </div>
 
                     <p class="card-description"></p>
@@ -450,6 +450,97 @@ if (!isset($_SESSION["admin_session"])) {
 
 
                           </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Vendors</label>
+
+
+                        <div class="col-sm-9">
+                          <select class="form-control" id="exampleSelectGender" name="vendors">
+                            <?php
+                            $vendor_query = mysqli_query($conn, "select * from vendor");
+                            while ($row = mysqli_fetch_array($vendor_query)) {
+                              $vname = $row['name'];
+
+
+                              ?>
+                              <option>
+                                <?= $vname ?>
+                              </option>
+
+                            <?php } ?>
+                          </select>
+
+                        </div>
+
+
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Price</label>
+                        <div class="col-sm-9">
+                          <input name="price" required type="text" class="form-control"
+                            id="exampleInputConfirmPassword2" placeholder="Enter the Price
+                             " />
+                        </div>
+                      </div>
+                      <div class="form-check form-check-flat form-check-primary"></div>
+                      <div style="
+                          width: 100%;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                        ">
+                        <button type="submit" class="btn btn-primary mr-2" name="addstockbtn">
+                          ADD
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card" style="width: 100%">
+                  <div class="card-body">
+                    <div style="
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                      ">
+                      <h4 class="card-title">Exsisting Stock Entry</h4>
+                    </div>
+
+                    <p class="card-description"></p>
+                    <form class="forms-sample" method="POST">
+                      
+                    <div class="form-group row">
+                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Item</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" id="dropitemid" name="dropitem">
+                            <?php
+                            $vendor_query = mysqli_query($conn, "select * from product");
+                            while ($row = mysqli_fetch_array($vendor_query)) {
+                              $name = $row['name'];
+                              ?>
+
+                              <option>
+                                <?= $name ?>
+                              </option>
+
+                            <?php } ?>
+
+
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Quantity</label>
+                        <div class="col-sm-9">
+                          <input name="exsistingquantity" required type="text" class="form-control" id="exsistingquantityid"
+                            placeholder="Enter the Quantity" />
                         </div>
                       </div>
                       <div class="form-group row">
@@ -566,6 +657,7 @@ if (!isset($_SESSION["admin_session"])) {
     $vendor = $_POST['vendors'];
     $price = $_POST['price'];
 
+    date_default_timezone_set('Asia/Kolkata'); 
     $currentDateTime = date('Y-m-d H:i:s'); 
 
     $insert = mysqli_query($conn, "INSERT INTO `stock`(`item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES ('$item', '$quantity', '$category', '$vendor', '$price', '$currentDateTime')");

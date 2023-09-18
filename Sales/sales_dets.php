@@ -326,10 +326,9 @@ if(isset($_POST['sbtn'])){
   $smobile = $_POST['smobile'];
   $saddress = $_POST['saddress'];
   $sidentity = $_POST['sidentity'];
-  $items_sold = 0;
 
-  $insert =mysqli_query($conn,"insert into `salesperson`(`name`,`mobile_no`,`address`,`identity_proof`,`items_sold`) values('$sname','$smobile','$saddress','$sidentity','$items_sold')");
-
+  $insert = mysqli_query($conn, "INSERT INTO sales_person (`name`, `mobile_number`, `address`, `identity_proof`, `items_sold`) VALUES ('$sname', '$smobile', '$saddress', '$sidentity', '0');");
+  
   if($insert){
   echo "<script>alert('Sales Person added!')</script>";
   echo "<script>window.open('./sales_dash.php','_self')</script>";

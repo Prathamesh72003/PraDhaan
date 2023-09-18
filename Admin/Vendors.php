@@ -186,6 +186,7 @@ if (!isset($_SESSION["admin_session"])) {
                   $mobile = $row['mobile_no'];
                   $address = $row['address'];
                   $identity_proof = $row['identity_proof'];
+                  $ddate = $row['date'];
 
                 ?>
               <div class="col-md-3 stretch-card grid-margin">
@@ -249,6 +250,16 @@ if (!isset($_SESSION["admin_session"])) {
                               </p>
                             </td>
 
+                          </tr>
+                          <tr>
+                            <td class="pl-0">Date</td>
+
+                            <td style="background-color:#fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $ddate ?></span
+                                >
+                              </p>
+                            </td>
                           </tr>
                   
 
