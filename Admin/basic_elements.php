@@ -459,7 +459,7 @@ if (!isset($_SESSION["admin_session"])) {
                         <div class="col-sm-9">
                           <select class="form-control" id="exampleSelectGender" name="vendors">
                             <?php
-                            $vendor_query = mysqli_query($conn, "select * from vendor");
+                            $vendor_query = mysqli_query($conn, "select * from vendor where active=1");
                             while ($row = mysqli_fetch_array($vendor_query)) {
                               $vname = $row['name'];
 
@@ -550,7 +550,7 @@ if (!isset($_SESSION["admin_session"])) {
                         <div class="col-sm-9">
                           <select class="form-control" id="exampleSelectGender" name="vendors">
                             <?php
-                            $vendor_query = mysqli_query($conn, "select * from vendor");
+                            $vendor_query = mysqli_query($conn, "select * from vendor where active=1");
                             while ($row = mysqli_fetch_array($vendor_query)) {
                               $vname = $row['name'];
 

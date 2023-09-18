@@ -187,11 +187,18 @@ if (!isset($_SESSION["admin_session"])) {
                   $address = $row['address'];
                   $identity_proof = $row['identity_proof'];
                   $ddate = $row['date'];
+                  $value = $row['active'];
+
+                  if ($value == '1') {
+                    $color = '#b5dfb5';
+                } elseif ($value == '0') {
+                    $color = '#e79494';
+                }
 
                 ?>
               <div class="col-md-3 stretch-card grid-margin">
-                <div class="card" style="margin-left=10px">
-                  <div class="card-body" style="border: 1px solid grey; border-radius: 20px">
+                <div class="card" style="margin-left=10px;">
+                  <div class="card-body" style="border: 1px solid grey; border-radius: 20px;background-color: <?php echo $color; ?>">
                     <div class="table-responsive">
                       <table class="table table-borderless">
                         
@@ -199,7 +206,7 @@ if (!isset($_SESSION["admin_session"])) {
                         <tbody>
                           <tr>
                             <td class="pl-0">Sr. No</td>
-                            <td style="background-color:#fff; border-top-left-radius: 10px;border-top-right-radius: 10px">
+                            <td style="background-color: <?php echo $color; ?> border-top-left-radius: 10px;border-top-right-radius: 10px">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $id ?></span
                                 >
@@ -210,7 +217,7 @@ if (!isset($_SESSION["admin_session"])) {
                           <tr>
                             <td class="pl-0">Name</td>
 
-                            <td style="background-color:#fff">
+                            <td style="background-color: <?php echo $color; ?>">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $name ?></span
                                 >
@@ -221,7 +228,7 @@ if (!isset($_SESSION["admin_session"])) {
                           <tr>
                             <td class="pl-0">Mobile</td>
 
-                            <td style="background-color:#fff">
+                            <td style="background-color: <?php echo $color; ?>">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $mobile ?></span
                                 >
@@ -232,7 +239,7 @@ if (!isset($_SESSION["admin_session"])) {
                           <tr>
                             <td class="pl-0">Address</td>
 
-                            <td style="background-color:#fff">
+                            <td style="background-color: <?php echo $color; ?>">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $address ?></span
                                 >
@@ -243,7 +250,7 @@ if (!isset($_SESSION["admin_session"])) {
                           <tr>
                             <td class="pl-0">Identity Proof</td>
 
-                            <td style="background-color:#fff">
+                            <td style="background-color: <?php echo $color; ?>">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $identity_proof ?></span
                                 >
@@ -254,7 +261,7 @@ if (!isset($_SESSION["admin_session"])) {
                           <tr>
                             <td class="pl-0">Date</td>
 
-                            <td style="background-color:#fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
+                            <td style="background-color: <?php echo $color; ?> border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
                               <p class="mb-0">
                                 <span class="font-weight-bold mr-2"><?= $ddate ?></span
                                 >
