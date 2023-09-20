@@ -212,9 +212,17 @@ else{
 
                         <div class="col-sm-9">
                           <select class="form-control" id="exampleSelectGender">
-                            <option>1pc</option>
+                          <?php
+                            $sales_query = mysqli_query($conn, "select * from sales_person");
+                            while ($row = mysqli_fetch_array($sales_query)) {
+                              $name = $row['name'];
+                              ?>
 
-                            <option>2pc</option>
+                              <option>
+                                <?= $name ?>
+                              </option>
+
+                            <?php } ?>
                           </select>
                         </div>
                       </div>
@@ -424,19 +432,7 @@ else{
                         <tbody id="new" >
                          
                         </tbody>
-                        <tr>
-                           <td> </td>
-                           <td> </td>
-                           <td> </td>
-                           <td class="text-right text-dark" >
-                                <h5><strong>Sub Total:  ₹ </strong></h5>
-                                <p><strong>Tax (5%) : ₹ </strong></p>
-                           </td>
-                           <td class="text-center text-dark" >
-                              <h5> <strong><span id="subTotal"></strong></h5>
-                              <h5> <strong><span id="taxAmount"></strong></h5>
-                           </td>
-                        </tr>
+                        
                         <tr>
                            <td> </td>
                            <td> </td>
@@ -838,8 +834,7 @@ function remove_data(r){
             });
              $('#subTotal').text(total);
               
-            // Code for calculate tax of Subtoal 5% Tax Applied
-              var Tax = (total * 5) / 100;
+              var Tax = (total * 1) / 1;
               $('#taxAmount').text(Tax.toFixed(2));
 
              // Code for Total Payment Amount
@@ -848,7 +843,7 @@ function remove_data(r){
              var taxAmount = $('#taxAmount').text();
 
              var totalPayment = parseFloat(Subtotal) + parseFloat(taxAmount);
-             $('#totalPayment').text(totalPayment.toFixed(2)); // Showing using ID 
+             $('#totalPayment').text(total.toFixed(2));
        
          });
          count++;

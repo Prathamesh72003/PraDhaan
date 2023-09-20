@@ -413,103 +413,7 @@ if (!isset($_SESSION["admin_session"])) {
                         align-items: center;
                         width: 100%;
                       ">
-                      <h4 class="card-title">New Stock Entry</h4>
-                    </div>
-
-                    <p class="card-description"></p>
-                    <form class="forms-sample" method="POST">
-                      <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Item</label>
-                        <div class="col-sm-9">
-                          <input name="itemname" required type="text" class="form-control" id="exampleInputUsername2"
-                            placeholder="Enter the item" />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Quantity</label>
-                        <div class="col-sm-9">
-                          <input name="quantity" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Quantity" />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Category</label>
-                        <div class="col-sm-9">
-                          <select class="form-control" id="exampleSelectGender" name="category">
-                            <?php
-                            $vendor_query = mysqli_query($conn, "select * from category");
-                            while ($row = mysqli_fetch_array($vendor_query)) {
-                              $catname = $row['category_name'];
-                              ?>
-
-                              <option>
-                                <?= $catname ?>
-                              </option>
-
-                            <?php } ?>
-
-
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Vendors</label>
-
-
-                        <div class="col-sm-9">
-                          <select class="form-control" id="exampleSelectGender" name="vendors">
-                            <?php
-                            $vendor_query = mysqli_query($conn, "select * from vendor where active=1");
-                            while ($row = mysqli_fetch_array($vendor_query)) {
-                              $vname = $row['name'];
-
-
-                              ?>
-                              <option>
-                                <?= $vname ?>
-                              </option>
-
-                            <?php } ?>
-                          </select>
-
-                        </div>
-
-
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Price</label>
-                        <div class="col-sm-9">
-                          <input name="price" required type="text" class="form-control"
-                            id="exampleInputConfirmPassword2" placeholder="Enter the Price
-                             " />
-                        </div>
-                      </div>
-                      <div class="form-check form-check-flat form-check-primary"></div>
-                      <div style="
-                          width: 100%;
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        ">
-                        <button type="submit" class="btn btn-primary mr-2" name="addstockbtn">
-                          ADD
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card" style="width: 100%">
-                  <div class="card-body">
-                    <div style="
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        width: 100%;
-                      ">
-                      <h4 class="card-title">Exsisting Stock Entry</h4>
+                      <h4 class="card-title">Stock Entry</h4>
                     </div>
 
                     <p class="card-description"></p>
@@ -542,7 +446,8 @@ if (!isset($_SESSION["admin_session"])) {
                           <input name="exsistingquantity" required type="text" class="form-control" id="exsistingquantityid"
                             placeholder="Enter the Quantity" />
                         </div>
-                      </div>
+                      </div>                      
+
                       <div class="form-group row">
                         <label for="exampleInputMobile" class="col-sm-3 col-form-label">Vendors</label>
 
@@ -651,25 +556,44 @@ if (!isset($_SESSION["admin_session"])) {
   <?php
 
   if(isset($_POST['addstockbtn'])){
-    $item = $_POST['itemname'];
-    $quantity = $_POST['quantity'];
-    $category = $_POST['category'];
+    $item = $_POST['dropitem'];
+    $quantity = $_POST['exsistingquantity'];
     $vendor = $_POST['vendors'];
     $price = $_POST['price'];
+    $category = "";
+    $category_name = "";
+
+    $fetch_query = mysqli_query($conn, "SELECT * FROM product WHERE name='$name'");
+    while ($row = mysqli_fetch_array($fetch_query)) {
+      $name = $row['name'];
+      $category = $row['category'];
+    }
+
+    $fetch_cat_name = mysqli_query($conn, "SELECT * FROM category WHERE id='$category'");
+    while ($row = mysqli_fetch_array($fetch_cat_name)) {
+      $category_name = $row['category_name'];
+    }
 
     date_default_timezone_set('Asia/Kolkata'); 
     $currentDateTime = date('Y-m-d H:i:s'); 
 
-    $insert = mysqli_query($conn, "INSERT INTO `stock`(`item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES ('$item', '$quantity', '$category', '$vendor', '$price', '$currentDateTime')");
-    
+    $insert = mysqli_query($conn, "INSERT INTO `stock`(`item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES ('$item', '$quantity', '$category_name', '$vendor', '$price', '$currentDateTime')");
+    $sql = "UPDATE product SET unit = unit + $quantity WHERE name = '$item'"; 
+    if ($conn->query($sql) === TRUE) 
+    { 
+      echo "Record updated successfully"; 
+    } 
+    else 
+    { 
+      echo "Error updating record: " . $conn->error; 
+    }
+
     if($insert){
     echo "<script>alert('Stock added!')</script>";
     echo "<script>window.open('./Stocks.php','_self')</script>";
     }
-
     else{
       echo "<script>alert('Stocks not added')</script>";
-
     }
 
   }                     
