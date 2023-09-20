@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 11, 2023 at 09:08 PM
+-- Generation Time: Sep 20, 2023 at 07:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -86,7 +86,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `mrp`, `sale_price`, `unit`, `brand`, `category`, `bar_code`, `cgst`, `sgst`, `status`, `created`) VALUES
-(1, 'NATH', 300.000, 250.000, 100.000, 'LOCALBRAND', '1', '8901277017437', 0.00, 0.00, '1', '2023-09-09 09:55:35');
+(1, 'NATH', 300.000, 250.000, 130.000, 'LOCALBRAND', '1', '8901277017437', 0.00, 0.00, '1', '2023-09-09 09:55:35'),
+(2, 'JHUMKA', 400.000, 350.000, 440.000, 'Lara', '2', 'JHUMKA', 0.00, 0.00, '1', '2023-09-18 15:28:20');
 
 -- --------------------------------------------------------
 
@@ -114,12 +115,21 @@ INSERT INTO `sales` (`id`, `name`, `password`) VALUES
 --
 
 CREATE TABLE `sales_person` (
-  `id` int(255) NOT NULL,
-  `name` longtext NOT NULL,
-  `mobile_no` int(15) NOT NULL,
-  `address` longtext NOT NULL,
-  `identity_proof` longtext NOT NULL
+  `id` int(11) NOT NULL,
+  `name` longtext DEFAULT NULL,
+  `mobile_number` longtext DEFAULT NULL,
+  `address` longtext DEFAULT NULL,
+  `identity_proof` longtext DEFAULT NULL,
+  `items_sold` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sales_person`
+--
+
+INSERT INTO `sales_person` (`id`, `name`, `mobile_number`, `address`, `identity_proof`, `items_sold`) VALUES
+(1, 'Prathameshhhh', '78430877777', 'Flat 61,E2 Building,Green Acre Society, Bibwewadi', '1234565789', '0'),
+(2, 'Dhanashreeee', '8208143115', 'Punee', '9876543218928', '5');
 
 -- --------------------------------------------------------
 
@@ -142,7 +152,8 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id`, `item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES
-(1, 'Jhumka', 20, 'earrings', 'vendorA', 5000, '2023-09-09 09:51:17');
+(1, 'JHUMKA', 20, 'earrings', 'VendorWithDate', 5000, '2023-09-20 20:30:17'),
+(2, 'JHUMKA', 40, 'earrings', 'VendorWithDate', 5000, '2023-09-20 20:30:55');
 
 -- --------------------------------------------------------
 
@@ -153,19 +164,24 @@ INSERT INTO `stock` (`id`, `item`, `quantity`, `category`, `vendor`, `price`, `d
 CREATE TABLE `vendor` (
   `id` int(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `mobile_no` int(15) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `identity_proof` int(30) NOT NULL
+  `mobile_no` bigint(15) NOT NULL,
+  `address` longtext NOT NULL,
+  `identity_proof` longtext NOT NULL,
+  `active` longtext NOT NULL,
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vendor`
 --
 
-INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `identity_proof`) VALUES
-(1, 'vendorA', 2147483647, 'pune', 234567890),
-(2, 'vendorB', 2147483647, 'pune', 124567893),
-(3, 'vendorC', 2147483647, 'dhule', 2147483647);
+INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `identity_proof`, `active`, `date`) VALUES
+(1, 'vendorA', 2147483647, 'pune', '234567890', '1', '2023-09-09 09:51:17'),
+(2, 'vendorB', 2147483647, 'pune', '124567893', '1', '2023-09-09 09:51:17'),
+(3, 'vendorC', 2147483647, 'dhule', '2147483647', '0', '2023-09-09 09:51:17'),
+(4, 'VendorWithDate', 8919201012, 'pune', '121212121212', '1', '2023-09-18 15:54:35'),
+(5, 'VendorWithDate2', 8919201012, 'pune', '121212121212111111', '0', '2023-09-18 16:09:42'),
+(6, 'VendorWithProperTime', 9012311111, 'pune', '121212121212', '1', '2023-09-18 19:46:36');
 
 --
 -- Indexes for dumped tables
@@ -233,7 +249,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -245,19 +261,19 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `sales_person`
 --
 ALTER TABLE `sales_person`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vendor`
 --
 ALTER TABLE `vendor`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
