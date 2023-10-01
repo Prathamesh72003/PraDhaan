@@ -12,7 +12,7 @@ include "../../db.php"
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Skydash Admin</title>
+    <title>PraDhaan Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/feather/feather.css" />
     <link

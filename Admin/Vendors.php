@@ -25,7 +25,7 @@ if (!isset($_SESSION["admin_session"])) {
       rel="stylesheet"
     />
 
-    <title>Skydash Admin</title>
+    <title>PraDhaan Admin</title>
 
     <!-- plugins:css -->
 
@@ -129,12 +129,12 @@ if (!isset($_SESSION["admin_session"])) {
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>
                 <span class="menu-title">Accounts</span>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="../index.php">
                 <i class="material-icons">logout </i>

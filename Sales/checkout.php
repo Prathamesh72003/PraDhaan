@@ -169,7 +169,7 @@ else{
                       <hr />
                       <div class="form-group row">
                         <label
-                          for="exampleInputUsername2"
+                          for="customerName"
                           class="col-sm-3 col-form-label"
                           >Customer Name</label
                         >
@@ -178,7 +178,8 @@ else{
                           <input
                             type="text"
                             class="form-control"
-                            id="exampleInputUsername2"
+                            id="customerName"
+                            name="customerName"
                             placeholder="Enter the name"
                             required
                           />
@@ -187,7 +188,7 @@ else{
 
                       <div class="form-group row">
                         <label
-                          for="exampleInputEmail2"
+                          for="customerContact"
                           class="col-sm-3 col-form-label"
                           >Customer Contact</label
                         >
@@ -196,7 +197,8 @@ else{
                           <input
                             type="text"
                             class="form-control"
-                            id="exampleInputEmail2"
+                            id="customerContact"
+                            name="customerContact"
                             placeholder="Enter the Mobile Number"
                             required
                           />
@@ -205,13 +207,13 @@ else{
 
                       <div class="form-group row">
                         <label
-                          for="exampleInputEmail2"
+                          for="selectSales"
                           class="col-sm-3 col-form-label"
                           >Salesperson Name</label
                         >
 
                         <div class="col-sm-9">
-                          <select class="form-control" id="exampleSelectGender">
+                          <select class="form-control" id="selectSales" name="selectSales">
                           <?php
                             $sales_query = mysqli_query($conn, "select * from sales_person");
                             while ($row = mysqli_fetch_array($sales_query)) {
@@ -242,7 +244,7 @@ else{
                   <tbody>
                   <tr id="1">
                     <td>
-                      <input type="text" id="bar_code_1" required class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,1)" name="bar_code[]" />
+                      <input type="text" id="bar_code_1" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,1)" name="bar_code[]" />
                     </td>
                     <td>
                       <select name="name[]" id="name_1" class="form-control" onchange="get_detail_name(this.value,1)">
@@ -257,7 +259,7 @@ else{
                       <input type="text" id="alias_1" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail_alias(this.value,1)" name="alias[]" />
                     </td>
                     <td>
-                      <input type="text" required class="form-control" readonly id="mrp_1" name="mrp[]" />
+                      <input type="text" class="form-control" readonly id="mrp_1" name="mrp[]" />
                     </td>
                     <td>  
                       <input type="number" class="form-control" onkeyup="calculate_price(this.value,1)" step="0.001" id="quantity_1" name="quantity[]" />
@@ -266,7 +268,7 @@ else{
                       <input type="text" readonly class="form-control" id="av_quantity_1" name="av_quantity[]" />
                     </td>
                     <td>
-                      <input type="number" required class="form-control" onkeyup="get_quantity(this.value,1)" step="0.01" id="sale_price_1" name="sale_price[]" />
+                      <input type="number" class="form-control" onkeyup="get_quantity(this.value,1)" step="0.01" id="sale_price_1" name="sale_price[]" />
                       <input type="hidden" class="form-control" id="sale_price_org_1" name="sale_price_org[]" />
                       <input type="hidden" class="form-control" id="igst_1" name="igst[]" />
                     </td>
@@ -274,109 +276,6 @@ else{
                   </tbody>
                 </table>
 
-
-                      <!-- <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Barcode</label
-                        >
-
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Scan the product"
-                            onkeypress="return RestrictSpace()" onchange="get_detail(this.value,1)" name="bar_code[]"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Item Name</label
-                        >
-
-                        <div class="col-sm-9">
-                        <select class="form-control" name="name[]" id="name_1" onchange="get_detail_name(this.value,1)">
-                        <option value="">Choose Product</option>
-                        <?php $sqlP = $conn->query("SELECT * FROM product WHERE status = 1 ORDER BY name ASC");
-                        while($rowP = $sqlP->fetch_array()){?>
-                        <option value="<?php echo $rowP['name']?>"><?php echo $rowP['name'];?></option>
-                        <?php }?>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Item Price</label
-                        >
-
-                        <div class="col-sm-9">
-                          <input
-                            type="text" 
-                            required class="form-control" 
-                            readonly id="mrp_1" 
-                            name="mrp[]"
-                            placeholder="Enter the Item price"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Item Quantity</label
-                        >
-
-                        <div class="col-sm-9">
-                        <input 
-                          type="number" 
-                          class="form-control" 
-                          onkeyup="calculate_price(this.value,1)" 
-                          step="0.001" 
-                          id="quantity_1" 
-                          name="quantity[]" 
-                        />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Quantity Remaining</label
-                        >
-
-                        <div class="col-sm-9">
-                        <input 
-                          type="text" 
-                          readonly class="form-control" 
-                          id="av_quantity_1" 
-                          name="av_quantity[]" />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >GST Number</label
-                        >
-
-                        <div class="col-sm-9">
-                        <input type="number" required class="form-control" onkeyup="get_quantity(this.value,1)" step="0.01" id="sale_price_1" name="sale_price[]" />
-                        </div>
-                      </div> -->
 
                       <hr />
 
@@ -399,11 +298,12 @@ else{
                           ADD ITEM
                         </button>
                       </div>
-                    </form>
+                    <!-- </form> -->
                   </div>
                 </div>
               </div>
               <div class="col-md-5  mt-4" style="background-color:#fff;">
+               <!-- <form method="POST"> -->
                <div class="p-4">
                   <div class="text-center">
                      <h4>Receipt</h4>
@@ -442,12 +342,20 @@ else{
                            </td>
                            <td class="text-center text-danger">
                               <h5 id="totalPayment"><strong> </strong></h5>
+                              <input type="hidden" name="totalPaymentInput" id="totalPaymentInput" display>
                               
                            </td>
                         </tr>
                      </table>
                   </div>
+                  <div style="width=100%; display: flex; justify-content: center; align-item: center;">
+
+                        <button type="submit" name="checkoutbtn" class="btn btn-primary mr-2">Print Receipt And Checkout</button>
+
+                     </div>
                </div>
+
+               </form>
             </div>
             </div>
           </div>
@@ -558,7 +466,7 @@ function get_detail(b,n){
                 var newRow = $('#app tbody').append('<tr id='+nx+'><td><input type="text"  class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,'+nx+')" id="bar_code_'+nx+'" name="bar_code[]" required /></td><td><select name="name[]" id="name_'+nx+'" class="form-control" onchange="get_detail_name(this.value,'+nx+')" required ><option value="">Choose Product</option><?php $sqlP = $conn->query("SELECT * FROM product WHERE status = 1 ORDER BY name ASC"); while($rowP = $sqlP->fetch_array()){?><option value="<?php echo $rowP['name'];?>"><?php echo $rowP['name'];?></option><?php }?></select></td><td><input type="text" id="alias_'+nx+'" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail_alias(this.value,'+nx+')" name="alias[]" /></td><td><input type="text"  id="mrp_'+nx+'" readonly class="form-control" name="mrp[]" required /></td><td><input type="number" id="quantity_'+nx+'" step="0.001" class="form-control" onkeyup="calculate_price(this.value,'+nx+')" name="quantity[]" required /></td><td><input type="text" id="av_quantity_'+nx+'" readonly class="form-control" name="av_quantity[]" /></td><td><input type="number" id="sale_price_'+nx+'"  class="form-control" onkeyup="get_quantity(this.value,'+nx+')" name="sale_price[]" step="0.01" required /><input type="hidden" class="form_control" id="sale_price_org_'+nx+'" name="sale_price_org[]" /><input type="hidden" class="form-control" id="igst_'+nx+'" name="igst[]" /></td><td><a href="#" onclick="remove_data('+ nx +')" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row" data-toggle="tooltip" data-original-title="Remove">Delete</a></td></tr>');
                 document.getElementById('name_'+n).value = data.name;
                 document.getElementById('alias_'+n).value = data.alias;
-                document.getElementById('mrp_'+n).value = data.mrp;
+                document.getElementById('mrp_'+n).value = data.sale_price;
                 document.getElementById('quantity_'+n).value = 1;
                 document.getElementById('av_quantity_'+n).value = data.av_quantity;
                 document.getElementById('sale_price_'+n).value = data.sale_price;
@@ -792,7 +700,7 @@ function remove_data(r){
    
         var name = $('#name_1').val();
         var qty = $('#quantity_1').val();
-        var price = $('#sale_price_1').val();
+        var price = $('#mrp_1').val();
 
         $('#bar_code_1').val('');
         $('#name_1').val('');
@@ -844,6 +752,7 @@ function remove_data(r){
 
              var totalPayment = parseFloat(Subtotal) + parseFloat(taxAmount);
              $('#totalPayment').text(total.toFixed(2));
+             $('#totalPaymentInput').val(total.toFixed(2));
        
          });
          count++;
@@ -892,6 +801,29 @@ function remove_data(r){
 </html>
 
 <?php
+
+ if (isset($_POST['checkoutbtn'])) {
+
+  $customer_name = $_POST['customerName'];
+  $contact = $_POST['customerContact'];
+  $sales_person_name = $_POST['selectSales'];
+  $total_amount = $_POST['totalPaymentInput'];
+  date_default_timezone_set('Asia/Kolkata'); 
+  $currentDateTime = date('Y-m-d H:i:s'); 
+
+  $sql = "INSERT INTO Invoice (customer_name, contact, sales_person_name, total_amount, datetime)
+  VALUES ('$customer_name', '$contact', '$sales_person_name', $total_amount, '$currentDateTime')";
+
+  $usql = "UPDATE sales_person SET items_sold = items_sold + 1 WHERE name = '$sales_person_name'";
+
+  if ($conn->query($sql) === TRUE && $conn->query($usql) === TRUE ) {
+    echo "<script>alert('Record inserted successfully.')</script>";  
+  } else {
+  echo "Error: " . $sql . "<br>" . $conn->error;
+  }  
+
+ } 
+
 if(isset($_POST['logoutt'])){
   session_start();
    unset($_SESSION['sales_session']);

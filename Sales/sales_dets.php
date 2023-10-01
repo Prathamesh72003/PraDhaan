@@ -25,7 +25,7 @@ else{
       rel="stylesheet"
     />
 
-    <title>Skydash Admin</title>
+    <title>PraDhaan Admin</title>
 
     <!-- plugins:css -->
 

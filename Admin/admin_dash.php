@@ -17,7 +17,7 @@ else{
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Skydash Admin</title>
+    <title>PraDhaan Admin</title>
     <!-- plugins:css -->
     <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
     <link rel="stylesheet" href="../vendors/feather/feather.css" />
@@ -122,12 +122,12 @@ else{
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="./Accounts.php">
                 <i class = "material-icons">currency_rupee</i>
                 <span class="menu-title">Accounts</span>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <form method="POST">
                 <!-- <a class="nav-link"> -->
@@ -148,8 +148,7 @@ else{
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                     <h3 class="font-weight-bold">Welcome <?= $_SESSION["admin_session"] ?> </h3>
                     <h6 class="font-weight-normal mb-0">
-                      All systems are running smoothly! You have
-                      <span class="text-primary">3 unread alerts!</span>
+                      Have a look at your collections!
                     </h6>
                   </div>
                   <div class="col-12 col-xl-4">
