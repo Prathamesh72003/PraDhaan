@@ -430,7 +430,7 @@ if (!isset($_SESSION["admin_session"])) {
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">MRP</label>
                         <div class="col-sm-9">
                           <input name="mrp" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Quantity" />
+                            placeholder="Enter the Cost" />
                         </div>
                       </div>
 
@@ -438,7 +438,7 @@ if (!isset($_SESSION["admin_session"])) {
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Sales price</label>
                         <div class="col-sm-9">
                           <input name="salesp" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Quantity" />
+                            placeholder="Enter the Sales price" />
                         </div>
                       </div>
 
@@ -453,7 +453,7 @@ if (!isset($_SESSION["admin_session"])) {
                       <div class="form-group row">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Brand</label>
                         <div class="col-sm-9">
-                          <input name="brand" required type="text" class="form-control" id="exampleInputEmail2"
+                          <input name="brand" type="text" class="form-control" id="exampleInputEmail2"
                             placeholder="Enter the Quantity" />
                         </div>
                       </div>
@@ -616,6 +616,9 @@ if (!isset($_SESSION["admin_session"])) {
   <?php
 
 if(isset($_POST['getbarcode'])){
+
+    $name = $_POST['proname'];
+
     $barcode = $_POST['barname'];
    
 
