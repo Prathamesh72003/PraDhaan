@@ -118,19 +118,21 @@ else{
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="./Checkout.php">
+              <a class="nav-link" href="./checkout.php">
                 <i class="material-icons">shopping_cart</i>
 
                 <span class="menu-title">Checkout</span>
               </a>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="../index.php">
-                <i class="material-icons">logout </i>
+            <li class="nav-item" style="margin: 20px; display: flex;align-item: center">
+              <form method="POST">
+                <!-- <a class="nav-link"> -->
+                <i class = "material-icons">logout  </i>
+                <span class="menu-title"><input style="border: none; background-color: #fff;" type="submit" name="logoutt" value="Logout"></span>
+              <!-- </a> -->
+            </form>
 
-                <span class="menu-title"> Logout</span>
-              </a>
             </li>
           </ul>
         </nav>

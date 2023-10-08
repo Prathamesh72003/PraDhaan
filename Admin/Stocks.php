@@ -351,17 +351,26 @@ if (!isset($_SESSION["admin_session"])) {
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./GenReport.php">
+                <i class = "material-icons">book</i>
+                <span class="menu-title">Reports</span>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>
                 <span class="menu-title">Accounts</span>
               </a>
             </li> -->
-            <li class="nav-item">
-              <a class="nav-link" href="../index.php">
-                <i class="material-icons">logout </i>
-                <span class="menu-title"> Logout</span>
-              </a>
+            <li class="nav-item" style="margin: 20px; display: flex;align-item: center">
+              <form method="POST">
+                <!-- <a class="nav-link"> -->
+                <i class = "material-icons">logout  </i>
+                <span class="menu-title"><input style="border: none; background-color: #fff;" type="submit" name="logoutt" value="Logout"></span>
+              <!-- </a> -->
+            </form>
+
             </li>
           </ul>
         </nav>

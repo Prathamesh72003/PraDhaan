@@ -122,17 +122,17 @@ else{
                 <span class="menu-title">Vendors</span>
               </a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="./Accounts.php">
-                <i class = "material-icons">currency_rupee</i>
-                <span class="menu-title">Accounts</span>
-              </a>
-            </li> -->
             <li class="nav-item">
+              <a class="nav-link" href="./GenReport.php">
+                <i class = "material-icons">book</i>
+                <span class="menu-title">Reports</span>
+              </a>
+            </li>
+            <li class="nav-item" style="margin: 20px; display: flex;align-item: center">
               <form method="POST">
                 <!-- <a class="nav-link"> -->
                 <i class = "material-icons">logout  </i>
-                <span class="menu-title"><input type="submit" name="logoutt" value="Logout"></span>
+                <span class="menu-title"><input style="border: none; background-color: #fff;" type="submit" name="logoutt" value="Logout"></span>
               <!-- </a> -->
             </form>
 
@@ -154,27 +154,10 @@ else{
                   <div class="col-12 col-xl-4">
                     <div class="justify-content-end d-flex">
                       <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                        <button
-                          class="btn btn-sm btn-light bg-white dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuDate2"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="true"
-                        >
-                          <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
-                        </button>
-                        <div
-                          class="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuDate2"
-                        >
-                          <a class="dropdown-item" href="#">January - March</a>
-                          <a class="dropdown-item" href="#">March - June</a>
-                          <a class="dropdown-item" href="#">June - August</a>
-                          <a class="dropdown-item" href="#"
-                            >August - November</a
-                          >
-                        </div>
+                        
+                      
+                      <input type="date" id="selectedDate" name="selectedDate" class="form-control" required>
+
                       </div>
                     </div>
                   </div>
@@ -190,23 +173,50 @@ else{
                   </div>
                 </div>
               </div>
+
               <div class="col-md-6 grid-margin transparent">
                 <div class="row">
                   <div class="col-md-6 mb-4 stretch-card transparent">
                     <div class="card card-tale">
                       <div class="card-body">
-                        <p class="mb-4">Today’s Bookings</p>
-                        <p class="fs-30 mb-2">4006</p>
-                        <p>10.00% (30 days)</p>
+                        <p class="mb-4">Today’s Checkouts</p>
+                        <?php
+                          date_default_timezone_set('Asia/Kolkata');
+                          $current_date = date('Y-m-d'); 
+                            $query = "SELECT COUNT(*) AS record_count FROM Invoice where DATE(datetime) = '$current_date'";
+                            $result = mysqli_query($conn, $query);
+
+                            if ($result) {
+                                $row = mysqli_fetch_assoc($result);
+                                $record_count = $row['record_count'];
+                            } else {
+                                $record_count = 0; 
+                            }
+                        ?> 
+                        <p class="fs-30 mb-2"><?= $record_count ?></p>
+                        <p><?= $current_date ?></p>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4 stretch-card transparent">
                     <div class="card card-dark-blue">
                       <div class="card-body">
-                        <p class="mb-4">Total Bookings</p>
-                        <p class="fs-30 mb-2">61344</p>
-                        <p>22.00% (30 days)</p>
+                        <p class="mb-4">Active Vendors</p>
+                        <?php
+                          date_default_timezone_set('Asia/Kolkata');
+                          $current_date = date('Y-m-d'); 
+                            $query = "SELECT COUNT(*) AS record_count FROM vendor where active=1";
+                            $result = mysqli_query($conn, $query);
+
+                            if ($result) {
+                                $row = mysqli_fetch_assoc($result);
+                                $record_count = $row['record_count'];
+                            } else {
+                                $record_count = 0; 
+                            }
+                        ?> 
+                        <p class="fs-30 mb-2"><?= $record_count ?></p>
+                        <p><?= $current_date ?></p>
                       </div>
                     </div>
                   </div>
@@ -215,9 +225,23 @@ else{
                   <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                     <div class="card card-light-blue">
                       <div class="card-body">
-                        <p class="mb-4">Number of Meetings</p>
-                        <p class="fs-30 mb-2">34040</p>
-                        <p>2.00% (30 days)</p>
+                        <p class="mb-4">This months total checkout amount</p>
+                        <?php
+                          date_default_timezone_set('Asia/Kolkata');
+                          $currentMonth = date('m');
+                          $currentYear = date('Y'); 
+                          $query = mysqli_query($conn, "SELECT SUM(total_amount) AS total_checkout_money FROM Invoice WHERE MONTH(datetime) = $currentMonth AND YEAR(datetime) = $currentYear");
+
+                          if ($query) {
+                          $result = mysqli_fetch_assoc($query);
+                          $totalCheckoutMoney = $result['total_checkout_money'];
+                          } else {
+                          echo "Error executing the query: " . mysqli_error($conn);
+                          }
+
+                        ?> 
+                        <p class="fs-30 mb-2">Rs. <?= $totalCheckoutMoney ?></p>
+                        <p><?= $current_date ?> (30 days)</p>
                       </div>
                     </div>
                   </div>
@@ -234,7 +258,7 @@ else{
               </div>
             </div>
             <div class="row" style="margin-top: 20px;">
-              <div class="col-md-6 grid-margin stretch-card"> 
+              <div class="col-md-7 grid-margin stretch-card"> 
                 <div class="card">
                 <div class="card-body">
                  
@@ -243,61 +267,39 @@ else{
                       <thead>
                         <tr>
                           <th>Product</th>
-                          <th>Price</th>
+                          <th>Contact</th>
+                          <th>Amount</th>
+                          <th>Sold By</th>
                           <th>Date</th>
                          
                         </tr>
                       </thead>
                       <tbody>
+                          
+                      <?php  
+                      
+                      $query = mysqli_query($conn, "SELECT * FROM Invoice ORDER BY datetime DESC LIMIT 8");
+                      while ($row = mysqli_fetch_array($query)) {
+                        
+                        $cust_name = $row['customer_name'];
+                        $contact = $row['contact'];
+                        $totalamt = $row['total_amount'];
+                        $date = $row['datetime'];
+                        $soldby = $row['sales_person_name'];
+      
+                      ?>
+
                         <tr>
-                          <td>Search Engine Marketing</td>
-                          <td class="font-weight-bold">$362</td>
-                          <td>21 Sep 2018</td>
+                          <td><?= $cust_name ?></td>
+                          <td><?= $contact ?></td>
+                          <td class="font-weight-bold"><?= $totalamt ?></td>
+                          <td><?= $soldby ?></td>
+                          <td><?= $date ?></td>
                           
                           </td>
                         </tr>
-                        <tr>
-                          <td>Search Engine Optimization</td>
-                          <td class="font-weight-bold">$116</td>
-                          <td>13 Jun 2018</td>
-                          
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Display Advertising</td>
-                          <td class="font-weight-bold">$551</td>
-                          <td>28 Sep 2018</td>
-                          
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Pay Per Click Advertising</td>
-                          <td class="font-weight-bold">$523</td>
-                          <td>30 Jun 2018</td>
-                          
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>E-Mail Marketing</td>
-                          <td class="font-weight-bold">$781</td>
-                          <td>01 Nov 2018</td>
-                          
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Referral Marketing</td>
-                          <td class="font-weight-bold">$283</td>
-                          <td>20 Mar 2018</td>
-                          
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Social media marketing</td>
-                          <td class="font-weight-bold">$897</td>
-                          <td>26 Oct 2018</td>
-                          
-                          </td>
-                        </tr>
+
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>
@@ -306,7 +308,7 @@ else{
                 </div>
               </div>
             </div>
-              <div class="col-md-6 grid-margin stretch-card">
+              <div class="col-md-5 grid-margin stretch-card">
 
                 <div class="card">
                   <div class="card-body">
