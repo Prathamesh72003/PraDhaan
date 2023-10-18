@@ -504,7 +504,10 @@ if (!isset($_SESSION["admin_session"])) {
                           justify-content: center;
                           align-items: center;
                         ">
-                        <button type="button" class="btn btn-primary mr-2" name="genbarcode" id="genbarcodeid">
+                        <!-- <button type="button" class="btn btn-primary mr-2" name="genbarcode" id="genbarcodeid">
+                          ADD
+                        </button> -->
+                        <button type="submit" class="btn btn-primary mr-2" name="genbarcode" id="genbarcode">
                           ADD
                         </button>
                       </div>
@@ -539,7 +542,7 @@ if (!isset($_SESSION["admin_session"])) {
                     </div>
 
                     <div style="display:flex; width: 100%; justify-content:center; align-items:center">
-                        <button type="submit" class="btn btn-primary mr-2" name="getbarcode">
+                        <button type="submit" class="btn btn-primary mr-2" name="getbarcode" onclick="PrintImg()">
                         
                           Generate
                         </button>
@@ -614,39 +617,55 @@ if (!isset($_SESSION["admin_session"])) {
             
             $('#barcodeid').val(globalid);
             var barcodetxt = $('#barcodeid').val();
-            var barcodeImage = '<center><img alt="testing" src="barcode.php?codetype=Code39&size=50&text=' + barcodetxt + '&print=true"/></center>';
+            var barcodeImage = '<center><img alt="testing" style="height: 150px; width: 560px;" src="barcode.php?codetype=Code39&size=100&text=' + barcodetxt + '&print=true"/></center>';
             $('#barcodeimg').html(barcodeImage);
                });
-               
+             
+    </script>
+
+    <script>
+          
+          function PrintImg(){
+            var prtContent = document.getElementById("barcodeimg");
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+          }  
+
     </script>
   </body>
 
   </html>
   <?php
 
-if(isset($_POST['getbarcode'])){
+if(isset($_POST['genbarcode'])){
+  
+  $proname = $_POST['proname'];
+  echo "<script>alert('Product added')</script>";
+  $mrp = $_POST['mrp'];
+  $salesprice = $_POST['salesp'];
+  $unit = $_POST['unit'];
+  $brand = $_POST['brand'];
+  $cat = $_POST['category'];
+  $gst = $_POST['gst'];
+  $bracode = $proname.$cat;
 
-    $name = $_POST['proname'];
+  date_default_timezone_set('Asia/Kolkata'); 
+  $currentDateTime = date('Y-m-d H:i:s'); 
 
-    $barcode = $_POST['barname'];
-   
+  $insert = mysqli_query($conn,"insert into `product`(`name`,`mrp`,`sale_price`,`unit`,`brand`,`category`,`bar_code`,`cgst`,`sgst`,`status`,`created`) values('$proname','$mrp','$salesprice','$unit','$brand','$cat','$barcode','0','0','1','$currentDateTime')");
+  
+  if($insert){
+   echo "<script>alert('Product added')</script>";
+  }
 
-    $result= mysqli_query($conn,"select id from stock order by id desc limit 1");
-     $globalid = 0;
-     
+  else{
+    echo "<script>alert('Product not added')</script>";
 
-     if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $id = $row['id'];
-        $globalid=$id+1;
-       
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
-    
-    $concat = $barcode.$globalid;
-    echo "<script>alert('ID: $concat')</script>";
-
+  }
 
   }           
 
