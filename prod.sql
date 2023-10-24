@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 20, 2023 at 07:39 PM
+-- Generation Time: Oct 18, 2023 at 02:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,7 +38,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `password`) VALUES
-(1, 'Dhanashree', 'sweet');
+(1, 'adminacc', '1234');
 
 -- --------------------------------------------------------
 
@@ -59,6 +59,31 @@ INSERT INTO `category` (`id`, `category_name`) VALUES
 (1, 'necklace'),
 (2, 'earrings'),
 (3, 'bangles');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Invoice`
+--
+
+CREATE TABLE `Invoice` (
+  `invoice_id` int(11) NOT NULL,
+  `customer_name` longtext DEFAULT NULL,
+  `contact` longtext DEFAULT NULL,
+  `sales_person_name` longtext DEFAULT NULL,
+  `total_amount` longtext DEFAULT NULL,
+  `datetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Invoice`
+--
+
+INSERT INTO `Invoice` (`invoice_id`, `customer_name`, `contact`, `sales_person_name`, `total_amount`, `datetime`) VALUES
+(1, 'Prathamesh', '7843087679', 'Dhanashreeee', '300.00', '2023-11-01 16:48:56'),
+(2, 'Random', '7843087679', 'Prathameshhhh', '1200.00', '2023-10-07 15:22:40'),
+(3, 'Prathameshs', '7843087679', 'Prathameshhhh', '1200.00', '2023-10-07 15:23:25'),
+(4, 'cdsj', '232312121212121', 'cdkscsd', '122', '2023-10-08 10:50:08');
 
 -- --------------------------------------------------------
 
@@ -87,7 +112,8 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `name`, `mrp`, `sale_price`, `unit`, `brand`, `category`, `bar_code`, `cgst`, `sgst`, `status`, `created`) VALUES
 (1, 'NATH', 300.000, 250.000, 130.000, 'LOCALBRAND', '1', '8901277017437', 0.00, 0.00, '1', '2023-09-09 09:55:35'),
-(2, 'JHUMKA', 400.000, 350.000, 440.000, 'Lara', '2', 'JHUMKA', 0.00, 0.00, '1', '2023-09-18 15:28:20');
+(2, 'JHUMKA', 400.000, 350.000, 480.000, 'Lara', '2', 'JHUMKA', 0.00, 0.00, '1', '2023-09-18 15:28:20'),
+(3, 'newprod', 300.000, 250.000, 77.000, 'YOYO', 'earrings', '', 0.00, 0.00, '1', '2023-10-18 17:36:16');
 
 -- --------------------------------------------------------
 
@@ -128,8 +154,8 @@ CREATE TABLE `sales_person` (
 --
 
 INSERT INTO `sales_person` (`id`, `name`, `mobile_number`, `address`, `identity_proof`, `items_sold`) VALUES
-(1, 'Prathameshhhh', '78430877777', 'Flat 61,E2 Building,Green Acre Society, Bibwewadi', '1234565789', '0'),
-(2, 'Dhanashreeee', '8208143115', 'Punee', '9876543218928', '5');
+(1, 'Prathameshhhh', '78430877777', 'Flat 61,E2 Building,Green Acre Society, Bibwewadi', '1234565789', '2'),
+(2, 'Dhanashreeee', '8208143115', 'Punee', '9876543218928', '6');
 
 -- --------------------------------------------------------
 
@@ -152,8 +178,10 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`id`, `item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES
-(1, 'JHUMKA', 20, 'earrings', 'VendorWithDate', 5000, '2023-09-20 20:30:17'),
-(2, 'JHUMKA', 40, 'earrings', 'VendorWithDate', 5000, '2023-09-20 20:30:55');
+(1, 'JHUMKA', 20, 'earrings', 'VendorWithDate', 5000, '2023-10-20 20:30:17'),
+(2, 'JHUMKA', 40, 'earrings', 'VendorWithDate', 5000, '2023-09-20 20:30:55'),
+(3, 'JHUMKA', 40, 'earrings', 'vendorB', 12000, '2023-10-11 23:29:10'),
+(4, 'newprod', 32, '', 'VendorWithDate', 3000, '2023-10-18 17:36:47');
 
 -- --------------------------------------------------------
 
@@ -176,7 +204,7 @@ CREATE TABLE `vendor` (
 --
 
 INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `identity_proof`, `active`, `date`) VALUES
-(1, 'vendorA', 2147483647, 'pune', '234567890', '1', '2023-09-09 09:51:17'),
+(1, 'vendorA', 2147483647, 'pune', '234567890', '1', '2023-10-09 09:51:17'),
 (2, 'vendorB', 2147483647, 'pune', '124567893', '1', '2023-09-09 09:51:17'),
 (3, 'vendorC', 2147483647, 'dhule', '2147483647', '0', '2023-09-09 09:51:17'),
 (4, 'VendorWithDate', 8919201012, 'pune', '121212121212', '1', '2023-09-18 15:54:35'),
@@ -198,6 +226,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `Invoice`
+--
+ALTER TABLE `Invoice`
+  ADD PRIMARY KEY (`invoice_id`);
 
 --
 -- Indexes for table `product`
@@ -246,10 +280,16 @@ ALTER TABLE `category`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `Invoice`
+--
+ALTER TABLE `Invoice`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -267,7 +307,7 @@ ALTER TABLE `sales_person`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vendor`
