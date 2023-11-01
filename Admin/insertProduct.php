@@ -439,31 +439,15 @@ if (!isset($_SESSION["admin_session"])) {
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">MRP</label>
                         <div class="col-sm-9">
                           <input name="mrp" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Cost" />
+                            placeholder="Enter the Selling Price" />
                         </div>
                       </div>
 
                       <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Sales price</label>
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Buy Price</label>
                         <div class="col-sm-9">
                           <input name="salesp" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Sales price" />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Unit</label>
-                        <div class="col-sm-9">
-                          <input name="unit" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Quantity" />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Brand</label>
-                        <div class="col-sm-9">
-                          <input name="brand" type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Quantity" />
+                            placeholder="Enter the Buy Price" />
                         </div>
                       </div>
 
@@ -488,15 +472,6 @@ if (!isset($_SESSION["admin_session"])) {
                         </div>
                       </div>
                       
-
-                      <div class="form-group row">
-                        <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">GST</label>
-                        <div class="col-sm-9">
-                          <input name="gst" required type="text" class="form-control"
-                            id="exampleInputConfirmPassword2" placeholder="Enter the Price
-                             " />
-                        </div>
-                      </div>
                       <div class="form-check form-check-flat form-check-primary"></div>
                       <div style="
                           width: 100%;
@@ -508,7 +483,7 @@ if (!isset($_SESSION["admin_session"])) {
                           ADD
                         </button> -->
                         <button type="submit" class="btn btn-primary mr-2" name="genbarcode" id="genbarcode">
-                          ADD
+                          ADD PRODUCT
                         </button>
                       </div>
                     </form>
@@ -554,6 +529,46 @@ if (!isset($_SESSION["admin_session"])) {
               
             
             </div>
+            
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card" style="width: 100%">
+                  <div class="card-body">
+                    <div style="
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                      ">
+                      <h4 class="card-title">Add Category</h4>
+                    </div>
+
+                    <p class="card-description"></p>
+                    <form class="forms-sample" method="POST">
+                      <div class="form-group row">
+                        <label for="catname" class="col-sm-3 col-form-label">Category Name</label>
+                        <div class="col-sm-9">
+                          <input name="catname" required type="text" class="form-control" id="catnameid"
+                            placeholder="Enter the categry name" />
+                        </div>
+                      </div>
+                
+                      
+                      <div class="form-check form-check-flat form-check-primary"></div>
+                      <div style="
+                          width: 100%;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                        ">
+                        <button type="submit" class="btn btn-primary mr-2" name="addcat" id="addcat">
+                          ADD CATRGORY
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            
             </div>
                             </div>
           </div>
@@ -641,14 +656,26 @@ if (!isset($_SESSION["admin_session"])) {
   </html>
   <?php
 
+if (isset($_POST['addcat'])) {
+  $catname = $_POST['catname'];
+  $insert = mysqli_query($conn,"insert into `category`(`category_name`) values('$catname')");
+  
+  if($insert){
+   echo "<script>alert('Category added')</script>";
+   echo "<script>window.open('insertProduct.php','_self')</script>";
+  }
+
+  else{
+    echo "<script>alert('Product not added')</script>";
+
+  }
+}
+
 if(isset($_POST['genbarcode'])){
   
   $proname = $_POST['proname'];
-  echo "<script>alert('Product added')</script>";
   $mrp = $_POST['mrp'];
   $salesprice = $_POST['salesp'];
-  $unit = $_POST['unit'];
-  $brand = $_POST['brand'];
   $cat = $_POST['category'];
   $gst = $_POST['gst'];
   $bracode = $proname.$cat;
@@ -656,7 +683,7 @@ if(isset($_POST['genbarcode'])){
   date_default_timezone_set('Asia/Kolkata'); 
   $currentDateTime = date('Y-m-d H:i:s'); 
 
-  $insert = mysqli_query($conn,"insert into `product`(`name`,`mrp`,`sale_price`,`unit`,`brand`,`category`,`bar_code`,`cgst`,`sgst`,`status`,`created`) values('$proname','$mrp','$salesprice','$unit','$brand','$cat','$barcode','0','0','1','$currentDateTime')");
+  $insert = mysqli_query($conn,"insert into `product`(`name`,`mrp`,`sale_price`,`unit`,`category`,`bar_code`,`cgst`,`sgst`,`status`,`created`) values('$proname','$mrp','$salesprice','0','$cat','$barcode','1.2','1.2','1','$currentDateTime')");
   
   if($insert){
    echo "<script>alert('Product added')</script>";

@@ -305,23 +305,6 @@ else{
                           />
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label
-                          for="exampleInputEmail2"
-                          class="col-sm-3 col-form-label"
-                          >Identity Proof</label
-                        >
-                        <div class="col-sm-9">
-                          <input
-                          name="iproof"
-                            required
-                            type="text"
-                            class="form-control"
-                            id="exampleInputEmail2"
-                            placeholder="Enter Adhaar no./PAN no."
-                          />
-                        </div>
-                      </div>
 
                       <div
                         class="form-check form-check-flat form-check-primary"
@@ -416,12 +399,11 @@ if(isset($_POST['vadd'])){
   $name = $_POST['vname'];
   $mobile = $_POST['vmobile'];
   $address = $_POST['vaddress'];
-  $identityp = $_POST['iproof'];
 
   date_default_timezone_set('Asia/Kolkata'); 
   $currentDateTime = date('Y-m-d H:i:s'); 
 
-  $insert =mysqli_query($conn,"insert into `vendor`(`name`,`mobile_no`,`address`,`identity_proof`,`active`,`date`) values('$name','$mobile','$address','$identityp','1','$currentDateTime')");
+  $insert =mysqli_query($conn,"insert into `vendor`(`name`,`mobile_no`,`address`,`active`,`date`) values('$name','$mobile','$address','1','$currentDateTime')");
   
   if($insert){
    echo "<script>alert('Vendor added')</script>";

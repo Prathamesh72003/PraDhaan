@@ -63,6 +63,19 @@ include "../db.php";
 
         color: #fff;
       }
+      @media print {
+    /* Set the custom width and height for printed pages */
+    @page {
+        size: 80mm 200mm; /* Custom dimensions */
+    }
+    #slip {
+        transform: scale(0.1); /* Adjust the scale value as needed */
+    }
+
+    #printslipbtnid {
+        display: block;
+    }
+}
     </style>
   </head>
 
@@ -298,7 +311,7 @@ include "../db.php";
                   </div>
                 </div>
               </div>
-              <div class="col-md-5  mt-4" style="background-color:#fff;">
+              <div class="col-md-5  mt-4" style="background-color:#fff;" id="slip">
                <!-- <form method="POST"> -->
                <div class="p-4">
                   <div class="text-center">
@@ -310,7 +323,13 @@ include "../db.php";
                         <span id="day"></span> : <span id="year"></span>
                      </div>
                      <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                        <p>Order No:</p>
+                          <?php 
+
+                            $order_id;
+                          
+                          ?>
+                        
+                        <p id="ordernumid">Order No: <?= $_GET['id'] ?></p>
                      </div>
                   </div>
                   <div class="row">
@@ -346,13 +365,17 @@ include "../db.php";
                   </div>
                   <div style="width=100%; display: flex; justify-content: center; align-item: center;">
 
-                        <button type="submit" name="checkoutbtn" class="btn btn-primary mr-2">Print Receipt And Checkout</button>
+                        <button type="submit" id="printslipbtnid" name="checkoutbtn" onclick="printslip('slip')" class="btn btn-primary mr-2">Print Receipt And Checkout</button>
 
                      </div>
                </div>
 
                </form>
+               
             </div>
+
+            <!-- <a href='checkout.php?id=<?= $order_id ?>'>Reset</a> -->
+
             </div>
           </div>
 
@@ -424,6 +447,16 @@ include "../db.php";
     <script src="../js/Chart.roundedBarCharts.js"></script>
 
     <script>
+
+      function printslip(paravalue){
+        document.getElementById('printslipbtnid').style.display = 'none';
+        var backup = document.body.innerHTML;
+        var divcontent = document.getElementById(paravalue).innerHTML;
+        document.body.innerHTML = divcontent;
+        window.print();
+        document.body.innerHTML = backup;
+        document.getElementById('printslipbtnid').style.display = 'block';
+      }
 
   // THIS DA CODE FOR BARCODE SCANNING
 
@@ -696,7 +729,7 @@ function remove_data(r){
    
         var name = $('#name_1').val();
         var qty = $('#quantity_1').val();
-        var price = $('#mrp_1').val();
+        var price = $('#sale_price_1').val();
 
         $('#bar_code_1').val('');
         $('#name_1').val('');
@@ -713,7 +746,7 @@ function remove_data(r){
         }
         else
         {
-           billFunction(); // Below Function passing here 
+           billFunction();
         }
         
         function billFunction()
@@ -728,7 +761,6 @@ function remove_data(r){
           var table =   '<tr><td>'+ count +'</td><td>'+ name + '</td><td>' + qty + '</td><td>' + price + '</td><td><strong><input type="hidden" id="total" value="'+total+'">' +total+ '</strong></td></tr>';
           $('#new').append(table)
 
-           // Code for Sub Total of Vegitables 
             var total = 0;
             $('tbody tr td:last-child').each(function() {
                 var value = parseInt($('#total', this).val());
@@ -813,7 +845,12 @@ function remove_data(r){
   $usql = "UPDATE sales_person SET items_sold = items_sold + 1 WHERE name = '$sales_person_name'";
 
   if ($conn->query($sql) === TRUE && $conn->query($usql) === TRUE ) {
-    echo "<script>alert('Record inserted successfully.')</script>";  
+    // if (TRUE) {
+    echo "<script>alert('Record inserted successfully.')</script>"; 
+    // $order_id = $order_id + 1;
+    // echo "<script>alert('Record number " . $order_id . "')</script>";
+
+    // echo "<script>document.getElementById('ordernumid').innerHTML = '$order_id';</script>";
   } else {
   echo "Error: " . $sql . "<br>" . $conn->error;
   }  

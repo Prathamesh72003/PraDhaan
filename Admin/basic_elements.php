@@ -486,7 +486,7 @@ if (!isset($_SESSION["admin_session"])) {
                         <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Price</label>
                         <div class="col-sm-9">
                           <input name="price" required type="text" class="form-control"
-                            id="exampleInputConfirmPassword2" placeholder="Enter the Price
+                            id="exampleInputConfirmPassword2" placeholder="Enter the Single Unit Price
                              " />
                         </div>
                       </div>

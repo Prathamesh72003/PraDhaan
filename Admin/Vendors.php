@@ -6,6 +6,12 @@ if (!isset($_SESSION["admin_session"])) {
 
 } else {
 
+
+  if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $delete = mysqli_query($conn, "delete from `vendor` where `id`='$id'");
+  }
+
   ?>
 
 <!DOCTYPE html>
@@ -67,6 +73,18 @@ if (!isset($_SESSION["admin_session"])) {
         font-size: 6em;
         color: #fff;
       }
+
+      .btn {
+        background: #fff;
+        color: darkred;
+        font-size: 1.2em;
+        padding: 5px 30px;
+        text-decoration: none;
+        position: absolute;
+        right: 20px;
+      }
+
+     
     </style>
   </head>
 
@@ -194,7 +212,6 @@ if (!isset($_SESSION["admin_session"])) {
                   $name = $row['name'];
                   $mobile = $row['mobile_no'];
                   $address = $row['address'];
-                  $identity_proof = $row['identity_proof'];
                   $ddate = $row['date'];
                   $value = $row['active'];
 
@@ -208,6 +225,7 @@ if (!isset($_SESSION["admin_session"])) {
               <div class="col-md-3 stretch-card grid-margin">
                 <div class="card" style="margin-left=10px;">
                   <div class="card-body" style="border: 1px solid grey; border-radius: 20px;background-color: <?php echo $color; ?>">
+                  <a href='Vendors.php?id=<?= $id ?>' class='btn'>Delete</a>
                     <div class="table-responsive">
                       <table class="table table-borderless">
                         
@@ -254,18 +272,6 @@ if (!isset($_SESSION["admin_session"])) {
                                 >
                               </p>
                             </td>
-                          </tr>
-
-                          <tr>
-                            <td class="pl-0">Identity Proof</td>
-
-                            <td style="background-color: <?php echo $color; ?>">
-                              <p class="mb-0">
-                                <span class="font-weight-bold mr-2"><?= $identity_proof ?></span
-                                >
-                              </p>
-                            </td>
-
                           </tr>
                           <tr>
                             <td class="pl-0">Date</td>
