@@ -1,11 +1,6 @@
 <?php
 include "../db.php";
-session_start();
-if(!isset($_SESSION["sales_session"])){
-  header("Location: ../index.php");
 
-}
-else{
 
 ?>
 
@@ -111,17 +106,19 @@ else{
 
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="./sales_dash.php">
-                <i class="icon-grid menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-              </a>
-            </li>
-
+          
             <li class="nav-item">
               <a class="nav-link" href="./checkout.php">
                 <i class="material-icons">shopping_cart </i>
                 <span class="menu-title">Checkout</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="././sales_dash.php">
+                <i class="icon-grid menu-icon"></i>
+
+                <span class="menu-title">Add Sales Person</span>
               </a>
             </li>
 
@@ -278,8 +275,6 @@ if(isset($_POST['logoutt'])){
    session_destroy();
    echo "<script>window.open('../index.php','_self')</script>";
    //exit();
-}
-
 }
 
 ?>

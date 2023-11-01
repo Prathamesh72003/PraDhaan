@@ -54,7 +54,7 @@
                     <a
                       style="background-color: #78a0fe"
                       class="btn btn-block btn-lg font-weight-medium auth-form-btn"
-                      href="./pages/samples/sales_login.php"
+                      href="./Sales/checkout.php"
                       >Salesperson</a
                     >
                   </div>
