@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 18, 2023 at 02:10 PM
+-- Generation Time: Nov 02, 2023 at 11:11 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -56,9 +56,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `category_name`) VALUES
-(1, 'necklace'),
-(2, 'earrings'),
-(3, 'bangles');
+(1, 'Earrings'),
+(2, 'Necklace'),
+(3, 'Nose');
 
 -- --------------------------------------------------------
 
@@ -80,10 +80,27 @@ CREATE TABLE `Invoice` (
 --
 
 INSERT INTO `Invoice` (`invoice_id`, `customer_name`, `contact`, `sales_person_name`, `total_amount`, `datetime`) VALUES
-(1, 'Prathamesh', '7843087679', 'Dhanashreeee', '300.00', '2023-11-01 16:48:56'),
-(2, 'Random', '7843087679', 'Prathameshhhh', '1200.00', '2023-10-07 15:22:40'),
-(3, 'Prathameshs', '7843087679', 'Prathameshhhh', '1200.00', '2023-10-07 15:23:25'),
-(4, 'cdsj', '232312121212121', 'cdkscsd', '122', '2023-10-08 10:50:08');
+(1, 'Pra', '7843087679', 'Prathameshhhh', '170.00', '2023-11-02 10:45:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL,
+  `mode` longtext NOT NULL,
+  `alice` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`id`, `mode`, `alice`) VALUES
+(1, 'Online', 'exampleupi'),
+(2, 'GST NUMBER', '12923*****');
 
 -- --------------------------------------------------------
 
@@ -95,9 +112,8 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `mrp` decimal(10,3) NOT NULL,
-  `sale_price` decimal(10,3) NOT NULL,
-  `unit` decimal(10,3) NOT NULL,
-  `brand` longtext NOT NULL,
+  `sale_price` bigint(20) NOT NULL,
+  `unit` bigint(20) NOT NULL,
   `category` longtext NOT NULL,
   `bar_code` varchar(200) NOT NULL,
   `cgst` decimal(10,2) NOT NULL,
@@ -110,10 +126,10 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `mrp`, `sale_price`, `unit`, `brand`, `category`, `bar_code`, `cgst`, `sgst`, `status`, `created`) VALUES
-(1, 'NATH', 300.000, 250.000, 130.000, 'LOCALBRAND', '1', '8901277017437', 0.00, 0.00, '1', '2023-09-09 09:55:35'),
-(2, 'JHUMKA', 400.000, 350.000, 480.000, 'Lara', '2', 'JHUMKA', 0.00, 0.00, '1', '2023-09-18 15:28:20'),
-(3, 'newprod', 300.000, 250.000, 77.000, 'YOYO', 'earrings', '', 0.00, 0.00, '1', '2023-10-18 17:36:16');
+INSERT INTO `product` (`id`, `name`, `mrp`, `sale_price`, `unit`, `category`, `bar_code`, `cgst`, `sgst`, `status`, `created`) VALUES
+(1, 'NATH', 150.000, 120, 0, 'Earrings', '1Ear', 1.20, 1.20, '1', '2023-11-02 08:16:48'),
+(2, 'Earrings2', 100.000, 50, 0, 'Earrings', '2Ear', 1.20, 1.20, '1', '2023-11-02 08:17:31'),
+(3, 'NoseNath', 120.000, 70, 0, 'Nose', '', 1.20, 1.20, '1', '2023-11-02 08:17:54');
 
 -- --------------------------------------------------------
 
@@ -154,7 +170,7 @@ CREATE TABLE `sales_person` (
 --
 
 INSERT INTO `sales_person` (`id`, `name`, `mobile_number`, `address`, `identity_proof`, `items_sold`) VALUES
-(1, 'Prathameshhhh', '78430877777', 'Flat 61,E2 Building,Green Acre Society, Bibwewadi', '1234565789', '2'),
+(1, 'Prathameshhhh', '78430877777', 'Flat 61,E2 Building,Green Acre Society, Bibwewadi', '1234565789', '6'),
 (2, 'Dhanashreeee', '8208143115', 'Punee', '9876543218928', '6');
 
 -- --------------------------------------------------------
@@ -194,7 +210,6 @@ CREATE TABLE `vendor` (
   `name` varchar(255) NOT NULL,
   `mobile_no` bigint(15) NOT NULL,
   `address` longtext NOT NULL,
-  `identity_proof` longtext NOT NULL,
   `active` longtext NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -203,13 +218,12 @@ CREATE TABLE `vendor` (
 -- Dumping data for table `vendor`
 --
 
-INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `identity_proof`, `active`, `date`) VALUES
-(1, 'vendorA', 2147483647, 'pune', '234567890', '1', '2023-10-09 09:51:17'),
-(2, 'vendorB', 2147483647, 'pune', '124567893', '1', '2023-09-09 09:51:17'),
-(3, 'vendorC', 2147483647, 'dhule', '2147483647', '0', '2023-09-09 09:51:17'),
-(4, 'VendorWithDate', 8919201012, 'pune', '121212121212', '1', '2023-09-18 15:54:35'),
-(5, 'VendorWithDate2', 8919201012, 'pune', '121212121212111111', '0', '2023-09-18 16:09:42'),
-(6, 'VendorWithProperTime', 9012311111, 'pune', '121212121212', '1', '2023-09-18 19:46:36');
+INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `active`, `date`) VALUES
+(1, 'vendorA', 2147483647, 'pune', '1', '2023-10-09 09:51:17'),
+(2, 'vendorB', 2147483647, 'pune', '1', '2023-09-09 09:51:17'),
+(3, 'vendorC', 2147483647, 'dhule', '1', '2023-09-09 09:51:17'),
+(4, 'VendorWithDate', 8919201012, 'pune', '1', '2023-09-18 15:54:35'),
+(5, 'VendorWithDate2', 8919201012, 'pune', '1', '2023-09-18 16:09:42');
 
 --
 -- Indexes for dumped tables
@@ -232,6 +246,12 @@ ALTER TABLE `category`
 --
 ALTER TABLE `Invoice`
   ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `product`
@@ -283,7 +303,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `Invoice`
 --
 ALTER TABLE `Invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -313,7 +339,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `vendor`
 --
 ALTER TABLE `vendor`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -268,38 +268,57 @@ if(isset($_POST['vendor']))
                 		<div class="card-body" style="background: #F5F7FF">
                         <h3 style="margin-left: 10px;margin-bottom: 50px">GENERATE ALL YOUR BARCODES</h3>
                         <form class="form-horizontal" method="post" action="barcode.php" target="_blank">
-                            <div class="form-group">
+                          <div class="form-group">
                             <label class="control-label col-sm-2" for="product">Product:</label>
                             <div class="col-sm-10">
-                                <input autocomplete="OFF" type="text" class="form-control" id="product" name="product">
+                              <select class="form-control" id="product" name="product">
+                                <?php
+                                  $sales_query = mysqli_query($conn, "select * from product");
+                                  while ($row = mysqli_fetch_array($sales_query)) {
+                                    $name = $row['name'];
+                                    $id = $row['id'];
+                                    ?>
+
+                                    <option value="<?php echo $id ?>">
+                                      <?= $name ?>
+                                    </option>
+
+                                  <?php } ?>
+                              </select> 
                             </div>
-                            </div>
-                            <div class="form-group">
+                          </div>
+                          <div class="form-group">
                             <label class="control-label col-sm-2" for="product_id">Product ID:</label>
                             <div class="col-sm-10">
-                                <input autocomplete="OFF" type="text" class="form-control" id="product_id" name="product_id">
+                              <input readonly autocomplete="OFF" type="text" class="form-control" id="product_id" name="product_id">
                             </div>
-                            </div>
-                            <div class="form-group">
+                          </div>
+                          <div class="form-group">
                             <label class="control-label col-sm-2" for="rate">Rate</label>
                             <div class="col-sm-10">          
-                                <input autocomplete="OFF" type="text" class="form-control" id="rate"  name="rate">
+                              <input readonly autocomplete="OFF" type="text" class="form-control" id="rate"  name="rate">
                             </div>
-                            </div>
-                            <div class="form-group">
+                          </div>
+                          <div class="form-group">
                             <label class="control-label col-sm-2" for="print_qty">Barcode Quantity</label>
                             <div class="col-sm-10">          
-                                <input autocomplete="OFF" type="print_qty" class="form-control" id="print_qty"  name="print_qty">
+                              <input readonly autocomplete="OFF" type="print_qty" class="form-control" id="print_qty"  name="print_qty">
                             </div>
-                            </div>
+                          </div>
 
-                            <div class="form-group">        
+                          <div class="form-group">  
+                            <div class="col-sm-10">
+                              <input readonly autocomplete="OFF" type="hidden" class="form-control" id="prod" name="prod">
+                              <input readonly autocomplete="OFF" type="hidden" class="form-control" id="cat" name="cat">
+                            </div>
+                          </div>
+
+                          <div class="form-group">        
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                              <button type="submit" class="btn btn-primary mr-2">GENERATE</button>
                             </div>
-                            </div>
+                          </div>
                         </form>
-                 
                 		</div>
               		</div>
 				</div>
@@ -355,6 +374,29 @@ if(isset($_POST['vendor']))
     <script src="../js/dashboard.js"></script>
     <script src="../js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
+    <script>
+      $(document).ready(function(){
+      $("#product").change(function(){
+        var id = $(this).find(":selected").val();
+        var dataString = 'id='+id;
+        $.ajax({
+          url: "GetData.php",
+          dataType: "json",
+          data: dataString,
+          cache: false,
+          success: function(prodData){
+            if (prodData) {
+              $('#prod').val(prodData.name);
+              $('#product_id').val(prodData.id);
+              $('#rate').val(prodData.mrp);
+              $('#cat').val(prodData.category);
+              $('#print_qty').val('30');
+            }
+          }
+        })
+      })
+     })
+    </script>
   </body>
 </html>
 
