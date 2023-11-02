@@ -145,6 +145,7 @@ if(isset($_POST['vendor']))
     <link rel="stylesheet" href="../css/vertical-layout-light/style.css" />
     <!-- endinject -->
     <link rel="shortcut icon" href="../images/favicon.png" />
+    
   </head>
   <body>
     <div class="container-scroller">
@@ -253,28 +254,7 @@ if(isset($_POST['vendor']))
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Heyy <?= $_SESSION["admin_session"] ?> </h3>
-                    <h6 class="font-weight-normal mb-0">
-                      GET ALL YOUR MONTHLY RECORDS HERE
-                    </h6>
-                  </div>
-                  <div class="col-12 col-xl-4">
-                    <div class="justify-content-end d-flex">
-                      <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                        
-                      
-                      <input type="date" id="selectedDate" name="selectedDate" class="form-control" required>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
             <div class="row">
               <div class="col-md-6 grid-margin stretch-card">
                 
@@ -285,12 +265,40 @@ if(isset($_POST['vendor']))
             <div class="row" style="margin-top: 20px;">
               	<div class="col-md-12 grid-margin stretch-card"> 
                 	<div class="card">
-                		<div class="card-body">
-							<form method="post" style="display: flex; flex-direction: column">
-								<input type="submit" class="btn btn-success" style="margin-bottom: 20px; background-color: #4B49AC" name="invoice" value="GET INVOICE RECORD OF THE MONTH">
-								<input type="submit" class="btn btn-success" style="margin-bottom: 20px; background-color: #4B49AC" name="stock" value="GET STOCK RECORD OF THE MONTH">
-								<input type="submit" class="btn btn-success" style="margin-bottom: 20px; background-color: #4B49AC" name="vendor" value="GET VENDOR RECORD OF THE MONTH">
-							</form>
+                		<div class="card-body" style="background: #F5F7FF">
+                        <h3 style="margin-left: 10px;margin-bottom: 50px">GENERATE ALL YOUR BARCODES</h3>
+                        <form class="form-horizontal" method="post" action="barcode.php" target="_blank">
+                            <div class="form-group">
+                            <label class="control-label col-sm-2" for="product">Product:</label>
+                            <div class="col-sm-10">
+                                <input autocomplete="OFF" type="text" class="form-control" id="product" name="product">
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <label class="control-label col-sm-2" for="product_id">Product ID:</label>
+                            <div class="col-sm-10">
+                                <input autocomplete="OFF" type="text" class="form-control" id="product_id" name="product_id">
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <label class="control-label col-sm-2" for="rate">Rate</label>
+                            <div class="col-sm-10">          
+                                <input autocomplete="OFF" type="text" class="form-control" id="rate"  name="rate">
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <label class="control-label col-sm-2" for="print_qty">Barcode Quantity</label>
+                            <div class="col-sm-10">          
+                                <input autocomplete="OFF" type="print_qty" class="form-control" id="print_qty"  name="print_qty">
+                            </div>
+                            </div>
+
+                            <div class="form-group">        
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            </div>
+                            </div>
+                        </form>
                  
                 		</div>
               		</div>

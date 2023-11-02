@@ -390,6 +390,12 @@ if (!isset($_SESSION["admin_session"])) {
                 <span class="menu-title">Reports</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./BarCodeGen.php">
+                <i class = "material-icons">book</i>
+                <span class="menu-title">Generate Bar-Codes</span>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>

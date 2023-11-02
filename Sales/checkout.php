@@ -63,19 +63,6 @@ include "../db.php";
 
         color: #fff;
       }
-      @media print {
-    /* Set the custom width and height for printed pages */
-    @page {
-        size: 80mm 200mm; /* Custom dimensions */
-    }
-    #slip {
-        transform: scale(0.1); /* Adjust the scale value as needed */
-    }
-
-    #printslipbtnid {
-        display: block;
-    }
-}
     </style>
   </head>
 
@@ -237,6 +224,53 @@ include "../db.php";
                           </select>
                         </div>
                       </div>
+                      
+                      <div class="form-group row">
+                        <label
+                          for="PaymentType"
+                          class="col-sm-3 col-form-label"
+                          >Payment Type</label
+                        >
+
+                        <div class="col-sm-9">
+                          <select class="form-control" id="paymentType" name="paymentType">
+                          <?php
+                            $sales_query = mysqli_query($conn, "select * from payment");
+                            while ($row = mysqli_fetch_array($sales_query)) {
+                              $mode = $row['mode'];
+                              $id = $row['id'];
+                              ?>
+
+                              <option value="<?php echo $id ?>">
+                                <?= $mode ?>
+                              </option>
+
+                            <?php } ?>
+                          </select>
+                        </div>
+                        
+                      </div>
+
+                      <div class="form-group row">
+                        <label
+                          for="PaymentDetails"
+                          class="col-sm-3 col-form-label"
+                          >Payment Type</label
+                        >
+
+                        <div class="col-sm-9">
+                        
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="mode"
+                            name="mode"
+                            readonly
+                            required
+                          />
+                        </div>
+                        
+                      </div>
 
                       <hr />
 
@@ -365,7 +399,7 @@ include "../db.php";
                   </div>
                   <div style="width=100%; display: flex; justify-content: center; align-item: center;">
 
-                        <button type="submit" id="printslipbtnid" name="checkoutbtn" onclick="printslip('slip')" class="btn btn-primary mr-2">Print Receipt And Checkout</button>
+                        <button type="submit" id="printslipbtnid" name="checkoutbtn" class="btn btn-primary mr-2">Print Receipt And Checkout</button>
 
                      </div>
                </div>
@@ -825,13 +859,56 @@ function remove_data(r){
         setTimeout(displayClock, 1000); 
      }
 </script>
+
+<script>
+
+     $(document).ready(function(){
+      $("#paymentType").change(function(){
+        var id = $(this).find(":selected").val();
+        var dataString = 'id='+id;
+        $.ajax({
+          url: "getPayments.php",
+          dataType: "json",
+          data: dataString,
+          cache: false,
+          success: function(payData){
+            if (payData) {
+              $('#mode').val(payData.alice);
+            }
+          }
+        })
+      })
+     })
+
+
+
+</script>
   </body>
 </html>
 
 <?php
 
- if (isset($_POST['checkoutbtn'])) {
 
+if(isset($_POST['samplebtn'])){
+
+  $paymentType = $_POST['paymentType'];  
+
+  $myquery = mysqli_query($conn, "select alice from payment where mode='$paymentType'");
+  if ($myquery) {
+    $row = mysqli_fetch_assoc($myquery);
+    $aliceValue = $row['alice'];
+
+    // Display the result within the div
+    echo '<script>document.getElementById("resultDiv").innerHTML = "' . $aliceValue . '";</script>';
+} else {
+    echo "Error executing the query: " . mysqli_error($conn);
+}
+
+}
+
+ if (isset($_POST['checkoutbtn'])) {
+   
+  $paymentType = $_POST['paymentType'];  
   $customer_name = $_POST['customerName'];
   $contact = $_POST['customerContact'];
   $sales_person_name = $_POST['selectSales'];

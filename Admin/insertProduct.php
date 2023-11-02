@@ -390,6 +390,12 @@ if (!isset($_SESSION["admin_session"])) {
                 <span class="menu-title">Reports</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./BarCodeGen.php">
+                <i class = "material-icons">book</i>
+                <span class="menu-title">Generate Bar-Codes</span>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>
@@ -491,46 +497,8 @@ if (!isset($_SESSION["admin_session"])) {
                 </div>
               </div>
 
+           
               <div class="col-md-6 grid-margin stretch-card">
-                <div class="card" style="width: 100%">
-                  <div class="card-body">
-                    <div style="
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        width: 100%;
-                      ">
-                      <h4 class="card-title">Barcode Of The Product</h4>
-                    </div>
-
-                    <p class="card-description"></p>
-                    <form class="forms-sample" method="POST">
-                      <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Barcode</label>
-                        <div class="col-sm-9">
-                          <input readonly name="barname" required type="text" class="form-control" id="barcodeid" />
-                        </div>
-                      </div>
-                    
-                    <div id='barcodeimg'>
-
-                    </div>
-
-                    <div style="display:flex; width: 100%; justify-content:center; align-items:center">
-                        <button type="submit" class="btn btn-primary mr-2" name="getbarcode" onclick="PrintImg()">
-                        
-                          Generate
-                        </button>
-                            </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              
-            
-            </div>
-            
-            <div class="col-md-6 grid-margin stretch-card">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
                     <div style="
@@ -568,6 +536,13 @@ if (!isset($_SESSION["admin_session"])) {
                   </div>
                 </div>
               </div>
+
+
+              
+            
+            </div>
+            
+            
             
             </div>
                             </div>
