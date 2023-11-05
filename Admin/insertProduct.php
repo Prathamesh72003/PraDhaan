@@ -441,19 +441,28 @@ if (!isset($_SESSION["admin_session"])) {
                             placeholder="Enter the item" />
                         </div>
                       </div>
+
                       <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">MRP</label>
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Buy Price</label>
+                        <div class="col-sm-9">
+                          <input name="buyprice" required type="text" class="form-control" id="exampleInputEmail2"
+                            placeholder="Enter the Buy Price" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Sale Price</label>
                         <div class="col-sm-9">
                           <input name="mrp" required type="text" class="form-control" id="exampleInputEmail2"
                             placeholder="Enter the Selling Price" />
                         </div>
                       </div>
-
+                      
                       <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Buy Price</label>
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Quantity</label>
                         <div class="col-sm-9">
-                          <input name="salesp" required type="text" class="form-control" id="exampleInputEmail2"
-                            placeholder="Enter the Buy Price" />
+                          <input name="units" required type="text" class="form-control" id="exampleInputEmail2"
+                            placeholder="Enter the Item Quantity" />
                         </div>
                       </div>
 
@@ -469,6 +478,27 @@ if (!isset($_SESSION["admin_session"])) {
 
                               <option>
                                 <?= $catname ?>
+                              </option>
+
+                            <?php } ?>
+
+
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group row">
+                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Vendor</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" id="vendorid" name="vendor">
+                            <?php
+                            $ven_query = mysqli_query($conn, "select * from vendor");
+                            while ($row = mysqli_fetch_array($ven_query)) {
+                              $vendor = $row['name'];
+                              ?>
+
+                              <option>
+                                <?= $vendor ?>
                               </option>
 
                             <?php } ?>
@@ -650,22 +680,39 @@ if(isset($_POST['genbarcode'])){
   
   $proname = $_POST['proname'];
   $mrp = $_POST['mrp'];
-  $salesprice = $_POST['salesp'];
+  $buyprice = $_POST['buyprice'];
   $cat = $_POST['category'];
-  $gst = $_POST['gst'];
-  $bracode = $proname.$cat;
+  $units = $_POST['units'];
+  $vendor = $_POST['vendor'];
+
+  $length = 12; 
+  $randomNumber = '';
+  for ($i = 0; $i < $length; $i++) {
+      $randomNumber .= mt_rand(0, 9); 
+  }
+
+  $barcode = $randomNumber;
 
   date_default_timezone_set('Asia/Kolkata'); 
   $currentDateTime = date('Y-m-d H:i:s'); 
 
-  $insert = mysqli_query($conn,"insert into `product`(`name`,`mrp`,`sale_price`,`unit`,`category`,`bar_code`,`cgst`,`sgst`,`status`,`created`) values('$proname','$mrp','$salesprice','0','$cat','$barcode','1.2','1.2','1','$currentDateTime')");
-  
+  $insert = mysqli_query($conn,"insert into `product`(`name`,`price`,`buy_price`,`unit`,`category`,`bar_code`,`created`) values('$proname','$mrp','$buyprice','$units','$cat','$barcode','$currentDateTime')");
+  $insto = mysqli_query($conn, "INSERT INTO `stock`(`item`, `quantity`, `vendor`, `price`, `date`) VALUES ('$proname','$units','$vendor','$buyprice','$currentDateTime')");
+
   if($insert){
    echo "<script>alert('Product added')</script>";
   }
 
   else{
     echo "<script>alert('Product not added')</script>";
+
+  }
+  if($insto){
+   echo "<script>alert('Stock added')</script>";
+  }
+
+  else{
+    echo "<script>alert('Stock not added')</script>";
 
   }
 

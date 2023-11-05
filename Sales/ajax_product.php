@@ -48,23 +48,6 @@ if(!empty($_POST['action_type'])){
 			
 		}
 		break;
-
-		case "get_detail_by_alias":
-		if(!empty($_POST['alias'])){
-			$alias = $conn->real_escape_string($_POST['alias']);
-			$sql = $conn->query("SELECT * FROM product WHERE alias = '$alias'");
-			$numRow = $sql->num_rows;
-			if($numRow > 0){
-				$row = $sql->fetch_array();
-				$detail = array('type'=>'Success','bar_code'=>$row['bar_code'],'name'=>$row['name'],'alias'=>$row['alias'],'mrp'=>$row['mrp'],'sale_price'=>$row['sale_price'],'av_quantity'=>$row['unit'],'igst'=>$row['igst']);
-				echo json_encode($detail);	
-			}else{
-				$detail = array('type'=>'Error');
-				echo json_encode($detail);
-			}
-			
-		}
-		break;	
 	}
 }
 ?>

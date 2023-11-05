@@ -17,7 +17,7 @@ date_default_timezone_set('Asia/Kolkata');
 $currentMonth = date('m');
 $currentYear = date('Y'); 
 
-$sqlinvoice ="select * from Invoice WHERE MONTH(datetime) = $currentMonth AND YEAR(datetime) = $currentYear";
+$sqlinvoice ="select * from invoices WHERE MONTH(invoice_date) = $currentMonth AND YEAR(invoice_date) = $currentYear";
 $sqlstock ="select * from stock WHERE MONTH(date) = $currentMonth AND YEAR(date) = $currentYear";
 $sqlvendor ="select * from vendor WHERE MONTH(date) = $currentMonth AND YEAR(date) = $currentYear";
 

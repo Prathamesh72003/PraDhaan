@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 02, 2023 at 11:11 AM
+-- Generation Time: Nov 05, 2023 at 02:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -58,29 +58,39 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`id`, `category_name`) VALUES
 (1, 'Earrings'),
 (2, 'Necklace'),
-(3, 'Nose');
+(3, 'Nose'),
+(4, 'New');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Invoice`
+-- Table structure for table `invoices`
 --
 
-CREATE TABLE `Invoice` (
+CREATE TABLE `invoices` (
   `invoice_id` int(11) NOT NULL,
-  `customer_name` longtext DEFAULT NULL,
-  `contact` longtext DEFAULT NULL,
-  `sales_person_name` longtext DEFAULT NULL,
-  `total_amount` longtext DEFAULT NULL,
-  `datetime` datetime DEFAULT NULL
+  `customer_name` varchar(100) DEFAULT NULL,
+  `invoice_date` date DEFAULT NULL,
+  `salesperson` longtext NOT NULL,
+  `payment_type` longtext NOT NULL,
+  `paymentacc` longtext NOT NULL,
+  `total_amount` bigint(20) DEFAULT NULL,
+  `discounted_price` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `Invoice`
+-- Table structure for table `invoice_details`
 --
 
-INSERT INTO `Invoice` (`invoice_id`, `customer_name`, `contact`, `sales_person_name`, `total_amount`, `datetime`) VALUES
-(1, 'Pra', '7843087679', 'Prathameshhhh', '170.00', '2023-11-02 10:45:07');
+CREATE TABLE `invoice_details` (
+  `detail_id` int(11) NOT NULL,
+  `invoice_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `total_cost` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -111,14 +121,11 @@ INSERT INTO `payment` (`id`, `mode`, `alice`) VALUES
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
-  `mrp` decimal(10,3) NOT NULL,
-  `sale_price` bigint(20) NOT NULL,
+  `price` bigint(20) NOT NULL,
+  `buy_price` bigint(20) NOT NULL,
   `unit` bigint(20) NOT NULL,
   `category` longtext NOT NULL,
   `bar_code` varchar(200) NOT NULL,
-  `cgst` decimal(10,2) NOT NULL,
-  `sgst` decimal(10,2) NOT NULL,
-  `status` tinytext NOT NULL,
   `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -126,29 +133,12 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `mrp`, `sale_price`, `unit`, `category`, `bar_code`, `cgst`, `sgst`, `status`, `created`) VALUES
-(1, 'NATH', 150.000, 120, 0, 'Earrings', '1Ear', 1.20, 1.20, '1', '2023-11-02 08:16:48'),
-(2, 'Earrings2', 100.000, 50, 0, 'Earrings', '2Ear', 1.20, 1.20, '1', '2023-11-02 08:17:31'),
-(3, 'NoseNath', 120.000, 70, 0, 'Nose', '', 1.20, 1.20, '1', '2023-11-02 08:17:54');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sales`
---
-
-CREATE TABLE `sales` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sales`
---
-
-INSERT INTO `sales` (`id`, `name`, `password`) VALUES
-(1, 'try', '1234');
+INSERT INTO `product` (`id`, `name`, `price`, `buy_price`, `unit`, `category`, `bar_code`, `created`) VALUES
+(1, 'Nath', 220, 200, 200, 'Nose', '311113321206', '2023-11-05 17:38:50'),
+(2, 'GoldNecklace', 350, 330, 140, 'Necklace', '684883575203', '2023-11-05 17:39:26'),
+(3, 'EarRings', 120, 100, 150, 'Earrings', '724867528429', '2023-11-05 17:39:52'),
+(4, 'ProdForVendor', 250, 200, 100, 'Earrings', '879011362179', '2023-11-05 17:45:51'),
+(5, 'HAHA', 350, 330, 150, 'Earrings', '346564206598', '2023-11-05 17:48:09');
 
 -- --------------------------------------------------------
 
@@ -171,7 +161,7 @@ CREATE TABLE `sales_person` (
 
 INSERT INTO `sales_person` (`id`, `name`, `mobile_number`, `address`, `identity_proof`, `items_sold`) VALUES
 (1, 'Prathameshhhh', '78430877777', 'Flat 61,E2 Building,Green Acre Society, Bibwewadi', '1234565789', '6'),
-(2, 'Dhanashreeee', '8208143115', 'Punee', '9876543218928', '6');
+(2, 'Dhanashreeee', '1221322332', 'Punee', '9876543218928', '6');
 
 -- --------------------------------------------------------
 
@@ -183,7 +173,6 @@ CREATE TABLE `stock` (
   `id` int(255) NOT NULL,
   `item` varchar(255) NOT NULL,
   `quantity` int(255) NOT NULL,
-  `category` varchar(255) NOT NULL,
   `vendor` varchar(255) NOT NULL,
   `price` int(255) NOT NULL,
   `date` datetime NOT NULL
@@ -193,11 +182,10 @@ CREATE TABLE `stock` (
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`id`, `item`, `quantity`, `category`, `vendor`, `price`, `date`) VALUES
-(1, 'JHUMKA', 20, 'earrings', 'VendorWithDate', 5000, '2023-10-20 20:30:17'),
-(2, 'JHUMKA', 40, 'earrings', 'VendorWithDate', 5000, '2023-09-20 20:30:55'),
-(3, 'JHUMKA', 40, 'earrings', 'vendorB', 12000, '2023-10-11 23:29:10'),
-(4, 'newprod', 32, '', 'VendorWithDate', 3000, '2023-10-18 17:36:47');
+INSERT INTO `stock` (`id`, `item`, `quantity`, `vendor`, `price`, `date`) VALUES
+(1, 'Nath', 20, 'SampleVendor', 200, '2023-11-05 18:32:06'),
+(2, 'GoldNecklace', 20, 'SampleVendor', 330, '2023-11-05 18:32:40'),
+(3, 'HAHA', 50, 'SampleVendor', 330, '2023-11-05 18:33:15');
 
 -- --------------------------------------------------------
 
@@ -219,11 +207,7 @@ CREATE TABLE `vendor` (
 --
 
 INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `active`, `date`) VALUES
-(1, 'vendorA', 2147483647, 'pune', '1', '2023-10-09 09:51:17'),
-(2, 'vendorB', 2147483647, 'pune', '1', '2023-09-09 09:51:17'),
-(3, 'vendorC', 2147483647, 'dhule', '1', '2023-09-09 09:51:17'),
-(4, 'VendorWithDate', 8919201012, 'pune', '1', '2023-09-18 15:54:35'),
-(5, 'VendorWithDate2', 8919201012, 'pune', '1', '2023-09-18 16:09:42');
+(1, 'SampleVendor', 9112272004, 'Pune', '1', '2023-11-03 13:10:43');
 
 --
 -- Indexes for dumped tables
@@ -242,10 +226,18 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Invoice`
+-- Indexes for table `invoices`
 --
-ALTER TABLE `Invoice`
+ALTER TABLE `invoices`
   ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoice_details`
+--
+ALTER TABLE `invoice_details`
+  ADD PRIMARY KEY (`detail_id`),
+  ADD KEY `invoice_id` (`invoice_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `payment`
@@ -257,12 +249,6 @@ ALTER TABLE `payment`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `sales`
---
-ALTER TABLE `sales`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -297,13 +283,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `Invoice`
+-- AUTO_INCREMENT for table `invoices`
 --
-ALTER TABLE `Invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `invoices`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `invoice_details`
+--
+ALTER TABLE `invoice_details`
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -315,13 +307,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `sales`
---
-ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sales_person`
@@ -333,13 +319,24 @@ ALTER TABLE `sales_person`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vendor`
 --
 ALTER TABLE `vendor`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `invoice_details`
+--
+ALTER TABLE `invoice_details`
+  ADD CONSTRAINT `invoice_details_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`),
+  ADD CONSTRAINT `invoice_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

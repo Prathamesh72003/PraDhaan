@@ -185,11 +185,11 @@ else{
                   <div class="col-md-6 mb-4 stretch-card transparent">
                     <div class="card card-tale">
                       <div class="card-body">
-                        <p class="mb-4">Today’s Checkouts</p>
+                        <p class="mb-4">Today's Checkouts</p>
                         <?php
                           date_default_timezone_set('Asia/Kolkata');
                           $current_date = date('Y-m-d'); 
-                            $query = "SELECT COUNT(*) AS record_count FROM Invoice where DATE(datetime) = '$current_date'";
+                            $query = "SELECT COUNT(*) AS record_count FROM invoices where DATE(invoice_date) = '$current_date'";
                             $result = mysqli_query($conn, $query);
 
                             if ($result) {
@@ -236,7 +236,7 @@ else{
                           date_default_timezone_set('Asia/Kolkata');
                           $currentMonth = date('m');
                           $currentYear = date('Y'); 
-                          $query = mysqli_query($conn, "SELECT SUM(total_amount) AS total_checkout_money FROM Invoice WHERE MONTH(datetime) = $currentMonth AND YEAR(datetime) = $currentYear");
+                          $query = mysqli_query($conn, "SELECT SUM(total_amount) AS total_checkout_money FROM invoices WHERE MONTH(invoice_date) = $currentMonth AND YEAR(invoice_date) = $currentYear");
 
                           if ($query) {
                           $result = mysqli_fetch_assoc($query);
@@ -264,7 +264,7 @@ else{
               </div>
             </div>
             <div class="row" style="margin-top: 20px;">
-              <div class="col-md-7 grid-margin stretch-card"> 
+              <div class="col-md-12 grid-margin stretch-card"> 
                 <div class="card">
                 <div class="card-body">
                  
@@ -272,11 +272,10 @@ else{
                     <table class="table table-striped table-borderless">
                       <thead>
                         <tr>
-                          <th>Product</th>
-                          <th>Contact</th>
-                          <th>Amount</th>
-                          <th>Sold By</th>
+                          <th>Customer Name</th>
                           <th>Date</th>
+                          <th>Amount</th>
+                          <th>Discounted Price</th>
                          
                         </tr>
                       </thead>
@@ -284,23 +283,21 @@ else{
                           
                       <?php  
                       
-                      $query = mysqli_query($conn, "SELECT * FROM Invoice ORDER BY datetime DESC LIMIT 8");
+                      $query = mysqli_query($conn, "SELECT * FROM invoices ORDER BY invoice_date DESC LIMIT 8");
                       while ($row = mysqli_fetch_array($query)) {
                         
                         $cust_name = $row['customer_name'];
-                        $contact = $row['contact'];
                         $totalamt = $row['total_amount'];
-                        $date = $row['datetime'];
-                        $soldby = $row['sales_person_name'];
+                        $date = $row['invoice_date'];
+                        $disc = $row['discounted_price'];
       
                       ?>
 
                         <tr>
                           <td><?= $cust_name ?></td>
-                          <td><?= $contact ?></td>
-                          <td class="font-weight-bold"><?= $totalamt ?></td>
-                          <td><?= $soldby ?></td>
                           <td><?= $date ?></td>
+                          <td class="font-weight-bold"><?= $totalamt ?></td>
+                          <td><?= $disc ?></td>
                           
                           </td>
                         </tr>
@@ -314,28 +311,7 @@ else{
                 </div>
               </div>
             </div>
-              <div class="col-md-5 grid-margin stretch-card">
-
-                <div class="card">
-                  <div class="card-body">
-
-                    <div class="d-flex justify-content-between">
-                      <p class="card-title">Sales Report</p>
-                      <a href="#" class="text-info">View all</a>
-                    </div>
-                    <!-- <p class="font-weight-500">
-                      The total number of sessions within the date range. It is
-                      the period time a user is actively engaged with your
-                      website, page or app, etc
-                    </p> -->
-                    <div
-                      id="sales-legend"
-                      class="chartjs-legend mt-4 mb-2"
-                    ></div>
-                    <canvas id="sales-chart"></canvas>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </div>
           <!-- content-wrapper ends -->

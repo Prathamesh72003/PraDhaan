@@ -194,9 +194,102 @@ if (!isset($_SESSION["admin_session"])) {
                   </div>
                 </form>
               </div>
+ <!-- to be removed -->
+              <div class="list-wrapper px-3">
+                <ul class="d-flex flex-column-reverse todo-list">
+                  <li>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" />
 
+                        Team review meeting at 3.00 PM
+                      </label>
+                    </div>
 
-        
+                    <i class="remove ti-close"></i>
+                  </li>
+
+                  <li>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" />
+
+                        Prepare for presentation
+                      </label>
+                    </div>
+
+                    <i class="remove ti-close"></i>
+                  </li>
+
+                  <li>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" />
+
+                        Resolve all the low priority tickets due today
+                      </label>
+                    </div>
+
+                    <i class="remove ti-close"></i>
+                  </li>
+
+                  <li class="completed">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" checked />
+
+                        Schedule meeting for next week
+                      </label>
+                    </div>
+
+                    <i class="remove ti-close"></i>
+                  </li>
+
+                  <li class="completed">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="checkbox" type="checkbox" checked />
+
+                        Project review
+                      </label>
+                    </div>
+
+                    <i class="remove ti-close"></i>
+                  </li>
+                </ul>
+              </div>
+
+              <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">
+                Events
+              </h4>
+
+              <div class="events pt-4 px-3">
+                <div class="wrapper d-flex mb-2">
+                  <i class="ti-control-record text-primary mr-2"></i>
+
+                  <span>Feb 11 2018</span>
+                </div>
+
+                <p class="mb-0 font-weight-thin text-gray">
+                  Creating component page build a js
+                </p>
+
+                <p class="text-gray mb-0">The total number of sessions</p>
+              </div>
+
+              <div class="events pt-4 px-3">
+                <div class="wrapper d-flex mb-2">
+                  <i class="ti-control-record text-primary mr-2"></i>
+
+                  <span>Feb 7 2018</span>
+                </div>
+
+                <p class="mb-0 font-weight-thin text-gray">
+                  Meeting with Alisa
+                </p>
+
+                <p class="text-gray mb-0">Call Sarah Graves</p>
+              </div>
             </div>
 
             <!-- To do section tab ends -->
@@ -264,6 +357,12 @@ if (!isset($_SESSION["admin_session"])) {
                 <span class="menu-title">Reports</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./BarCodeGen.php">
+                <i class = "material-icons">book</i>
+                <span class="menu-title">Generate Bar-Codes</span>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="./Accounts.php">
                 <i class="material-icons">currency_rupee</i>
@@ -289,103 +388,155 @@ if (!isset($_SESSION["admin_session"])) {
             <div class="row">
               <div class="col-md-12 stretch-card grid-margin">
                 <div
-                  class="card" style = "height: auto;"
+                  class="card"
+                  style="height: 300px; background-color: #7da0fa"
                 >
                   <div class="card-body">
-                    
-                  <h6 class="mt-5"><b>Search Product</b></h6>
-                    <div class="input-group mb-4 mt-3">
-                      <div class="form-outline">
-                        <input type="text" id="getName"/>
-                      </div>
+                    <div
+                      style="
+                        margin-top: 70px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                      "
+                    >
+                      <p class="card-title text-white" style="font-size: 35px">
+                        Add Stocks
+                      </p>
+                      <a href="./basic_elements.php"
+                        ><button style="background: none; border: none">
+                          <i class="material-icons mysize">add_circle</i>
+                        </button></a
+                      >
                     </div>
-
-                  <div class="table-responsive">
-                    <table class="table table-striped table-borderless">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>BarCode</th>
-                          <th>Quanity</th>
-                          <th>Add Stock</th>
-                         
-                        </tr>
-                      </thead>
-                      <tbody id="showdata">
-                          
-                      <?php  
-                      
-                      $query = mysqli_query($conn, "SELECT * FROM product ORDER BY created");
-                      while ($row = mysqli_fetch_array($query)) {
-                        $id = $row['id'];
-                        $name = $row['name'];
-                        $barcode = $row['bar_code'];
-                        $quantity = $row['unit'];
-      
-                      ?>
-
-                        <tr id="<?php echo $id; ?>">
-                          <td><?= $name ?></td>
-                          <td><?= $barcode ?></td>
-                          <td data-target="addunits"><?= $quantity ?></td>
-                          <td><a href="#" data-role="update" data-id="<?php echo $id; ?>">ADD</a></td>
-                          
-                          </td>
-                        </tr>
-
-                        <?php } ?>
-                      </tbody>
-                    </table>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+            <div class="row">
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Add Stock</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="">Number of units Added: </label>
-            <input type="text" name="addunits" id="addunits" class="form-control">
-          </div>
-          <div class="form-group">
-          <select class="form-control" id="vendorid" name="vendor">
-                            <?php
-                            $ven_query = mysqli_query($conn, "select * from vendor");
-                            while ($row = mysqli_fetch_array($ven_query)) {
-                              $vendor = $row['name'];
-                              ?>
+            <?php
+                
+                $query = mysqli_query($conn, "select * from stock");
+                while ($row = mysqli_fetch_array($query)) {
+                  $id = $row['id'];
+                  $item = $row['item'];
+                  $quantity = $row['quantity'];
+                  $category = $row['category'];
+                  $vendor = $row['vendor'];
+                  $price = $row['price'];
+                  $ddate = $row['date'];
+                
 
-                              <option>
-                                <?= $vendor ?>
-                              </option>
+                ?>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card" style="margin-left=10px">
+                  <div class="card-body" style="border: 1px solid grey; border-radius: 20px">
+                    <div class="table-responsive">
+                      <table class="table table-borderless">
+                        
 
-                            <?php } ?>
+                        <tbody>
+                          <tr>
+                            <td class="pl-0">Sr. No</td>
+                            <td style="background-color:#fff; border-top-left-radius: 10px;border-top-right-radius: 10px">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $id ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
 
+                          <tr>
+                            <td class="pl-0">Name</td>
 
-                          </select>
-          </div>
-          <input type="hidden" name="prodId" id="prodId">
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <a href="#" id="save" class="btn btn-default">Update</a>
-        </div>
-      </div>
-      
-    </div>
-  </div>
+                            <td style="background-color:#fff">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $item ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
 
-            
+                          <tr>
+                            <td class="pl-0">Quantity</td>
+
+                            <td style="background-color:#fff">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $quantity ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="pl-0">Category</td>
+
+                            <td style="background-color:#fff">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $category ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="pl-0">Vendor</td>
+
+                            <td style="background-color:#fff">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $vendor ?></span
+                                >
+                              </p>
+                            </td>
+
+                          </tr>
+
+                          <tr>
+                            <td class="pl-0">Price</td>
+
+                            <td style="background-color:#fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $price ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="pl-0">Date</td>
+
+                            <td style="background-color:#fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px">
+                              <p class="mb-0">
+                                <span class="font-weight-bold mr-2"><?= $ddate ?></span
+                                >
+                              </p>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php } ?>
+            </div>
+
+            <div style="width: 100%; text-align: right">
+              <a
+                ><Text
+                  style="
+                    color: rgb(70, 20, 189);
+                    cursor: pointer;
+                    padding: 10px;
+                  "
+                  >View All</Text
+                ></a
+              >
+            </div>
           </div>
 
           <!-- content-wrapper ends -->
@@ -452,58 +603,6 @@ if (!isset($_SESSION["admin_session"])) {
     <script src="../js/dashboard.js"></script>
 
     <script src="../js/Chart.roundedBarCharts.js"></script>
-    
-    <script>
-
-      // search
-      $(document).ready(function(){
-   $('#getName').on("keyup", function(){
-     var getName = $(this).val();
-     $.ajax({
-       method:'POST',
-       url:'searchajax.php',
-       data:{name:getName},
-       success:function(response)
-       {
-            $("#showdata").html(response);
-       } 
-     });
-   });
-  });
-
-      var temp;
-    $(document).ready(function() {
-        $(document).on('click', 'a[data-role=update]', function() {
-            var id = $(this).data('id')
-            var addunits = $('#'+id).children('td[data-target=addunits]').text();
-            temp = addunits;
-            // $('#addunits').val(addunits);
-            $('#prodId').val(id);
-            $('#myModal').modal('toggle')
-        });
-
-        $('#save').click(function() {
-            var id = $('#prodId').val();
-            var addunits = $('#addunits').val();
-            var selectElement = document.getElementById("vendorid");
-            var vendor = selectElement.value;
-            
-            $.ajax({
-                url: 'tupd.php',
-                method: 'post',
-                data: { id: id, addunits: addunits, vendor: vendor},
-                success: function(response) {
-                    $('#'+id).children('td[data-target=addunits]').text(parseInt(addunits) + parseInt(temp));
-                    $('#addunits').val("");
-                    $('#myModal').modal('toggle')
-                } 
-            });
-});
-
-
-    });
-</script>
-
   </body>
 </html>
 

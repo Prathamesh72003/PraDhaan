@@ -1,6 +1,9 @@
 <?php
 include "../db.php";
+
+
 ?>
+
 
 <!DOCTYPE html>
 
@@ -14,13 +17,12 @@ include "../db.php";
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
 
-    <title>Product Checkout</title>
+    <title>PraDhaan Admin</title>
 
     <!-- plugins:css -->
 
@@ -60,7 +62,6 @@ include "../db.php";
     <style>
       i.mysize {
         font-size: 6em;
-
         color: #fff;
       }
     </style>
@@ -74,15 +75,13 @@ include "../db.php";
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-5" href="././sales_dash.php"
+          <a class="navbar-brand brand-logo mr-5" href="./sales_dash.php"
             ><img src="../images/logo.svg" class="mr-2" alt="logo"
           /></a>
-
-          <a class="navbar-brand brand-logo-mini" href="././sales_dash.php"
+          <a class="navbar-brand brand-logo-mini" href="./sales_dash.php"
             ><img src="../images/logo-mini.svg" alt="logo"
           /></a>
         </div>
-
         <div
           class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
         >
@@ -99,14 +98,18 @@ include "../db.php";
       <!-- partial -->
 
       <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.php -->
+
+        <!-- partial -->
+
+        <!-- partial:partials/_sidebar.php -->
 
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            
+          
             <li class="nav-item">
               <a class="nav-link" href="./checkout.php">
-                <i class="material-icons">shopping_cart</i>
-
+                <i class="material-icons">shopping_cart </i>
                 <span class="menu-title">Checkout</span>
               </a>
             </li>
@@ -134,106 +137,54 @@ include "../db.php";
         <!-- partial -->
 
         <div class="main-panel">
-          <div class="content-wrapper" style="width: 100%">
-            <div
-              class="row"
-              style="justify-content: center; align-items: center"
-            >
-              <div class="col-md-7 grid-margin stretch-card">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 stretch-card grid-margin">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
-                    <div
-                      style="
-                        display: flex;
-
-                        justify-content: center;
-
-                        align-items: center;
-
-                        width: 100%;
-                      "
-                    >
-                      <h4 class="card-title">Checkout For An Item</h4>
+                  <form method="post" action="process_data.php">
+                    <div class="form-group">
+                        <label for="customer_name">Customer Name:</label>
+                        <input type="text" class="form-control" name="customer_name" required>
                     </div>
+            <div class="form-group">
+                <label for="invoice_date">Invoice Date:</label>
+                <input type="date" class="form-control" name="invoice_date" id="invoice_date" required>
+                <script>
+                    // Function to format the current date as "YYYY-MM-DD"
+                    function getCurrentDate() {
+                        const today = new Date();
+                        const year = today.getFullYear();
+                        const month = String(today.getMonth() + 1).padStart(2, '0');
+                        const day = String(today.getDate()).padStart(2, '0');
+                        return `${year}-${month}-${day}`;
+                    }
 
-                    <p class="card-description"></p>
+                    // Set the default value for the "Invoice Date" input
+                    document.getElementById('invoice_date').value = getCurrentDate();
+                </script>
+            </div>
 
-                    <form
-                      class="forms-sample"
-                      method="POST"
-                    >
-                      <hr />
-                      <div class="form-group row">
-                        <label
-                          for="customerName"
-                          class="col-sm-3 col-form-label"
-                          >Customer Name</label
-                        >
+            <div class="form-group">
+                <label for="selectSales">Sales Person</label>
+                <select class="form-control" id="selectSales" name="selectSales">
+                    <?php
+                      $sales_query = mysqli_query($conn, "select * from sales_person");
+                      while ($row = mysqli_fetch_array($sales_query)) {
+                        $name = $row['name'];
+                        ?>
 
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="customerName"
-                            name="customerName"
-                            placeholder="Enter the name"
-                            required
-                          />
-                        </div>
-                      </div>
+                        <option>
+                          <?= $name ?>
+                        </option>
 
-                      <div class="form-group row">
-                        <label
-                          for="customerContact"
-                          class="col-sm-3 col-form-label"
-                          >Customer Contact</label
-                        >
-
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="customerContact"
-                            name="customerContact"
-                            placeholder="Enter the Mobile Number"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label
-                          for="selectSales"
-                          class="col-sm-3 col-form-label"
-                          >Salesperson Name</label
-                        >
-
-                        <div class="col-sm-9">
-                          <select class="form-control" id="selectSales" name="selectSales">
-                          <?php
-                            $sales_query = mysqli_query($conn, "select * from sales_person");
-                            while ($row = mysqli_fetch_array($sales_query)) {
-                              $name = $row['name'];
-                              ?>
-
-                              <option>
-                                <?= $name ?>
-                              </option>
-
-                            <?php } ?>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <div class="form-group row">
-                        <label
-                          for="PaymentType"
-                          class="col-sm-3 col-form-label"
-                          >Payment Type</label
-                        >
-
-                        <div class="col-sm-9">
-                          <select class="form-control" id="paymentType" name="paymentType">
+                      <?php } ?>
+                  </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="paymentType">Payment</label>
+                <select class="form-control" id="paymentType" name="paymentType">
                           <?php
                             $sales_query = mysqli_query($conn, "select * from payment");
                             while ($row = mysqli_fetch_array($sales_query)) {
@@ -247,169 +198,94 @@ include "../db.php";
 
                             <?php } ?>
                           </select>
-                        </div>
-                        
-                      </div>
 
-                      <div class="form-group row">
-                        <label
-                          for="PaymentDetails"
-                          class="col-sm-3 col-form-label"
-                          >Payment Type</label
-                        >
-
-                        <div class="col-sm-9">
-                        
-                        <input
-                            type="text"
+                          <input
+                            type="hidden"
                             class="form-control"
                             id="mode"
                             name="mode"
                             readonly
                             required
                           />
-                        </div>
-                        
-                      </div>
+            </div>
 
-                      <hr />
+            <table class="table table-bordered" id="product_table">
+        
+            <tr>
+                <th>Barcode</th>
+                <th>Product</th>
+                <th>selling_price</th>
+                <th>Available unit</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="barcode[]" class="barcode">
+                </td>
+                <td>
+                    <select name="products[]" class="product">
+                    <?php
+                        // Your database connection details
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "gati";
 
-                      <table id="app">
-                  <thead>
-                    <th>Barcode</th>
-                    <th>Name</th>
-                    <th>Alias</th>
-                    <th>MRP</th>
-                    <th>Quantity</th>
-                    <th>Available Quantity</th>
-                    <th>Sale Price</th>
-                  </thead>
-                  <tbody>
-                  <tr id="1">
-                    <td>
-                      <input type="text" id="bar_code_1" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,1)" name="bar_code[]" />
-                    </td>
-                    <td>
-                      <select name="name[]" id="name_1" class="form-control" onchange="get_detail_name(this.value,1)">
-                        <option value="">Choose Product</option>
-                        <?php $sqlP = $conn->query("SELECT * FROM product WHERE status = 1 ORDER BY name ASC");
-                        while($rowP = $sqlP->fetch_array()){?>
-                        <option value="<?php echo $rowP['name']?>"><?php echo $rowP['name'];?></option>
-                        <?php }?>
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" id="alias_1" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail_alias(this.value,1)" name="alias[]" />
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" readonly id="mrp_1" name="mrp[]" />
-                    </td>
-                    <td>  
-                      <input type="number" class="form-control" onkeyup="calculate_price(this.value,1)" step="0.001" id="quantity_1" name="quantity[]" />
-                    </td>
-                    <td>
-                      <input type="text" readonly class="form-control" id="av_quantity_1" name="av_quantity[]" />
-                    </td>
-                    <td>
-                      <input type="number" class="form-control" onkeyup="get_quantity(this.value,1)" step="0.01" id="sale_price_1" name="sale_price[]" />
-                      <input type="hidden" class="form-control" id="sale_price_org_1" name="sale_price_org[]" />
-                      <input type="hidden" class="form-control" id="igst_1" name="igst[]" />
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+                        // Create a connection
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+                        // Fetch products from the 'products' table
+                        $stmt = $conn->query("SELECT id, name FROM product");
 
-                      <hr />
+                        // Display product options in the select element
+                        while ($row = $stmt->fetch()) {
+                            echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                </td>
+                <td>
+                    <input readonly type="text" name="selling_price[]" class="selling_price">
+                </td>
+                <td>
+                    <input readonly type="text" name="availunits[]" class="avail_units">
+                </td>
+                <td>
+                    <input type="number" name="quantities[]" class="quantity" min="1">
+                </td>
+                <td>
+                    <input readonly type="text" name="total_price[]" class="total_price">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" onclick="deleteProductRow(this)">Delete</button>
+                </td>
+            </tr>
 
-                      <div
-                        class="form-check form-check-flat form-check-primary"
-                      ></div>
+            
+            <tr id="total_row">
+                <td colspan="5"><strong>Total</strong></td>
+                <td><input readonly type="text" id="grand_total" name="grand_total" class="grand_total" value="0"></td>
+            </tr>
 
-                      <div
-                        style="
-                          width: 100%;
+            <tr id="disc_row">
+                <td colspan="5"><strong>Discounted Price</strong></td>
+                <td><input type="text" id="disc" name="disc" class="disc"></td>
+            </tr>
+           
+            </table>
 
-                          display: flex;
+            <button type="button" style="margin-top: 30px" class="btn btn-primary" onclick="addProductRow()">Add Product</button><br><br>
 
-                          justify-content: center;
-
-                          align-items: center;
-                        "
-                      >
-                        <button type="button" id="add" class="btn btn-primary mr-2">
-                          ADD ITEM
-                        </button>
-                      </div>
-                    <!-- </form> -->
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Generate Invoice">
+            </div>
+        </form>
                   </div>
                 </div>
               </div>
-              <div class="col-md-5  mt-4" style="background-color:#fff;" id="slip">
-               <!-- <form method="POST"> -->
-               <div class="p-4">
-                  <div class="text-center">
-                     <h4>Receipt</h4>
-                  </div>
-                  <span class="mt-4"> Time : </span><span  class="mt-4" id="time"></span>
-                  <div class="row">
-                     <div class="col-xs-6 col-sm-6 col-md-6 ">
-                        <span id="day"></span> : <span id="year"></span>
-                     </div>
-                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                          <?php 
-
-                            $order_id;
-                          
-                          ?>
-                        
-                        <p id="ordernumid">Order No: <?= $_GET['id'] ?></p>
-                     </div>
-                  </div>
-                  <div class="row">
-                     </span>
-                     <table id="receipt_bill" class="table">
-                        <thead>
-                           <tr>
-                              <th> No.</th>
-                              <th>Product Name</th>
-                              <th>Quantity</th>
-                              <th class="text-center">Price</th>
-                              <th class="text-center">Total</th>
-                           </tr>
-                        </thead>
-                        <tbody id="new" >
-                         
-                        </tbody>
-                        
-                        <tr>
-                           <td> </td>
-                           <td> </td>
-                           <td> </td>
-                           <td class="text-right text-dark">
-                              <h5><strong>Gross Total: ₹ </strong></h5>
-                           </td>
-                           <td class="text-center text-danger">
-                              <h5 id="totalPayment"><strong> </strong></h5>
-                              <input type="hidden" name="totalPaymentInput" id="totalPaymentInput" display>
-                              
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-                  <div style="width=100%; display: flex; justify-content: center; align-item: center;">
-
-                        <button type="submit" id="printslipbtnid" name="checkoutbtn" class="btn btn-primary mr-2">Print Receipt And Checkout</button>
-
-                     </div>
-               </div>
-
-               </form>
-               
-            </div>
-
-            <!-- <a href='checkout.php?id=<?= $order_id ?>'>Reset</a> -->
-
             </div>
           </div>
 
@@ -424,11 +300,9 @@ include "../db.php";
               <span
                 class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
                 >Hand-crafted & made with
-
                 <i class="ti-heart text-danger ml-1"></i
               ></span>
             </div>
-
             <div
               class="d-sm-flex justify-content-center justify-content-sm-between"
             >
@@ -482,387 +356,7 @@ include "../db.php";
 
     <script>
 
-      function printslip(paravalue){
-        document.getElementById('printslipbtnid').style.display = 'none';
-        var backup = document.body.innerHTML;
-        var divcontent = document.getElementById(paravalue).innerHTML;
-        document.body.innerHTML = divcontent;
-        window.print();
-        document.body.innerHTML = backup;
-        document.getElementById('printslipbtnid').style.display = 'block';
-      }
-
-  // THIS DA CODE FOR BARCODE SCANNING
-
-  function RestrictSpace() {
-    if (event.keyCode == 32) {
-        return false;
-    }
-}
-
-function default_focus(){
-    document.getElementById('bar_code_1').focus();
-}
-
-function get_detail(b,n){
-    var nx = n+1;
-    
-    $.ajax({  
-        type:"POST",  
-        url:"ajax_product.php",  
-        data:{bar_code:b,action_type:"get_detail"},
-        success:function(data){
-            var data = $.parseJSON(data);
-            if(data.type == 'Success'){
-                
-                //Check Duplicate Value
-                var barCode = document.querySelectorAll("#dd input[name='bar_code[]']");
-                for(key=0; key < barCode.length - 1; key++)  {
-                    if(barCode[key].value == data.bar_code){
-                        alert("Already Exist");
-                        document.getElementById('bar_code_'+n).value = '';
-                        document.getElementById('bar_code_'+n).focus();
-                        return false;
-                    }                   
-                }
-                
-                var newRow = $('#app tbody').append('<tr id='+nx+'><td><input type="text"  class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,'+nx+')" id="bar_code_'+nx+'" name="bar_code[]" required /></td><td><select name="name[]" id="name_'+nx+'" class="form-control" onchange="get_detail_name(this.value,'+nx+')" required ><option value="">Choose Product</option><?php $sqlP = $conn->query("SELECT * FROM product WHERE status = 1 ORDER BY name ASC"); while($rowP = $sqlP->fetch_array()){?><option value="<?php echo $rowP['name'];?>"><?php echo $rowP['name'];?></option><?php }?></select></td><td><input type="text" id="alias_'+nx+'" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail_alias(this.value,'+nx+')" name="alias[]" /></td><td><input type="text"  id="mrp_'+nx+'" readonly class="form-control" name="mrp[]" required /></td><td><input type="number" id="quantity_'+nx+'" step="0.001" class="form-control" onkeyup="calculate_price(this.value,'+nx+')" name="quantity[]" required /></td><td><input type="text" id="av_quantity_'+nx+'" readonly class="form-control" name="av_quantity[]" /></td><td><input type="number" id="sale_price_'+nx+'"  class="form-control" onkeyup="get_quantity(this.value,'+nx+')" name="sale_price[]" step="0.01" required /><input type="hidden" class="form_control" id="sale_price_org_'+nx+'" name="sale_price_org[]" /><input type="hidden" class="form-control" id="igst_'+nx+'" name="igst[]" /></td><td><a href="#" onclick="remove_data('+ nx +')" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row" data-toggle="tooltip" data-original-title="Remove">Delete</a></td></tr>');
-                document.getElementById('name_'+n).value = data.name;
-                document.getElementById('alias_'+n).value = data.alias;
-                document.getElementById('mrp_'+n).value = data.sale_price;
-                document.getElementById('quantity_'+n).value = 1;
-                document.getElementById('av_quantity_'+n).value = data.av_quantity;
-                document.getElementById('sale_price_'+n).value = data.sale_price;
-                document.getElementById('sale_price_org_'+n).value = data.sale_price;
-                document.getElementById('igst_'+n).value = data.igst;
-                
-                //Get
-
-				
-				//Get Value For Total
-				var salePrice = document.querySelectorAll("#dd input[name='sale_price[]']");
-				var newA = [];
-				for(key=0; key < salePrice.length; key++)  {
-					if(salePrice[key].value != ''){
-						newA.push(parseFloat(salePrice[key].value));
-					}
-				}
-				var aac = newA.reduce(getSum);
-				document.getElementById('getTotal').value = Math.round(parseFloat(aac));
-				
-				document.getElementById('bar_code_'+nx).focus();
-			}else{
-				alert("Barcode Not Found");
-				document.getElementById('bar_code_'+n).value = '';
-				document.getElementById('bar_code_'+n).focus();
-				return false;
-			}
-		}  
-	});
-}
-
-function get_detail_name(i,n){
-	var nx = n+1;
-	
-	$.ajax({  
-		type:"POST",  
-		url:"ajax_product.php",  
-		data:{name:i,action_type:"get_detail_by_name"},
-		success:function(data){ 
-			var data = $.parseJSON(data);
-			if(data.type == 'Success'){
-				
-				//Check Duplicate Value
-				var barCode = document.querySelectorAll("#dd input[name='bar_code[]']");
-				for(key=0; key < barCode.length - 1; key++)  {
-					if(barCode[key].value == data.bar_code){
-						alert("Already Exist");
-						return false;
-					}					
-				}
-								
-				//Appending New Row
-				var newRow = $('#app tbody').append('<tr id='+nx+'><td><input type="text"  class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,'+nx+')" id="bar_code_'+nx+'" name="bar_code[]" required /></td><td><select name="name[]" id="name_'+nx+'" class="form-control" onchange="get_detail_name(this.value,'+nx+')" required ><option value="">Choose Product</option><?php $sqlP = $conn->query("SELECT * FROM product WHERE status = 1 ORDER BY name ASC"); while($rowP = $sqlP->fetch_array()){?><option value="<?php echo $rowP['name'];?>"><?php echo $rowP['name'];?></option><?php }?></select></td><td><input type="text" id="alias_'+nx+'" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail_alias(this.value,'+nx+')" name="alias[]" /></td><td><input type="text"  id="mrp_'+nx+'" readonly class="form-control" name="mrp[]" required /></td><td><input type="number" id="quantity_'+nx+'" step="0.001" class="form-control" onkeyup="calculate_price(this.value,'+nx+')" name="quantity[]" required /></td><td><input type="text" id="av_quantity_'+nx+'" readonly class="form-control" name="av_quantity[]" /></td><td><input type="number" id="sale_price_'+nx+'" onkeyup="get_quantity(this.value,'+nx+')"  class="form-control" name="sale_price[]" step="0.01" required /><input type="hidden" class="form-control" id="sale_price_org_'+nx+'" name="sale_price_org[]" /><input type="hidden" class="form-control" id="igst_'+nx+'" name="igst[]" /></td><td><a href="#" onclick="remove_data('+ nx +')" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row" data-toggle="tooltip" data-original-title="Remove">Delete</a></td></tr>');
-				document.getElementById('bar_code_'+n).value = data.bar_code;
-				document.getElementById('alias_'+n).value = data.alias;
-				document.getElementById('mrp_'+n).value = data.mrp;
-				document.getElementById('quantity_'+n).value = 1;
-				document.getElementById('av_quantity_'+n).value = data.av_quantity;
-				document.getElementById('sale_price_'+n).value = data.sale_price;
-				document.getElementById('sale_price_org_'+n).value = data.sale_price;
-				document.getElementById('igst_'+n).value = data.igst;
-				
-				//Get Value For Total
-				var salePrice = document.querySelectorAll("#dd input[name='sale_price[]']");
-				var newA = [];
-				for(key=0; key < salePrice.length; key++)  {
-					if(salePrice[key].value != ''){
-						newA.push(parseFloat(salePrice[key].value));
-					}
-				}
-				var aac = newA.reduce(getSum);
-				document.getElementById('getTotal').value = Math.round(parseFloat(aac));
-				
-				document.getElementById('name_'+nx).focus();
-			}else{
-				alert("Prduct Not Found!");
-			}
-		}  
-	});
-}
-
-function get_detail_alias(a,n){
-	var nx = n+1;
-	
-	$.ajax({  
-		type:"POST",  
-		url:"ajax_product.php",  
-		data:{alias:a,action_type:"get_detail_by_alias"},
-		success:function(data){
-			
-			var data = $.parseJSON(data);
-			if(data.type == 'Success'){
-				
-				//Check Duplicate Value
-				var aliasA = document.querySelectorAll("#dd input[name='alias[]']");
-				for(key=0; key < aliasA.length - 1; key++)  {
-					if(aliasA[key].value == data.alias){
-						alert("Alias Exist");
-						document.getElementById('alias_'+n).value = '';
-						document.getElementById('alias_'+n).focus();
-						return false;
-					}					
-				}
-				
-				var newRow = $('#app tbody').append('<tr id='+nx+'><td><input type="text"  class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail(this.value,'+nx+')" id="bar_code_'+nx+'" name="bar_code[]" required /></td><td><select name="name[]" id="name_'+nx+'" class="form-control" onchange="get_detail_name(this.value,'+nx+')" required ><option value="">Choose Product</option><?php $sqlP = $conn->query("SELECT * FROM product WHERE status = 1 ORDER BY name ASC"); while($rowP = $sqlP->fetch_array()){?><option value="<?php echo $rowP['name'];?>"><?php echo $rowP['name'];?></option><?php }?></select></td><td><input type="text" id="alias_'+nx+'" class="form-control" onkeypress="return RestrictSpace()" onchange="get_detail_alias(this.value,'+nx+')" name="alias[]" /></td><td><input type="text"  id="mrp_'+nx+'" readonly class="form-control" name="mrp[]" required /></td><td><input type="number" id="quantity_'+nx+'" step="0.001" class="form-control" onkeyup="calculate_price(this.value,'+nx+')" name="quantity[]" required /></td><td><input type="text" id="av_quantity_'+nx+'" readonly class="form-control" name="av_quantity[]" /></td><td><input type="number" id="sale_price_'+nx+'"  class="form-control" onkeyup="get_quantity(this.value,'+nx+')" name="sale_price[]" step="0.01" required /><input type="hidden" class="form-control" id="sale_price_org_'+nx+'" name="sale_price_org[]" /><input type="hidden" class="form-control" id="igst_'+nx+'" name="igst[]" /></td><td><a href="#" onclick="remove_data('+ nx +')" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row" data-toggle="tooltip" data-original-title="Remove">Delete</a></td></tr>');
-				document.getElementById('name_'+n).value = data.name;
-				document.getElementById('bar_code_'+n).value = data.bar_code;
-				document.getElementById('mrp_'+n).value = data.mrp;
-				document.getElementById('quantity_'+n).value = 1;
-				document.getElementById('av_quantity_'+n).value = data.av_quantity;
-				document.getElementById('sale_price_'+n).value = data.sale_price;
-				document.getElementById('sale_price_org_'+n).value = data.sale_price;
-				document.getElementById('igst_'+n).value = data.igst;
-				
-				//Get Value For Total
-				var salePrice = document.querySelectorAll("#dd input[name='sale_price[]']");
-				var newA = [];
-				for(key=0; key < salePrice.length; key++)  {
-					if(salePrice[key].value != ''){
-						newA.push(parseFloat(salePrice[key].value));
-					}
-				}
-				var aac = newA.reduce(getSum);
-				document.getElementById('getTotal').value = Math.round(parseFloat(aac));
-				
-				document.getElementById('bar_code_'+nx).focus();
-			}else{
-				alert("Alias Not Found");
-				document.getElementById('alias_'+n).value = '';
-				document.getElementById('alias_'+n).focus();
-				return false;
-			}
-		}  
-	});
-}
-
-function calculate_price(q,n){
-	var sale_price_org = document.getElementById('sale_price_org_'+n).value;
-	var sp = document.getElementById('sale_price_'+n).value;
-	//var total = document.getElementById('getTotal').value;
-	var gt = document.getElementById('sale_price_'+n).value = (sale_price_org * q).toFixed(2);
-	
-	
-	var salePrice = document.querySelectorAll("#dd input[name='sale_price[]']");
-
-	var newA = [];
-	for(key=0; key < salePrice.length ; key++)  {
-		if(salePrice[key].value != ''){
-			newA.push(parseFloat(salePrice[key].value));
-		}
-	}
-	
-	//alert(newA);
-	var aac = newA.reduce(getSum);
-	document.getElementById('getTotal').value = Math.round(parseFloat(aac));
-	//alert(aac);
-	//document.getElementById('getTotal').value = Math.round((parseFloat(total) - parseFloat(sp)) + parseFloat(gt));
-}
-
-function getSum(total, num) {
-  return parseFloat(total + num);
-}
-function get_quantity(p,n){
-	
-	var salePrice = document.querySelectorAll("#dd input[name='sale_price[]']");
-
-	var newA = [];
-	for(key=0; key < salePrice.length; key++)  {
-		if(salePrice[key].value != ''){
-			newA.push(parseFloat(salePrice[key].value));
-		}
-	}
-	
-	//alert(newA);
-	var aac = newA.reduce(getSum);
-	document.getElementById('getTotal').value = Math.round(parseFloat(aac));
-	//alert(aac);
-	
-	
-	var sale_price_org = document.getElementById('sale_price_org_'+n).value;
-	var spgF = parseFloat(sale_price_org);
-	var sp = document.getElementById('sale_price_'+n).value;
-	var spF = parseFloat(sp);
-	document.getElementById('quantity_'+n).value = (p/parseFloat(sale_price_org)).toFixed(3);
-		
-}
-
-function remove_data(r){
-	$('#'+r).remove();
-	//Get Value For Total
-	var salePrice = document.querySelectorAll("#dd input[name='sale_price[]']");
-	var newA = [];
-	for(key=0; key < salePrice.length; key++)  {
-		if(salePrice[key].value != ''){
-			newA.push(parseFloat(salePrice[key].value));
-		}
-	}
-	var aac = newA.reduce(getSum);
-	document.getElementById('getTotal').value = Math.round(parseFloat(aac));
-	
-}
-
-
-
-  // BARCODE SCANNING ENDS HERE
-
-
-
-  // RECIEPT PART STARTS HERE
-
-   $(document).ready(function(){
-     $('#vegitable').change(function() {
-      var id = $(this).find(':selected')[0].id;
-       $.ajax({
-          method:'POST',
-          url:'fetch_product.php',
-          data:{id:id},
-          dataType:'json',
-          success:function(data)
-            {
-               $('#price').text(data.product_price);
-
-               //$('#qty').text(data.product_qty);
-            }
-       });
-     });
-   
-     //add to cart 
-     var count = 1;
-     $('#add').on('click',function(){
-   
-        var name = $('#name_1').val();
-        var qty = $('#quantity_1').val();
-        var price = $('#sale_price_1').val();
-
-        $('#bar_code_1').val('');
-        $('#name_1').val('');
-        $('#alias_1').val('');
-        $('#mrp_1').val('');
-        $('#quantity_1').val('');
-        $('#av_quantity_1').val('');
-        $('#sale_price_1').val('');
-
-        if(qty == 0)
-        {
-           var erroMsg =  '<span class="alert alert-danger ml-5">Minimum Qty should be 1 or More than 1</span>';
-           $('#errorMsg').html(erroMsg).fadeOut(9000);
-        }
-        else
-        {
-           billFunction();
-        }
-        
-        function billFunction()
-          {
-          var total = 0;
-      
-          $("#receipt_bill").each(function () {
-          var total =  price*qty;
-          var subTotal = 0;
-          subTotal += parseInt(total);
-         
-          var table =   '<tr><td>'+ count +'</td><td>'+ name + '</td><td>' + qty + '</td><td>' + price + '</td><td><strong><input type="hidden" id="total" value="'+total+'">' +total+ '</strong></td></tr>';
-          $('#new').append(table)
-
-            var total = 0;
-            $('tbody tr td:last-child').each(function() {
-                var value = parseInt($('#total', this).val());
-                if (!isNaN(value)) {
-                    total += value;
-                }
-            });
-             $('#subTotal').text(total);
-              
-              var Tax = (total * 1) / 1;
-              $('#taxAmount').text(Tax.toFixed(2));
-
-             // Code for Total Payment Amount
-
-             var Subtotal = $('#subTotal').text();
-             var taxAmount = $('#taxAmount').text();
-
-             var totalPayment = parseFloat(Subtotal) + parseFloat(taxAmount);
-             $('#totalPayment').text(total.toFixed(2));
-             $('#totalPaymentInput').val(total.toFixed(2));
-       
-         });
-         count++;
-        } 
-       });
-           // Code for year 
-            
-           var currentdate = new Date(); 
-             var datetime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear();
-                $('#year').text(datetime);
-
-           // Code for extract Weekday     
-                function myFunction()
-                 {
-                    var d = new Date();
-                    var weekday = new Array(7);
-                    weekday[0] = "Sunday";
-                    weekday[1] = "Monday";
-                    weekday[2] = "Tuesday";
-                    weekday[3] = "Wednesday";
-                    weekday[4] = "Thursday";
-                    weekday[5] = "Friday";
-                    weekday[6] = "Saturday";
-
-                    var day = weekday[d.getDay()];
-                    return day;
-                    }
-                var day = myFunction();
-                $('#day').text(day);
-     });
-</script>
-
-<!-- // Code for TIME -->
-<script>
-    window.onload = displayClock();
-
-     function displayClock(){
-       var time = new Date().toLocaleTimeString();
-       document.getElementById("time").innerHTML = time;
-        setTimeout(displayClock, 1000); 
-     }
-</script>
-
-<script>
-
-     $(document).ready(function(){
+$(document).ready(function(){
       $("#paymentType").change(function(){
         var id = $(this).find(":selected").val();
         var dataString = 'id='+id;
@@ -881,59 +375,123 @@ function remove_data(r){
      })
 
 
+       $(document).ready(function() {
+    $('#product_table').on('change', '.barcode', function() {
+        var barcode = $(this).val();
+        var $row = $(this).closest('tr');
 
-</script>
+        $.ajax({
+            type: 'GET',
+            url: 'fetch_product_data.php',
+            data: { barcode: barcode },
+            success: function(data) {
+                var productData = JSON.parse(data);
+                $row.find('.selling_price').val(productData.selling_price);
+                $row.find('.avail_units').val(productData.avail_units);
+                
+                var productSelect = $row.find('select[name="products[]"]');
+                if (productData.product_name) {
+                    productSelect.find('option').each(function() {
+                        if ($(this).text() === productData.product_name) {
+                            $(this).prop('selected', true);
+                            productSelect.val(productData.product_id);
+                        }
+                    });
+                }
+                calculateTotalPrice($row);
+            },
+            error: function() {
+                alert('Failed to fetch product data.');
+            }
+        });
+    });
+
+    $('#product_table').on('change', '.quantity', function() {
+        calculateTotalPrice($(this).closest('tr'));
+    });
+});
+
+
+        function calculateTotalPrice($row) {
+            var quantity = parseFloat($row.find('.quantity').val());
+            var price = parseFloat($row.find('.selling_price').val()); // Use selling_price if available
+            if (!isNaN(quantity) && !isNaN(price)) {
+                $row.find('.total_price').val(parseInt(quantity * price));
+            }
+
+            var total = 0;
+            $('.total_price').each(function() {
+                total += parseInt($(this).val()) || 0;
+            });
+            $('#grand_total').val(total);
+                
+        }
+
+        function deleteProductRow(btn) {
+            var row = btn.parentNode.parentNode;
+            var priceToDelete = parseInt(row.querySelector('.total_price').value) || 0;
+
+            row.parentNode.removeChild(row);
+
+            // Recalculate the total after deleting the row
+            var total = 0;
+            var totalPrices = document.querySelectorAll('.total_price');
+            totalPrices.forEach(function(price) {
+                total += parseInt(price.value) || 0;
+            });
+
+            // Subtract the deleted row's price from the total
+            total -= priceToDelete;
+
+            document.getElementById('grand_total').value = total;
+        }
+
+
+
+        function addProductRow() {
+            fetch('get_products.php')
+                .then(response => response.json())
+                .then(data => {
+                    let productOptions = '';
+                    data.forEach(product => {
+                        productOptions += `<option value="${product.id}">${product.name}</option>`;
+                    });
+
+                    var table = document.getElementById("product_table");
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+                    var cell7 = row.insertCell(6);
+
+                    cell1.innerHTML = '<input type="text" name="barcode[]" class="barcode">';
+                    cell2.innerHTML = `<select name="products[]" class="product">${productOptions}</select>`;
+                    cell3.innerHTML = '<input readonly type="text" name="selling_price[]" class="selling_price">';
+                    cell4.innerHTML = '<input readonly type="text" name="availunits[]" class="avail_units">';
+                    cell5.innerHTML = '<input type="number" name="quantities[]" class="quantity" min="1">';
+                    cell6.innerHTML = '<input readonly type="text" name="total_price[]" class="total_price">';
+                    cell7.innerHTML = '<button type="button" onclick="deleteProductRow(this)" class="btn btn-danger">Delete</button>';
+
+                    var table = document.getElementById("product_table");
+                    var totalRow = document.getElementById("total_row");
+                    var discRow = document.getElementById("disc_row");
+                    if (totalRow) {
+                        table.appendChild(totalRow); 
+                        table.appendChild(discRow); 
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
   </body>
 </html>
-
 <?php
-
-
-if(isset($_POST['samplebtn'])){
-
-  $paymentType = $_POST['paymentType'];  
-
-  $myquery = mysqli_query($conn, "select alice from payment where mode='$paymentType'");
-  if ($myquery) {
-    $row = mysqli_fetch_assoc($myquery);
-    $aliceValue = $row['alice'];
-
-    // Display the result within the div
-    echo '<script>document.getElementById("resultDiv").innerHTML = "' . $aliceValue . '";</script>';
-} else {
-    echo "Error executing the query: " . mysqli_error($conn);
-}
-
-}
-
- if (isset($_POST['checkoutbtn'])) {
-   
-  $paymentType = $_POST['paymentType'];  
-  $customer_name = $_POST['customerName'];
-  $contact = $_POST['customerContact'];
-  $sales_person_name = $_POST['selectSales'];
-  $total_amount = $_POST['totalPaymentInput'];
-  date_default_timezone_set('Asia/Kolkata'); 
-  $currentDateTime = date('Y-m-d H:i:s'); 
-
-  $sql = "INSERT INTO Invoice (customer_name, contact, sales_person_name, total_amount, datetime)
-  VALUES ('$customer_name', '$contact', '$sales_person_name', $total_amount, '$currentDateTime')";
-
-  $usql = "UPDATE sales_person SET items_sold = items_sold + 1 WHERE name = '$sales_person_name'";
-
-  if ($conn->query($sql) === TRUE && $conn->query($usql) === TRUE ) {
-    // if (TRUE) {
-    echo "<script>alert('Record inserted successfully.')</script>"; 
-    // $order_id = $order_id + 1;
-    // echo "<script>alert('Record number " . $order_id . "')</script>";
-
-    // echo "<script>document.getElementById('ordernumid').innerHTML = '$order_id';</script>";
-  } else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
-  }  
-
- } 
-
 if(isset($_POST['logoutt'])){
   session_start();
    unset($_SESSION['sales_session']);
@@ -941,6 +499,5 @@ if(isset($_POST['logoutt'])){
    echo "<script>window.open('../index.php','_self')</script>";
    //exit();
 }
-
 
 ?>
