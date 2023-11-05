@@ -233,12 +233,7 @@ if(isset($_POST['vendor']))
                 <span class="menu-title">Reports</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./BarCodeGen.php">
-                <i class = "material-icons">book</i>
-                <span class="menu-title">Generate Bar-Codes</span>
-              </a>
-            </li>
+            
             <li class="nav-item" style="margin: 20px; display: flex;align-item: center">
               <form method="POST">
                 <!-- <a class="nav-link"> -->

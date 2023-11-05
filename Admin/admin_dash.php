@@ -128,12 +128,6 @@ else{
                 <span class="menu-title">Reports</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./BarCodeGen.php">
-                <i class = "material-icons">book</i>
-                <span class="menu-title">Generate Bar-Codes</span>
-              </a>
-            </li>
             <li class="nav-item" style="margin: 20px; display: flex;align-item: center">
               <form method="POST">
                 <!-- <a class="nav-link"> -->
@@ -251,15 +245,7 @@ else{
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                      <div class="card-body">
-                        <p class="mb-4">Number of Clients</p>
-                        <p class="fs-30 mb-2">47033</p>
-                        <p>0.22% (30 days)</p>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
             </div>
