@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 05, 2023 at 02:13 PM
+-- Generation Time: Nov 06, 2023 at 08:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -78,6 +78,13 @@ CREATE TABLE `invoices` (
   `discounted_price` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `customer_name`, `invoice_date`, `salesperson`, `payment_type`, `paymentacc`, `total_amount`, `discounted_price`) VALUES
+(3, 'Customer1', '2023-11-06', 'Prathameshhhh', '1', '', 2450, 2450);
+
 -- --------------------------------------------------------
 
 --
@@ -91,6 +98,14 @@ CREATE TABLE `invoice_details` (
   `quantity` int(11) DEFAULT NULL,
   `total_cost` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoice_details`
+--
+
+INSERT INTO `invoice_details` (`detail_id`, `invoice_id`, `product_id`, `quantity`, `total_cost`) VALUES
+(1, 3, 5, 2, 700.00),
+(2, 3, 2, 5, 1750.00);
 
 -- --------------------------------------------------------
 
@@ -135,10 +150,10 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `name`, `price`, `buy_price`, `unit`, `category`, `bar_code`, `created`) VALUES
 (1, 'Nath', 220, 200, 200, 'Nose', '311113321206', '2023-11-05 17:38:50'),
-(2, 'GoldNecklace', 350, 330, 140, 'Necklace', '684883575203', '2023-11-05 17:39:26'),
+(2, 'GoldNecklace', 350, 330, 135, 'Necklace', '684883575203', '2023-11-05 17:39:26'),
 (3, 'EarRings', 120, 100, 150, 'Earrings', '724867528429', '2023-11-05 17:39:52'),
 (4, 'ProdForVendor', 250, 200, 100, 'Earrings', '879011362179', '2023-11-05 17:45:51'),
-(5, 'HAHA', 350, 330, 150, 'Earrings', '346564206598', '2023-11-05 17:48:09');
+(5, 'HAHA', 350, 330, 168, 'Earrings', '8901277017437', '2023-11-05 17:48:09');
 
 -- --------------------------------------------------------
 
@@ -185,7 +200,8 @@ CREATE TABLE `stock` (
 INSERT INTO `stock` (`id`, `item`, `quantity`, `vendor`, `price`, `date`) VALUES
 (1, 'Nath', 20, 'SampleVendor', 200, '2023-11-05 18:32:06'),
 (2, 'GoldNecklace', 20, 'SampleVendor', 330, '2023-11-05 18:32:40'),
-(3, 'HAHA', 50, 'SampleVendor', 330, '2023-11-05 18:33:15');
+(3, 'HAHA', 50, 'SampleVendor', 330, '2023-11-05 18:33:15'),
+(4, 'HAHA', 20, 'SampleVendor', 330, '2023-11-06 23:43:41');
 
 -- --------------------------------------------------------
 
@@ -207,7 +223,7 @@ CREATE TABLE `vendor` (
 --
 
 INSERT INTO `vendor` (`id`, `name`, `mobile_no`, `address`, `active`, `date`) VALUES
-(1, 'SampleVendor', 9112272004, 'Pune', '1', '2023-11-03 13:10:43');
+(2, 'SampleVendor', 8919201012, 'pune', '1', '2023-01-07 00:33:55');
 
 --
 -- Indexes for dumped tables
@@ -289,13 +305,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -319,13 +335,13 @@ ALTER TABLE `sales_person`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vendor`
 --
 ALTER TABLE `vendor`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
