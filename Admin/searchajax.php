@@ -3,7 +3,7 @@
   
    $name = $_POST['name'];
   
-   $sql = "SELECT * FROM product WHERE bar_code LIKE '$name%'";  
+   $sql = "SELECT * FROM product WHERE bar_code LIKE '$name%' OR name LIKE '$name%'";  
    $query = mysqli_query($conn,$sql);
    $data='';
    while($row = mysqli_fetch_assoc($query))

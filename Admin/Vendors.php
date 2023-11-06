@@ -226,7 +226,10 @@ if (!isset($_SESSION["admin_session"])) {
               <div class="col-md-3 stretch-card grid-margin">
                 <div class="card" style="margin-left=10px;">
                   <div class="card-body" style="border: 1px solid grey; border-radius: 20px;background-color: <?php echo $color; ?>">
+                  <div style="display:flex; flex-direction: column">
                   <a href='Vendors.php?id=<?= $id ?>' class='btn'>Delete</a>
+                  <a href='getvenrep.php?id=<?= $id ?>' class='btn' style="margin-top: 40px">Report</a>
+                  </div>
                     <div class="table-responsive">
                       <table class="table table-borderless">
                         

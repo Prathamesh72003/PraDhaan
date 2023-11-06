@@ -113,6 +113,13 @@ include "../db.php";
                 <span class="menu-title">Checkout</span>
               </a>
             </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="./getinvoice.php">
+                <i class="material-icons">receipt_long </i>
+                <span class="menu-title">Invoices</span>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="././sales_dash.php">
