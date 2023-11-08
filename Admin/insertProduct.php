@@ -680,7 +680,7 @@ if(isset($_POST['genbarcode'])){
   $units = $_POST['units'];
   $vendor = $_POST['vendor'];
 
-  $length = 12; 
+  $length = 6; 
   $randomNumber = '';
   for ($i = 0; $i < $length; $i++) {
       $randomNumber .= mt_rand(0, 9); 
@@ -703,7 +703,7 @@ if(isset($_POST['genbarcode'])){
 
   }
   if($insto){
-   echo "<script>alert('Stock added')</script>";
+  //  echo "<script>alert('Stock added')</script>";
   }
 
   else{
