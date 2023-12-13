@@ -17,7 +17,7 @@ $grandtotal = $_POST['grand_total'];
 
 if ($_POST['disc']) {
     $disc_price = $_POST['disc'];
-}else{
+} else {
     $disc_price = $grandtotal;
 }
 
@@ -33,8 +33,10 @@ try {
     $total_amount = 0;
 
     // Insert invoice details without total amount first to get the generated invoice ID
-    $stmt_invoice->execute([$customer_name, $invoice_date,$salesp, $payment_type,$payment, 0, $disc_price]);
+    $stmt_invoice->execute([$customer_name, $invoice_date, $salesp, $payment_type, $payment, 0, $disc_price]);
     $last_invoice_id = $conn->lastInsertId();
+
+
 
     // Loop through each product and its quantity
     foreach ($products as $index => $product_id) {
@@ -69,6 +71,9 @@ try {
     $stmt_update_invoice = $conn->prepare("UPDATE invoices SET total_amount = ? WHERE invoice_id = ?");
     $stmt_update_invoice->execute([$total_amount, $last_invoice_id]);
 
+    $stmt_update_sales_person = $conn->prepare("UPDATE sales_person set items_sold=items_sold+1 where name=?");
+    $stmt_update_sales_person->execute([$salesp]);
+
     // Commit the transaction
     $conn->commit();
     echo "Invoice generated successfully";
@@ -85,4 +90,3 @@ try {
 
 // Close the connection
 $conn = null;
-?>
