@@ -11,9 +11,9 @@ $id = $_GET['id'];
 
 $squery = mysqli_query($conn, "SELECT * FROM vendor WHERE id = '$id'");
 while ($row = mysqli_fetch_array($squery)) {
-    $vendorname = $row['name']; 
-    $adr = $row['address']; 
-    $date = $row['date']; 
+    $vendorname = $row['name'];
+    $adr = $row['address'];
+    $date = $row['date'];
 }
 
 
@@ -59,14 +59,18 @@ $pdf->Cell(40, 10, 'Date', 1, 1, 'C');
 
 $pdf->SetFont('Arial', '', 10);
 
-$vquery = mysqli_query($conn, "SELECT * FROM stock WHERE vendor = '$vendorname'");
+$month = $_GET['month'];
+$year  = $_GET['year'];
 
+$vquery = mysqli_query($conn, "SELECT id, item, quantity as 'total_qty', quantity*price as 'total_price', date from stock where vendor='$vendorname' and DATE_FORMAT(date, '%m')=$month and DATE_FORMAT(date, '%YYYY')=$year;");
+
+$i = 1;
 while ($row = mysqli_fetch_array($vquery)) {
     $stockid = $row['id'];
     $item = $row['item'];
-    $units = $row['quantity'];
-    $singleUnitPrice = $row['price'];
-    $stockDate = $row['date'];
+    $units = $row['total_qty'];
+    $singleUnitPrice = $row['total_price'];
+    $stockDate = date('Y-m-d', strtotime($row['date']));
 
     $pdf->Cell(20, 10, $stockid, 1, 0, 'C');
     $pdf->Cell(70, 10, $item, 1, 0);
@@ -77,5 +81,3 @@ while ($row = mysqli_fetch_array($vquery)) {
 
 
 $pdf->Output();
-
-?>
