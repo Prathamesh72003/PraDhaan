@@ -1,10 +1,5 @@
 <?php
 include "../db.php";
-session_start();
-if (!isset($_SESSION["admin_session"])) {
-  header("Location: ../index.php");
-
-} else {
 
   ?>
 <!DOCTYPE html>
@@ -244,24 +239,16 @@ if (!isset($_SESSION["admin_session"])) {
                   class="card" style = "height: auto;"
                 >
                   <div class="card-body">
-                    
-                  <h6 class="mt-5"><b>Search Product</b></h6>
-                    <div class="input-group mb-4 mt-3">
-                      <div class="form-outline">
-                        <input type="text" id="getName"/>
-                      </div>
-                    </div>
-
+                  
                   <div class="table-responsive">
                     <table class="table table-striped table-borderless">
                       <thead>
                         <tr>
-                          <th>Product</th>
-                          <th>BarCode</th>
-                          <th>Quanity</th>
-                          <th>Selling Price</th>
-                          <th>Add Stock</th>
-                          <th>Update Selling Price</th>
+                          <th>Invoice Id</th>
+                          <th>Customer Name</th>
+                          <th>Invoice Date</th>
+                          <th>Dicounted Price</th>
+                          <th>Get Bill</th>
                          
                         </tr>
                       </thead>
@@ -269,23 +256,21 @@ if (!isset($_SESSION["admin_session"])) {
                           
                       <?php  
                       
-                      $query = mysqli_query($conn, "SELECT * FROM product ORDER BY created");
+                      $query = mysqli_query($conn, "SELECT * FROM invoices ORDER BY invoice_date");
                       while ($row = mysqli_fetch_array($query)) {
-                        $id = $row['id'];
-                        $name = $row['name'];
-                        $barcode = $row['bar_code'];
-                        $price = $row['buy_price'];
-                        $quantity = $row['unit'];
+                        $id = $row['invoice_id'];
+                        $name = $row['customer_name'];
+                        $date = $row['invoice_date'];
+                        $disc = $row['discounted_price'];
       
                       ?>
 
                         <tr id="<?php echo $id; ?>">
+                          <td><?= $id ?></td>
                           <td><?= $name ?></td>
-                          <td><?= $barcode ?></td>
-                          <td data-target="addunits"><?= $quantity ?></td>
-                          <td data-target="updatedprice"><?= $price ?></td>
-                          <td><a href="#" data-role="update" data-id="<?php echo $id; ?>">ADD</a></td>
-                          <td><a href="#" data-role="updatepr" data-id="<?php echo $id; ?>">UPDATE</a></td>
+                          <td><?= $date ?></td>
+                          <td><?= $disc ?></td>
+                          <td><a href="billreciept.php?id=<?php echo $id ?>">Print</a></td>
                           
                           </td>
                         </tr>
@@ -315,10 +300,6 @@ if (!isset($_SESSION["admin_session"])) {
             <input type="text" name="addunits" id="addunits" class="form-control">
           </div>
           <div class="form-group">
-            <label for="">Price of single unit: </label>
-            <input type="text" name="newprice" id="newprice" class="form-control">
-          </div>
-          <div class="form-group">
           <select class="form-control" id="vendorid" name="vendor">
                             <?php
                             $ven_query = mysqli_query($conn, "select * from vendor");
@@ -340,31 +321,6 @@ if (!isset($_SESSION["admin_session"])) {
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <a href="#" id="save" class="btn btn-default">Update</a>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="upricemodel" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Update Stock</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="">New Price: </label>
-            <input type="text" name="updatedprice" id="updatedprice" class="form-control">
-          </div>
-          <input type="hidden" name="prodId" id="prodId">
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <a href="#" id="saveprice" class="btn btn-default">Update</a>
         </div>
       </div>
       
@@ -471,45 +427,17 @@ if (!isset($_SESSION["admin_session"])) {
         $('#save').click(function() {
             var id = $('#prodId').val();
             var addunits = $('#addunits').val();
-            var newprice = $('#newprice').val();
             var selectElement = document.getElementById("vendorid");
             var vendor = selectElement.value;
             
             $.ajax({
                 url: 'tupd.php',
                 method: 'post',
-                data: { id: id, addunits: addunits, vendor: vendor, newprice:newprice},
+                data: { id: id, addunits: addunits, vendor: vendor},
                 success: function(response) {
                     $('#'+id).children('td[data-target=addunits]').text(parseInt(addunits) + parseInt(temp));
                     $('#addunits').val("");
                     $('#myModal').modal('toggle')
-                } 
-            });
-});
-
-
-    });
-    $(document).ready(function() {
-        $(document).on('click', 'a[data-role=updatepr]', function() {
-            var id = $(this).data('id')
-            var updatedprice = $('#'+id).children('td[data-target=updatedprice]').text();
-            temp = updatedprice;
-            $('#prodId').val(id);
-            $('#upricemodel').modal('toggle')
-        });
-
-        $('#saveprice').click(function() {
-            var id = $('#prodId').val();
-            var updatedprice = $('#updatedprice').val();
-            
-            $.ajax({
-                url: 'tupdprice.php',
-                method: 'post',
-                data: { id: id, updatedprice: updatedprice},
-                success: function(response) {
-                    $('#'+id).children('td[data-target=updatedprice]').text(parseInt(updatedprice));
-                    $('#updatedprice').val("");
-                    $('#upricemodel').modal('toggle')
                 } 
             });
 });
@@ -534,6 +462,6 @@ if (isset($_POST['logoutt'])) {
   //exit();
 }
 
-}
+
 
 ?>

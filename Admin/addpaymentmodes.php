@@ -244,24 +244,14 @@ if (!isset($_SESSION["admin_session"])) {
                   class="card" style = "height: auto;"
                 >
                   <div class="card-body">
-                    
-                  <h6 class="mt-5"><b>Search Product</b></h6>
-                    <div class="input-group mb-4 mt-3">
-                      <div class="form-outline">
-                        <input type="text" id="getName"/>
-                      </div>
-                    </div>
 
                   <div class="table-responsive">
                     <table class="table table-striped table-borderless">
                       <thead>
                         <tr>
-                          <th>Product</th>
-                          <th>BarCode</th>
-                          <th>Quanity</th>
-                          <th>Selling Price</th>
-                          <th>Add Stock</th>
-                          <th>Update Selling Price</th>
+                          <th>Id</th>
+                          <th>Payment To</th>
+                          <th>Delete</th>
                          
                         </tr>
                       </thead>
@@ -269,23 +259,16 @@ if (!isset($_SESSION["admin_session"])) {
                           
                       <?php  
                       
-                      $query = mysqli_query($conn, "SELECT * FROM product ORDER BY created");
+                      $query = mysqli_query($conn, "SELECT * FROM payment");
                       while ($row = mysqli_fetch_array($query)) {
                         $id = $row['id'];
-                        $name = $row['name'];
-                        $barcode = $row['bar_code'];
-                        $price = $row['buy_price'];
-                        $quantity = $row['unit'];
-      
+                        $payto = $row['mode'];
                       ?>
 
                         <tr id="<?php echo $id; ?>">
-                          <td><?= $name ?></td>
-                          <td><?= $barcode ?></td>
-                          <td data-target="addunits"><?= $quantity ?></td>
-                          <td data-target="updatedprice"><?= $price ?></td>
-                          <td><a href="#" data-role="update" data-id="<?php echo $id; ?>">ADD</a></td>
-                          <td><a href="#" data-role="updatepr" data-id="<?php echo $id; ?>">UPDATE</a></td>
+                          <td><?= $id ?></td>
+                          <td data-target="newmode"><?= $payto ?></td>
+                          <td><form method="POST"><button type="submit" name="del" value="<?= $id ?>" class="btn btn-danger">Delete</button></form></td>
                           
                           </td>
                         </tr>
@@ -296,75 +279,29 @@ if (!isset($_SESSION["admin_session"])) {
                   </div>
                 </div>
               </div>
+              
             </div>
 
             <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal fade" id="modemodal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Add Stock</h4>
+          <h4 class="modal-title">Update Payement options</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="">Number of units Added: </label>
-            <input type="text" name="addunits" id="addunits" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="">Price of single unit: </label>
-            <input type="text" name="newprice" id="newprice" class="form-control">
-          </div>
-          <div class="form-group">
-          <select class="form-control" id="vendorid" name="vendor">
-                            <?php
-                            $ven_query = mysqli_query($conn, "select * from vendor");
-                            while ($row = mysqli_fetch_array($ven_query)) {
-                              $vendor = $row['name'];
-                              ?>
-
-                              <option>
-                                <?= $vendor ?>
-                              </option>
-
-                            <?php } ?>
-
-
-                          </select>
+            <label for="">New Mode: </label>
+            <input type="text" name="newmode" id="newmode" class="form-control">
           </div>
           <input type="hidden" name="prodId" id="prodId">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <a href="#" id="save" class="btn btn-default">Update</a>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="upricemodel" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Update Stock</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="">New Price: </label>
-            <input type="text" name="updatedprice" id="updatedprice" class="form-control">
-          </div>
-          <input type="hidden" name="prodId" id="prodId">
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <a href="#" id="saveprice" class="btn btn-default">Update</a>
+            <a href="#" id="savemode" class="btn btn-default">Update</a>
         </div>
       </div>
       
@@ -461,61 +398,33 @@ if (!isset($_SESSION["admin_session"])) {
     $(document).ready(function() {
         $(document).on('click', 'a[data-role=update]', function() {
             var id = $(this).data('id')
-            var addunits = $('#'+id).children('td[data-target=addunits]').text();
-            temp = addunits;
             // $('#addunits').val(addunits);
+            var prevmode = $('#'+id).children('td[data-target=newmode]').text();
+
+            $('#newmode').val();
             $('#prodId').val(id);
-            $('#myModal').modal('toggle')
+            $('#modemodal').modal('toggle')
         });
 
-        $('#save').click(function() {
+        $('#savemode').click(function() {
             var id = $('#prodId').val();
-            var addunits = $('#addunits').val();
-            var newprice = $('#newprice').val();
-            var selectElement = document.getElementById("vendorid");
-            var vendor = selectElement.value;
+            var newmode = $('#newmode').val();
             
             $.ajax({
-                url: 'tupd.php',
+                url: 'newmodeup.php',
                 method: 'post',
-                data: { id: id, addunits: addunits, vendor: vendor, newprice:newprice},
+                data: { id: id, newmode: newmode},
                 success: function(response) {
-                    $('#'+id).children('td[data-target=addunits]').text(parseInt(addunits) + parseInt(temp));
-                    $('#addunits').val("");
-                    $('#myModal').modal('toggle')
+                    $('#'+id).children('td[data-target=newmode]').text((newmode));
+                    $('#newmode').val("");
+                    $('#modemodal').modal('toggle')
                 } 
             });
 });
 
 
     });
-    $(document).ready(function() {
-        $(document).on('click', 'a[data-role=updatepr]', function() {
-            var id = $(this).data('id')
-            var updatedprice = $('#'+id).children('td[data-target=updatedprice]').text();
-            temp = updatedprice;
-            $('#prodId').val(id);
-            $('#upricemodel').modal('toggle')
-        });
-
-        $('#saveprice').click(function() {
-            var id = $('#prodId').val();
-            var updatedprice = $('#updatedprice').val();
-            
-            $.ajax({
-                url: 'tupdprice.php',
-                method: 'post',
-                data: { id: id, updatedprice: updatedprice},
-                success: function(response) {
-                    $('#'+id).children('td[data-target=updatedprice]').text(parseInt(updatedprice));
-                    $('#updatedprice').val("");
-                    $('#upricemodel').modal('toggle')
-                } 
-            });
-});
-
-
-    });
+    
 </script>
 
   </body>
@@ -523,6 +432,22 @@ if (!isset($_SESSION["admin_session"])) {
 
 
 <?php
+
+
+if (isset($_POST['del'])) {
+    $deleteId = mysqli_real_escape_string($conn, $_POST['del']);
+    echo 'Delete ID: ' . htmlspecialchars($deleteId) . '<br>';
+    $deleteQuery = "DELETE FROM payment WHERE id = $deleteId";
+    $result = mysqli_query($conn, $deleteQuery);
+
+    if ($result) {
+        echo "<script>window.open('./addpaymentmodes.php','_self')</script>";
+    } else {
+        echo "Error deleting record: " . mysqli_error($conn);
+    }
+}
+
+
 
 if (isset($_POST['logoutt'])) {
   session_start();
