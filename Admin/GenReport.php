@@ -248,6 +248,35 @@ if(isset($_POST['vendor']))
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
+          <div style="margin-bottom: 40px; float: right;">
+                <form action="#" style="">
+                    <label for="vendormonth">Select Month:</label>
+                    <select id="vendormonth" name="vendormonth">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+
+                    <select id="vendoryear" name="vendoryear">
+                        <?php
+                        for ($year = 2022; $year <= 2045; $year++) {
+                            echo "<option value=\"$year\">$year</option>";
+                        }
+                        ?>
+                    </select>
+
+                    <input type="submit" class="btn btn-success" value="Update">
+                </form>
+              </div>
             <div class="row">
               <div class="col-md-12 grid-margin">
                 <div class="row">
@@ -259,12 +288,7 @@ if(isset($_POST['vendor']))
                   </div>
                   <div class="col-12 col-xl-4">
                     <div class="justify-content-end d-flex">
-                      <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                        
-                      
-                      <input type="date" id="selectedDate" name="selectedDate" class="form-control" required>
-
-                      </div>
+                     
                     </div>
                   </div>
                 </div>

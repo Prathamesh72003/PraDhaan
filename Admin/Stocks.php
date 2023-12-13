@@ -307,7 +307,9 @@ if (!isset($_SESSION["admin_session"])) {
                           <th>Product</th>
                           <th>BarCode</th>
                           <th>Quanity</th>
+                          <th>Selling Price</th>
                           <th>Add Stock</th>
+                          <th>Update Selling Price</th>
                          
                         </tr>
                       </thead>
@@ -320,6 +322,7 @@ if (!isset($_SESSION["admin_session"])) {
                         $id = $row['id'];
                         $name = $row['name'];
                         $barcode = $row['bar_code'];
+                        $price = $row['buy_price'];
                         $quantity = $row['unit'];
       
                       ?>
@@ -327,8 +330,10 @@ if (!isset($_SESSION["admin_session"])) {
                         <tr id="<?php echo $id; ?>">
                           <td><?= $name ?></td>
                           <td><?= $barcode ?></td>
+                          <td><?= $price ?></td>
                           <td data-target="addunits"><?= $quantity ?></td>
                           <td><a href="#" data-role="update" data-id="<?php echo $id; ?>">ADD</a></td>
+                          <td><a href="#" data-role="update" data-id="<?php echo $id; ?>">UPDATE</a></td>
                           
                           </td>
                         </tr>
@@ -356,6 +361,10 @@ if (!isset($_SESSION["admin_session"])) {
           <div class="form-group">
             <label for="">Number of units Added: </label>
             <input type="text" name="addunits" id="addunits" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Price of single unit: </label>
+            <input type="number" name="newprice" id="newprice" class="form-control">
           </div>
           <div class="form-group">
           <select class="form-control" id="vendorid" name="vendor">
